@@ -31,16 +31,8 @@
     KERNEL_TARGET="Image.lzo"
 
   # Kernel extra targets to build
-    case $SYSTEM in
-     KI_Plus)
-      KERNEL_UBOOT_EXTRA_TARGET="gxbb_p200.dtb"
-      ;;
-     KII_Pro)
-      KERNEL_UBOOT_EXTRA_TARGET="gxl_p212_2g.dtb"
-      ;;
-      esac
 #    KERNEL_UBOOT_EXTRA_TARGET="gxbb_p200.dtb gxbb_p200_2G.dtb gxl_p212_1g.dtb gxl_p212_2g.dtb"
-#    KERNEL_UBOOT_EXTRA_TARGET="gxbb_p200.dtb"
+    KERNEL_UBOOT_EXTRA_TARGET="gxbb_p200.dtb"
 
   # Build Android kernel image using mkbootimg
     BUILD_ANDROID_BOOTIMG="yes"
@@ -57,7 +49,7 @@
   # Kernel to use. values can be:
   # default:  default mainline kernel
     LINUX="custom"
-    KERNEL_VERSION="0d8dd61"
+    KERNEL_VERSION="6e79ad4"
     BUILD_DATE=`date +%Y%m%d%H%M%S`
 #    CUSTOM_VERSION="8.0.1-devel-$BUILD_DATE-g$KERNEL_VERSION-I"
     CUSTOM_VERSION="8.0.1k-I"
@@ -156,4 +148,3 @@
 
   # OEM packages for OEM's (yes / no)
     OEM_SUPPORT="yes"
-
