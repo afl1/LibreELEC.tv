@@ -17,8 +17,8 @@
 ################################################################################
 
 PKG_NAME="ffmpeg"
-# Current branch is: release/3.1-xbmc
-PKG_VERSION="33c167d"
+# Current branch is: release/3.3-kodi
+PKG_VERSION="eb0819c"
 PKG_ARCH="any"
 PKG_LICENSE="LGPLv2.1+"
 PKG_SITE="https://ffmpeg.org"
@@ -58,6 +58,15 @@ fi
 if [ "$KODIPLAYER_DRIVER" = "bcm2835-driver" ]; then
   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET bcm2835-driver"
 fi
+
+case "$TARGET_ARCH" in
+  arm)
+    FFMPEG_TABLES="--enable-hardcoded-tables"
+    ;;
+  *)
+    FFMPEG_TABLES="--disable-hardcoded-tables"
+    ;;
+esac
 
 case "$TARGET_ARCH" in
   arm)
@@ -120,7 +129,7 @@ configure_target() {
               --enable-shared \
               --enable-gpl \
               --disable-version3 \
-              --disable-nonfree \
+              --enable-nonfree \
               --enable-logging \
               --disable-doc \
               $FFMPEG_DEBUG \
@@ -155,8 +164,7 @@ configure_target() {
               $FFMPEG_VDPAU \
               --disable-dxva2 \
               --enable-runtime-cpudetect \
-              --disable-memalign-hack \
-              --disable-encoders \
+              $FFMPEG_TABLES \
               --enable-encoder=ac3 \
               --enable-encoder=aac \
               --enable-encoder=wmav2 \
@@ -184,7 +192,6 @@ configure_target() {
               --disable-libopencore-amrwb \
               --disable-libopencv \
               --disable-libdc1394 \
-              --disable-libfaac \
               --disable-libfreetype \
               --disable-libgsm \
               --disable-libmp3lame \

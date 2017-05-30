@@ -1,0 +1,13 @@
+--- a/libavformat/tls_openssl.c
++++ b/libavformat/tls_openssl.c
+@@ -35,6 +35,8 @@
+ #include <openssl/bio.h>
+ #include <openssl/ssl.h>
+ #include <openssl/err.h>
++
++#define OPENSSL_VERSION_NUMBER  0x10000000
+ 
+ static int openssl_init;
+ 
+
+

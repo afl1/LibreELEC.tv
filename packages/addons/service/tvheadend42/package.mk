@@ -17,9 +17,9 @@
 ################################################################################
 
 PKG_NAME="tvheadend42"
-PKG_VERSION_NUMBER="4.3.50"
-PKG_VERSION="4fdb390"
-PKG_REV="200"
+PKG_VERSION_NUMBER="4.2.2"
+PKG_VERSION="76dbc3e"
+PKG_REV="113"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.tvheadend.org"
@@ -32,7 +32,7 @@ PKG_LONGDESC="Tvheadend ($PKG_VERSION_NUMBER): is a TV streaming server for Linu
 PKG_AUTORECONF="no"
 
 PKG_IS_ADDON="yes"
-PKG_ADDON_NAME="Tvheadend 4.3"
+PKG_ADDON_NAME="Tvheadend 4.2.2"
 PKG_ADDON_TYPE="xbmc.service"
 
 # transcoding only for generic

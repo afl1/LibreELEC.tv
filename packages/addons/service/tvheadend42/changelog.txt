@@ -1,5 +1,5 @@
-200 
--  update to Tvheadend 4.3.50
+113
+- release 4.2.2
 
 112
 - release 4.2.1

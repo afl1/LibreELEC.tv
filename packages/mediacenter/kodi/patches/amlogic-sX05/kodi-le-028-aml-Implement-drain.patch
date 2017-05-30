@@ -14,6 +14,15 @@ diff --git a/xbmc/cores/VideoPlayer/DVDCodecs/Video/AMLCodec.cpp b/xbmc/cores/Vi
 index 11b08b5..eba385d 100644
 --- a/xbmc/cores/VideoPlayer/DVDCodecs/Video/AMLCodec.cpp
 +++ b/xbmc/cores/VideoPlayer/DVDCodecs/Video/AMLCodec.cpp
+@@ -1389,6 +1389,8 @@ CAMLCodec::CAMLCodec()
+   , m_bufferIndex(-1)
+   , m_state(0)
+   , m_frameSizeSum(0)
++  , m_stallCounter(0)
++  , m_timeSize(0)
+ {
+   am_private = new am_private_t;
+   memset(am_private, 0, sizeof(am_private_t));
 @@ -1431,6 +1431,7 @@ bool CAMLCodec::OpenDecoder(CDVDStreamInfo &hints)
  #endif
  
@@ -39,7 +48,7 @@ index 11b08b5..eba385d 100644
  
    SetSpeed(m_speed);
  
-@@ -1889,20 +1893,34 @@ int CAMLCodec::Decode(uint8_t *pData, size_t iSize, double dts, double pts)
+@@ -1889,24 +1893,51 @@ int CAMLCodec::Decode(uint8_t *pData, size_t iSize, double dts, double pts)
         m_state |= STATE_PREFILLED;
    }
  
@@ -61,6 +70,18 @@ index 11b08b5..eba385d 100644
  
 -  if (((rtn & VC_PICTURE) == 0 && timesize < 2.0) || timesize < 1.0)
 -    rtn |= VC_BUFFER;
++    if (rtn == 0 && timesize == m_timeSize)
++      m_stallCounter += 1;
++    else
++      m_stallCounter = 0;
++
++    m_timeSize = timesize;
++
++    if (rtn == 0 && m_stallCounter > 50) {
++      m_stallCounter = 0;
++      CLog::Log(LOGNOTICE, "CAMLCodec::Decode: Stuck, try to get more buffer");
++      rtn |= VC_BUFFER;
++    }
 +    if (timesize > 0.0 && DequeueBuffer() == 0)
 +      rtn |= VC_PICTURE;
  
@@ -71,7 +92,7 @@ index 11b08b5..eba385d 100644
    if (g_advancedSettings.CanLogComponent(LOGVIDEO))
    {
 -    CLog::Log(LOGDEBUG, "CAMLCodec::Decode: ret: %d, sz: %u, dts_in: %0.4lf[%llX], pts_in: %0.4lf[%llX], adj:%llu, ptsOut:%0.4f, amlpts:%d, idx:%u, timesize:%0.4f",
-+    CLog::Log(LOGDEBUG, "CAMLCodec::Decode: ret: %d, sz: %u, pts:%s dts_in: %0.4f, pts_in: %0.4f, adj:%llu, ptsOut:%0.4f, amlpts:%d, idx:%u, timesize:%0.4f, drain:%d",
++    if (iSize) CLog::Log(LOGDEBUG, "CAMLCodec::Decode: ret: %d, sz: %u, pts:%s dts_in:%0.3f, pts_in:%0.3f, adj:%llu, ptsOut:%0.3f, amlpts:%d, idx:%u, timesize:%0.3f, sc:%u",
        rtn,
        static_cast<unsigned int>(iSize),
 -      dts / DVD_TIME_BASE, am_private->am_pkt.avdts,
@@ -81,16 +102,12 @@ index 11b08b5..eba385d 100644
        m_start_adj,
        static_cast<float>(m_cur_pts)/PTS_FREQ,
        static_cast<int>(m_cur_pts),
-@@ -1907,7 +1925,8 @@ int CAMLCodec::Decode(uint8_t *pData, size_t iSize, double dts, double pts)
-       static_cast<float>(m_cur_pts)/PTS_FREQ,
-       static_cast<int>(m_cur_pts),
        m_bufferIndex,
 -      timesize
 +      timesize,
-+      m_drain
++      m_stallCounter
      );
    }
- 
 @@ -2030,7 +2155,7 @@
    struct buf_status bs;
    m_dll->codec_get_vbuf_state(&am_private->vcodec, &bs);
@@ -100,6 +117,20 @@ index 11b08b5..eba385d 100644
    while (m_frameSizeSum >  (unsigned int)bs.data_len)
    {
      m_frameSizeSum -= m_frameSizes.front();
+diff --git a/xbmc/cores/VideoPlayer/DVDCodecs/Video/AMLCodec.h b/xbmc/cores/VideoPlayer/DVDCodecs/Video/AMLCodec.h
+index 2885a88363..15bbe1f050 100644
+--- a/xbmc/cores/VideoPlayer/DVDCodecs/Video/AMLCodec.h
++++ b/xbmc/cores/VideoPlayer/DVDCodecs/Video/AMLCodec.h
+@@ -108,6 +108,9 @@ private:
+   std::deque<uint32_t> m_frameSizes;
+   std::uint32_t m_frameSizeSum;
+ 
++  int              m_stallCounter;
++  float            m_timeSize;
++
+   static long  m_pollSync;
+   static int   m_pollDevice;
+ };
 diff --git a/xbmc/cores/VideoPlayer/DVDCodecs/Video/AMLCodec.h b/xbmc/cores/VideoPlayer/DVDCodecs/Video/AMLCodec.h
 index 2885a88..763daee 100644
 --- a/xbmc/cores/VideoPlayer/DVDCodecs/Video/AMLCodec.h
