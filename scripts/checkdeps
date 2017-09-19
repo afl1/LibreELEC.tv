@@ -28,8 +28,8 @@ if  [ -f /etc/os-release ]; then
   DISTRO=$(grep ^ID= /etc/os-release | cut -d "=" -f 2 | tr A-Z a-z)
 fi
 
-deps="wget bash bc gcc sed patch tar bzip2 gzip perl gawk gperf zip unzip diff makeinfo lzop"
-deps_pkg="wget bash bc gcc sed patch tar bzip2 gzip perl gawk gperf zip unzip diffutils texinfo lzop"
+deps="wget bash bc gcc sed patch lsdiff tar bzip2 gzip perl gawk gperf zip unzip diff makeinfo lzop"
+deps_pkg="wget bash bc gcc sed patch patchutils tar bzip2 gzip perl gawk gperf zip unzip diffutils texinfo lzop"
 
 files="/usr/include/stdio.h /usr/include/ncurses.h"
 files_pkg="libc6-dev libncurses5-dev"
@@ -61,6 +61,11 @@ case "$DISTRO" in
       deps_pkg="$deps_pkg g++ xfonts-utils xfonts-utils xfonts-utils xsltproc default-jre"
       ;;
 esac
+
+if ! perl -MJSON -e 'exit(0);' 2>/dev/null; then
+  files="$files perl/JSON.pm"
+  files_pkg="$files_pkg libjson-perl"
+fi
 
 # project specific dependencies
 if [ -n "$EXTRA_DEPS" ] ; then
@@ -96,7 +101,7 @@ done
 
 if [ -n "$need" ]; then
   echo "**** Your system lacks the following tools needed to build $DISTRONAME ****"
-  echo $need
+  echo $need provided by $need_pkg
   echo "**** You seem to use a $DISTRO system ****"
 
   case "$DISTRO" in

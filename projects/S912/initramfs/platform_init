@@ -72,9 +72,9 @@ for part in /sys/block/*/queue/add_random; do
   echo 0 > "$part"
 done
 
-# Set 500MHz minimum CPU speed for both clusters
-echo 500000 > /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq
-echo 500000 > /sys/devices/system/cpu/cpu3/cpufreq/scaling_min_freq
+# Set 1GHz minimum CPU speed for both clusters
+echo 1000000 > /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq
+echo 1000000 > /sys/devices/system/cpu/cpu4/cpufreq/scaling_min_freq
 
 # set smp_affinity
 #            Binary       Hex
@@ -86,5 +86,7 @@ echo 2 > /proc/irq/231/smp_affinity  # hdmi_aocec
 echo 4 > /proc/irq/63/smp_affinity   # dwc_otg, dwc_otg_hcd:usb1
 echo 8 > /proc/irq/62/smp_affinity   # dwc_otg, dwc_otg_hcd:usb2, dwc_otg_pcd
 
-# Nougat WIP HDR
-echo '444,10bit' > /sys/class/amhdmitx/amhdmitx0/attr
+# DEC_CONTROL_FLAG_DISABLE_FAST_POC
+echo 4 > /sys/module/amvdec_h264/parameters/dec_control
+
+echo 1 > /sys/devices/system/cpu/cpufreq/ondemand/io_is_busy

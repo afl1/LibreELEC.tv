@@ -67,24 +67,16 @@ if [ -n "$CUSTOM_GIT_HASH" ]; then
   GIT_HASH="$CUSTOM_GIT_HASH"
 fi
 
-if [ -z "$DEVICE" ]; then
-  TARGET_VERSION="$PROJECT.$TARGET_ARCH-$LIBREELEC_VERSION"
-else
-  TARGET_VERSION="$PROJECT.$DEVICE.$TARGET_ARCH-$LIBREELEC_VERSION"
-fi
+LIBREELEC_ARCH="${DEVICE:-$PROJECT}.$TARGET_ARCH"
+TARGET_VERSION="$LIBREELEC_ARCH-$LIBREELEC_VERSION"
 IMAGE_NAME="$DISTRONAME-$TARGET_VERSION"
 
 # Set Amlogic update package name
 AML_UPDATE_NAME="$IMAGE_NAME"
 
 if [ "$DEVEL_VERSION" = "devel" ] ; then
-  if [ -z "$DEVICE" ]; then
-    IMAGE_NAME="$DISTRONAME-$PROJECT.$TARGET_ARCH-$OS_VERSION-$LIBREELEC_VERSION"
-    AML_UPDATE_NAME="$DISTRONAME-$PROJECT.$TARGET_ARCH-$OS_VERSION-$DEVEL_VERSION"
-  else
-    IMAGE_NAME="$DISTRONAME-$PROJECT.$DEVICE.$TARGET_ARCH-$OS_VERSION-$LIBREELEC_VERSION"
-    AML_UPDATE_NAME="$DISTRONAME-$PROJECT.$DEVICE.$TARGET_ARCH-$OS_VERSION-$DEVEL_VERSION"
-  fi
+  IMAGE_NAME="$DISTRONAME-$LIBREELEC_ARCH-$OS_VERSION-$LIBREELEC_VERSION"
+  AML_UPDATE_NAME="$DISTRONAME-$LIBREELEC_ARCH-$OS_VERSION-$LIBREELEC_VERSION"
 fi
 
 if [ -n "$SYSTEM" ]; then
@@ -139,12 +131,12 @@ echo -e "NAME=\"$DISTRONAME\"" > $INSTALL/etc/os-release
 echo -e "VERSION=\"$LIBREELEC_VERSION\"" >> $INSTALL/etc/os-release
 echo -e "ID=\"libreelec\"" >> $INSTALL/etc/os-release
 echo -e "VERSION_ID=\"$OS_VERSION\"" >> $INSTALL/etc/os-release
-echo -e "PRETTY_NAME=\"$DISTRONAME ($LIBREELEC_BUILD) - Version: $LIBREELEC_VERSION\"" >> $INSTALL/etc/os-release
+echo -e "PRETTY_NAME=\"$DISTRONAME ($LIBREELEC_BUILD): $LIBREELEC_VERSION\"" >> $INSTALL/etc/os-release
 echo -e "HOME_URL=\"https://libreelec.tv\"" >> $INSTALL/etc/os-release
 echo -e "BUG_REPORT_URL=\"$ORIGIN_URL\"" >> $INSTALL/etc/os-release
 echo -e "BUILD_ID=\"$GIT_HASH\"" >> $INSTALL/etc/os-release
-echo -e "OPENELEC_ARCH=\"$PROJECT.$TARGET_ARCH\"" >> $INSTALL/etc/os-release
-echo -e "LIBREELEC_ARCH=\"$PROJECT.$TARGET_ARCH\"" >> $INSTALL/etc/os-release
+echo -e "OPENELEC_ARCH=\"$LIBREELEC_ARCH\"" >> $INSTALL/etc/os-release
+echo -e "LIBREELEC_ARCH=\"$LIBREELEC_ARCH\"" >> $INSTALL/etc/os-release
 echo -e "LIBREELEC_BUILD=\"$LIBREELEC_BUILD\"" >> $INSTALL/etc/os-release
 
 # create /etc/issue
@@ -153,10 +145,7 @@ echo "$GREETING1" >> $INSTALL/etc/issue
 echo "$GREETING2" >> $INSTALL/etc/issue
 echo "$GREETING3" >> $INSTALL/etc/issue
 echo "$GREETING4" >> $INSTALL/etc/issue
-echo "$DISTRONAME ($LIBREELEC_BUILD) Version: $LIBREELEC_VERSION" >> $INSTALL/etc/issue
-if [ "$DEVEL_VERSION" = "devel" ] ; then
-  echo "$DISTRONAME git: $GIT_HASH" >> $INSTALL/etc/issue
-fi
+echo "$DISTRONAME ($LIBREELEC_BUILD): $LIBREELEC_VERSION ($LIBREELEC_ARCH)" >> $INSTALL/etc/issue
 
 ln -sf /etc/issue $INSTALL/etc/motd
 
@@ -234,15 +223,20 @@ fi
 MODVER=$(basename $(ls -d $INSTALL/usr/lib/modules/*))
 find $INSTALL/usr/lib/modules/$MODVER/ -name "*.ko" | \
   sed -e "s,$INSTALL/usr/lib/modules/$MODVER/,," > $INSTALL/usr/lib/modules/$MODVER/modules.order
-$ROOT/$TOOLCHAIN/bin/depmod -b $INSTALL/usr -a -e -F "$BUILD/linux-$(kernel_version)/System.map" $MODVER
+$TOOLCHAIN/bin/depmod -b $INSTALL/usr -a -e -F "$BUILD/linux-$(kernel_version)/System.map" $MODVER
 
 # strip kernel modules
 if [ "$TARGET_KERNEL_ARCH" = "arm64" -a "$TARGET_ARCH" = "arm" ]; then
-  STRIP=$ROOT/$TOOLCHAIN/lib/gcc-linaro-aarch64-linux-gnu/bin/aarch64-linux-gnu-strip
+  STRIP=$TOOLCHAIN/lib/gcc-linaro-aarch64-linux-gnu/bin/aarch64-linux-gnu-strip
 fi
 for MOD in `find $INSTALL/usr/lib/modules/ -type f -name "*.ko"`; do
   $STRIP --strip-debug $MOD
 done
+
+# delete PCI firmware for non-PCI targets
+if [ "$ARCH" = "arm" -o "$ARCH" = "aarch64" ]; then
+  find $INSTALL/usr/lib/firmware -iname "*pci*" -exec rm {} +;
+fi
 
 # make target dir
 mkdir -p $TARGET_IMG
@@ -254,10 +248,9 @@ if [ "$BUILD_ANDROID_BOOTIMG" = "yes" ]; then
   pushd "$BUILD/linux-$(kernel_version)" > /dev/null
   rm -rf arch/$TARGET_KERNEL_ARCH/boot/dts/amlogic/*.dtb arch/$TARGET_KERNEL_ARCH/boot/dtb.img arch/$TARGET_KERNEL_ARCH/boot/boot.img
   if [ "$TARGET_KERNEL_ARCH" = "arm64" -a "$TARGET_ARCH" = "arm" ]; then
-    PATH=$ROOT/$TOOLCHAIN/lib/gcc-linaro-aarch64-linux-gnu/bin/:$PATH
+    PATH=$TOOLCHAIN/lib/gcc-linaro-aarch64-linux-gnu/bin/:$PATH
     TARGET_PREFIX=aarch64-linux-gnu-
   fi
-
   for extra_target in $KERNEL_UBOOT_EXTRA_TARGET; do
     LDFLAGS="" make $extra_target > /dev/null
   done
@@ -265,9 +258,8 @@ if [ "$BUILD_ANDROID_BOOTIMG" = "yes" ]; then
   DTB_BLOBS_COUNT="${#DTB_BLOBS[@]}"
   DTB_BLOB_OUTPUT="arch/$TARGET_KERNEL_ARCH/boot/dtb.img"
   ANDROID_BOOTIMG_SECOND="--second $DTB_BLOB_OUTPUT"
-
   if [ "$DTB_BLOBS_COUNT" -gt 1 ]; then
-    $ROOT/tools/dtbTool/dtbTool -o arch/$TARGET_KERNEL_ARCH/boot/dtb.img -p scripts/dtc/ arch/$TARGET_KERNEL_ARCH/boot/dts/amlogic/
+    $TOOLCHAIN/bin/dtbTool -o arch/$TARGET_KERNEL_ARCH/boot/dtb.img -p scripts/dtc/ arch/$TARGET_KERNEL_ARCH/boot/dts/amlogic/
     ANDROID_BOOTIMG_SECOND="--second arch/$TARGET_KERNEL_ARCH/boot/dtb.img"
   elif [ "$DTB_BLOBS_COUNT" -eq 1 ]; then
     ANDROID_BOOTIMG_SECOND="--second $DTB_BLOBS"
@@ -275,7 +267,7 @@ if [ "$BUILD_ANDROID_BOOTIMG" = "yes" ]; then
   else
     ANDROID_BOOTIMG_SECOND=""
   fi
-  mkbootimg --kernel arch/$TARGET_KERNEL_ARCH/boot/$KERNEL_TARGET --ramdisk $ROOT/$BUILD/image/initramfs.cpio \
+  mkbootimg --kernel arch/$TARGET_KERNEL_ARCH/boot/$KERNEL_TARGET --ramdisk $BUILD/image/initramfs.cpio \
       $ANDROID_BOOTIMG_SECOND $ANDROID_BOOTIMG_OPTIONS --output arch/$TARGET_KERNEL_ARCH/boot/boot.img
   if [ -f $DTB_BLOB_OUTPUT ]; then
     cp -f $DTB_BLOB_OUTPUT $TARGET_IMG/$IMAGE_NAME.dtb
@@ -294,10 +286,10 @@ if [ -z "$SQUASHFS_COMPRESSION" ]; then
 fi
 
 echo "rm -rf \"$TARGET_IMG/$IMAGE_NAME.system\"" >> $FAKEROOT_SCRIPT
-echo "$ROOT/$TOOLCHAIN/bin/mksquashfs \"$BUILD/image/system\" \"$TARGET_IMG/$IMAGE_NAME.system\" -noappend -comp $SQUASHFS_COMPRESSION" >> $FAKEROOT_SCRIPT
+echo "$TOOLCHAIN/bin/mksquashfs \"$BUILD/image/system\" \"$TARGET_IMG/$IMAGE_NAME.system\" -noappend -comp $SQUASHFS_COMPRESSION" >> $FAKEROOT_SCRIPT
 
 # run fakeroot
-$ROOT/$TOOLCHAIN/bin/fakeroot -- $FAKEROOT_SCRIPT
+$TOOLCHAIN/bin/fakeroot -- $FAKEROOT_SCRIPT
 rm -rf $FAKEROOT_SCRIPT
 
 # set permissions
@@ -325,10 +317,10 @@ if [ "$1" = "release" -o "$1" = "mkimage" -o "$1" = "amlpkg" -o "$1" = "noobs" ]
   rm -rf $TARGET_IMG/$IMAGE_NAME.img.gz
   if [ -n "$BOOTLOADER" ]; then
 
-   BOOTLOADER_DIR="$(get_pkg_directory "$BOOTLOADER")"
+    BOOTLOADER_DIR="$(get_pkg_directory "$BOOTLOADER")"
 
     if [ -d $BOOTLOADER_DIR/files ]; then
-       cp -R $BOOTLOADER_DIR/files/* $RELEASE_DIR
+      cp -R $BOOTLOADER_DIR/files/* $RELEASE_DIR
     fi
 
     if [ -n "$DEVICE" -a -f $PROJECT_DIR/$PROJECT/devices/$DEVICE/bootloader/release ]; then
@@ -401,6 +393,7 @@ if [ "$1" = "release" -o "$1" = "mkimage" -o "$1" = "amlpkg" -o "$1" = "noobs" ]
       TOOLCHAIN="$TOOLCHAIN" \
       PROJECT_DIR="$PROJECT_DIR" \
       PROJECT="$PROJECT" \
+      DEVICE="$DEVICE" \
       DISTRO="$DISTRO" \
       TARGET_IMG="$TARGET_IMG" \
       IMAGE_NAME="$IMAGE_NAME" \
@@ -412,6 +405,7 @@ if [ "$1" = "release" -o "$1" = "mkimage" -o "$1" = "amlpkg" -o "$1" = "noobs" ]
       UUID_SYSTEM="$(uuidgen)" \
       UUID_STORAGE="$(uuidgen)" \
       UBOOT_SYSTEM="$UBOOT_SYSTEM" \
+      UBOOT_VERSION="$UBOOT_VERSION" \
       EXTRA_CMDLINE="$EXTRA_CMDLINE" \
       SYSTEM_SIZE="$SYSTEM_SIZE" \
       SYSTEM_PART_START="$SYSTEM_PART_START" \
@@ -476,8 +470,8 @@ if [ "$1" = "release" -o "$1" = "mkimage" -o "$1" = "amlpkg" -o "$1" = "noobs" ]
     fi
 
     # copy device tree image if any
-    if [ -f "$ROOT/$INSTALL/usr/share/bootloader/dtb.img" ]; then
-      cp "$ROOT/$INSTALL/usr/share/bootloader/dtb.img" .
+    if [ -f "$INSTALL/usr/share/bootloader/dtb.img" ]; then
+      cp "$INSTALL/usr/share/bootloader/dtb.img" .
     fi
 
     zip -q $TARGET_IMG/$IMAGE_NAME.zip *
@@ -591,4 +585,5 @@ if [ "$1" = "release" -o "$1" = "mkimage" -o "$1" = "amlpkg" -o "$1" = "noobs" ]
     # cleanup release dir
     rm -rf $RELEASE_DIR
   fi
+
 fi

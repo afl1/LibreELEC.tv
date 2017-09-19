@@ -34,7 +34,7 @@ get_branch() {
     KERNEL_TARGET="Image.lzo"
 
   # Kernel extra targets to build
-  #  KERNEL_UBOOT_EXTRA_TARGET="gxm_q200_2g.dtb gxm_q201_1g.dtb gxm_q201_2g.dtb"
+    KERNEL_UBOOT_EXTRA_TARGET="gxm_q200_2g.dtb gxm_q201_1g.dtb gxm_q201_2g.dtb"
     KERNEL_UBOOT_EXTRA_TARGET="gxm_q200_2g.dtb"
 
   # Build Android kernel image using mkbootimg
@@ -52,15 +52,15 @@ get_branch() {
   # Kernel to use. values can be:
   # default:  default mainline kernel
     LINUX="custom"
-    KERNEL_VERSION="00221a7"
+    KERNEL_VERSION="d562e8e"
     KERNEL_URL="https://github.com/kszaq/linux-amlogic-le/archive/$KERNEL_VERSION.tar.gz"
     KERNEL_SOURCE_DIR="linux-amlogic-le-$KERNEL_VERSION*"
-    KERNEL_VERSION="834a470"
-    KERNEL_URL="https://github.com/amillogical/linux-amlogic/archive/$KERNEL_VERSION.tar.gz"
-    KERNEL_SOURCE_DIR="linux-amlogic-$KERNEL_VERSION*"
+#    KERNEL_VERSION="8b16c08"
+#    KERNEL_URL="https://github.com/amillogical/linux-amlogic/archive/$KERNEL_VERSION.tar.gz"
+#    KERNEL_SOURCE_DIR="linux-amlogic-$KERNEL_VERSION*"
     KERNEL_PATCH_DIRS="amlogic-3.14"
     BUILD_DATE=`date +%Y%m%d%H%M`
-    CUSTOM_VERSION="8.90.0-devel-$BUILD_DATE-g$KERNEL_VERSION-I"
+    CUSTOM_VERSION="8.2-devel-$BUILD_DATE-g$KERNEL_VERSION-I"
   #  CUSTOM_VERSION="$(get_branch)-I"
     CUSTOM_IMAGE_NAME="LibreELEC-S912.arm-$CUSTOM_VERSION"
 ################################################################################

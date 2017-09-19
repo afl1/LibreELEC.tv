@@ -43,7 +43,7 @@ get_branch() {
       KERNEL_UBOOT_EXTRA_TARGET="gxl_p230_2g.dtb"
       ;;
      KII_Pro)
-      KERNEL_UBOOT_EXTRA_TARGET="gxl_p212_2g.dtb"
+      KERNEL_UBOOT_EXTRA_TARGET="gbb_p200_2G.dtb"
       ;;
     esac
 
@@ -62,18 +62,17 @@ get_branch() {
   # Kernel to use. values can be:
   # default:  default mainline kernel
     LINUX="custom"
-    KERNEL_VERSION="00221a7"
+    KERNEL_VERSION="d562e8e"
     KERNEL_URL="https://github.com/kszaq/linux-amlogic-le/archive/$KERNEL_VERSION.tar.gz"
     KERNEL_SOURCE_DIR="linux-amlogic-le-$KERNEL_VERSION*"
-    KERNEL_VERSION="834a470"
-    KERNEL_URL="https://github.com/amillogical/linux-amlogic/archive/$KERNEL_VERSION.tar.gz"
-    KERNEL_SOURCE_DIR="linux-amlogic-$KERNEL_VERSION*"
+#    KERNEL_VERSION="8b16c08"
+#    KERNEL_URL="https://github.com/amillogical/linux-amlogic/archive/$KERNEL_VERSION.tar.gz"
+#    KERNEL_SOURCE_DIR="linux-amlogic-$KERNEL_VERSION*"
     KERNEL_PATCH_DIRS="amlogic-3.14"
     BUILD_DATE=`date +%Y%m%d%H%M`
-    CUSTOM_VERSION="8.90.0-devel-$BUILD_DATE-g$KERNEL_VERSION-I"
+    CUSTOM_VERSION="8.2-devel-$BUILD_DATE-g$KERNEL_VERSION-I"
   #  CUSTOM_VERSION="$(get_branch)-I"
     CUSTOM_IMAGE_NAME="LibreELEC-S905.arm-$CUSTOM_VERSION"
-
 ################################################################################
 # setup build defaults
 ################################################################################
@@ -161,8 +160,8 @@ get_branch() {
 
   # set the addon dirs
     ADDON_SERVER_URL="http://kszaq.libreelec.tv/addons"
-    ADDON_PATH="$ADDON_VERSION/S905/$TARGET_ARCH"
     ADDON_URL="$ADDON_SERVER_URL/$ADDON_PATH"
+
 
   # OEM packages for OEM's (yes / no)
     OEM_SUPPORT="yes"
