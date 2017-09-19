@@ -18,7 +18,6 @@
 
 PKG_NAME="populatefs"
 PKG_VERSION="95cc98b"
-PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/oskarirauta/populatefs"
@@ -37,6 +36,6 @@ make_host() {
 makeinstall_host() {
   $STRIP src/populatefs
 
-  mkdir -p $ROOT/$TOOLCHAIN/sbin
-  cp src/populatefs $ROOT/$TOOLCHAIN/sbin
+  mkdir -p $TOOLCHAIN/sbin
+  cp src/populatefs $TOOLCHAIN/sbin
 }

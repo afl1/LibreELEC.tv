@@ -18,7 +18,6 @@
 
 PKG_NAME="nmap"
 PKG_VERSION="7.11"
-PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://nmap.org/"
@@ -39,7 +38,7 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-static \
 
 pre_configure_target() {
 # nmap fails to build in subdirs
-  cd $ROOT/$PKG_BUILD
+  cd $PKG_BUILD
     rm -rf .$TARGET_NAME
 
   export CPPFLAGS="$CPPFLAGS -Iliblua"

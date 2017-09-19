@@ -17,8 +17,8 @@
 ################################################################################
 
 PKG_NAME="audiodecoder.stsound"
-PKG_VERSION="af0967e"
-PKG_REV="2"
+PKG_VERSION="a306bf6"
+PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.kodi.tv"

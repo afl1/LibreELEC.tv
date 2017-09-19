@@ -36,19 +36,19 @@ PKG_AUTORECONF="no"
 
 if [ "$TARGET_KERNEL_ARCH" = "arm64" -a "$TARGET_ARCH" = "arm" ]; then
   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET gcc-linaro-aarch64-linux-gnu:host"
-  export PATH=$ROOT/$TOOLCHAIN/lib/gcc-linaro-aarch64-linux-gnu/bin/:$PATH
+  export PATH=$TOOLCHAIN/lib/gcc-linaro-aarch64-linux-gnu/bin/:$PATH
   TARGET_PREFIX=aarch64-linux-gnu-
 fi
 
 make_target() {
-  LDFLAGS="" make LINUX_SRC=$(kernel_path) ARCH=$TARGET_KERNEL_ARCH CROSS_COMPILE=$TARGET_PREFIX RT28xx_DIR=$ROOT/$PKG_BUILD -f $ROOT/$PKG_BUILD/Makefile
+  LDFLAGS="" make LINUX_SRC=$(kernel_path) ARCH=$TARGET_KERNEL_ARCH CROSS_COMPILE=$TARGET_PREFIX RT28xx_DIR=$PKG_BUILD -f $PKG_BUILD/Makefile
 }
 
 makeinstall_target() {
   mkdir -p $INSTALL/usr/lib/modules/$(get_module_dir)/$PKG_NAME
-  cp $ROOT/$PKG_BUILD/os/linux/mtprealloc.ko $INSTALL/usr/lib/modules/$(get_module_dir)/$PKG_NAME
-  cp $ROOT/$PKG_BUILD/os/linux/mt7603usta.ko $INSTALL/usr/lib/modules/$(get_module_dir)/$PKG_NAME
+  cp $PKG_BUILD/os/linux/mtprealloc.ko $INSTALL/usr/lib/modules/$(get_module_dir)/$PKG_NAME
+  cp $PKG_BUILD/os/linux/mt7603usta.ko $INSTALL/usr/lib/modules/$(get_module_dir)/$PKG_NAME
 
   mkdir -p $INSTALL/usr/lib/firmware
-  cp $ROOT/$PKG_BUILD/conf/MT7603USTA.dat $INSTALL/usr/lib/firmware
+  cp $PKG_BUILD/conf/MT7603USTA.dat $INSTALL/usr/lib/firmware
 }

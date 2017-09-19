@@ -1,0 +1,21 @@
+diff --git a/src/input/mpegts/mpegts_network_dvb.c b/src/input/mpegts/mpegts_network_dvb.c
+index 549331888..7d658b820 100644
+--- a/src/input/mpegts/mpegts_network_dvb.c
++++ b/src/input/mpegts/mpegts_network_dvb.c
+@@ -666,6 +666,7 @@ dvb_network_create_mux
+ 
+   ln = (dvb_network_t*)mn;
+   mm = dvb_network_find_mux(ln, dmc, onid, tsid, 0, 0);
++  tvhwarn(LS_MPEGTS, "create mux %p discover %d force %d", mm, ln->mn_autodiscovery, force);
+   if (!mm && (ln->mn_autodiscovery != MN_DISCOVERY_DISABLE || force)) {
+     cls = dvb_network_mux_class((mpegts_network_t *)ln);
+     save |= cls == &dvb_mux_dvbt_class && dmc->dmc_fe_type == DVB_TYPE_T;
+@@ -673,6 +674,7 @@ dvb_network_create_mux
+     save |= cls == &dvb_mux_dvbs_class && dmc->dmc_fe_type == DVB_TYPE_S;
+     save |= cls == &dvb_mux_atsc_t_class && dmc->dmc_fe_type == DVB_TYPE_ATSC_T;
+     save |= cls == &dvb_mux_atsc_c_class && dmc->dmc_fe_type == DVB_TYPE_ATSC_C;
++    tvhwarn(LS_MPEGTS, "1: save %d", save);
+     if (save && dmc->dmc_fe_type == DVB_TYPE_S) {
+       satpos = dvb_network_get_orbital_pos(mn);
+       /* do not allow to mix satellite positions */
+

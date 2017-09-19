@@ -18,7 +18,6 @@
 
 PKG_NAME="autoconf"
 PKG_VERSION="2.69"
-PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://sources.redhat.com/autoconf/"
@@ -32,7 +31,7 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
 PKG_CONFIGURE_OPTS_HOST="EMACS=no \
-                         ac_cv_path_M4=$ROOT/$TOOLCHAIN/bin/m4 \
+                         ac_cv_path_M4=$TOOLCHAIN/bin/m4 \
                          ac_cv_prog_gnu_m4_gnu=no \
                          --target=$TARGET_NAME"
 

@@ -16,12 +16,11 @@
 #  along with LibreELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 PKG_NAME="u-boot-v2"
-PKG_VERSION="2016.03"
+PKG_VERSION="2017.01"
 PKG_SITE=""
 PKG_URL="ftp://ftp.denx.de/pub/u-boot/u-boot-$PKG_VERSION.tar.bz2"
 PKG_SOURCE_DIR="u-boot-$PKG_VERSION"
 PKG_DEPENDS_TARGET="toolchain"
-PKG_REV="1"
 PKG_ARCH="arm"
 PKG_LICENSE="GPL"
 PKG_SECTION="tools"
@@ -85,9 +84,9 @@ make_target() {
 makeinstall_target() {
   mkdir -p $INSTALL/usr/share/bootloader
 
-  cp $ROOT/$PKG_BUILD/u-boot-*.imx $INSTALL/usr/share/bootloader 2>/dev/null || : #
-  cp $ROOT/$PKG_BUILD/u-boot-*.img $INSTALL/usr/share/bootloader 2>/dev/null || : #
-  cp $ROOT/$PKG_BUILD/SPL-* $INSTALL/usr/share/bootloader 2>/dev/null || : #
+  cp $PKG_BUILD/u-boot-*.imx $INSTALL/usr/share/bootloader 2>/dev/null || : #
+  cp $PKG_BUILD/u-boot-*.img $INSTALL/usr/share/bootloader 2>/dev/null || : #
+  cp $PKG_BUILD/SPL-* $INSTALL/usr/share/bootloader 2>/dev/null || : #
 }
 
 pre_install() {

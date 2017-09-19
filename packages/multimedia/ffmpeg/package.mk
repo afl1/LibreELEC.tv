@@ -17,8 +17,8 @@
 ################################################################################
 
 PKG_NAME="ffmpeg"
-# Current branch is: release/3.3.2-Leia-Alpha
-PKG_VERSION="30554d7"
+# Current branch is: release/3.1-xbmc
+PKG_VERSION="f58e5b9"
 PKG_ARCH="any"
 PKG_LICENSE="LGPLv2.1+"
 PKG_SITE="https://ffmpeg.org"
@@ -62,12 +62,7 @@ fi
 case "$TARGET_ARCH" in
   arm)
     CFLAGS="$CFLAGS -mthumb"
-    ;;
-esac
-
-case "$TARGET_ARCH" in
-  arm)
-    CFLAGS="$CFLAGS -mthumb"
+    CFLAGS=$(echo "$CFLAGS" | sed 's/-Os/-O3/g')
     ;;
 esac
 
@@ -85,7 +80,7 @@ if [ "$DISPLAYSERVER" = "x11" ]; then
 fi
 
 pre_configure_target() {
-  cd $ROOT/$PKG_BUILD
+  cd $PKG_BUILD
   rm -rf .$TARGET_NAME
 
 # ffmpeg fails building for x86_64 with LTO support
@@ -131,7 +126,7 @@ configure_target() {
               --disable-doc \
               $FFMPEG_DEBUG \
               --enable-pic \
-              --pkg-config="$ROOT/$TOOLCHAIN/bin/pkg-config" \
+              --pkg-config="$TOOLCHAIN/bin/pkg-config" \
               --enable-optimizations \
               --disable-extra-warnings \
               --disable-ffprobe \
@@ -161,6 +156,7 @@ configure_target() {
               $FFMPEG_VDPAU \
               --disable-dxva2 \
               --enable-runtime-cpudetect \
+              --disable-memalign-hack \
               --disable-encoders \
               --enable-encoder=ac3 \
               --enable-encoder=aac \
@@ -189,6 +185,7 @@ configure_target() {
               --disable-libopencore-amrwb \
               --disable-libopencv \
               --disable-libdc1394 \
+              --disable-libfaac \
               --disable-libfreetype \
               --disable-libgsm \
               --disable-libmp3lame \

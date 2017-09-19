@@ -17,7 +17,6 @@
 ################################################################################
 
 PKG_NAME="brcmap6xxx-aml"
-PKG_REV="1"
 PKG_ARCH="arm aarch64"
 PKG_LICENSE="GPL"
 PKG_SITE="http://openlinux.amlogic.com:8000/download/ARM/wifi/"
@@ -35,7 +34,7 @@ PKG_AUTORECONF="no"
 make_target() {
   cd bcmdhd_1_201_59_x
   LDFLAGS="" make V=1 \
-    -C $(kernel_path) M=$ROOT/$PKG_BUILD/bcmdhd_1_201_59_x \
+    -C $(kernel_path) M=$PKG_BUILD/bcmdhd_1_201_59_x \
     ARCH=$TARGET_KERNEL_ARCH \
     CROSS_COMPILE=$TARGET_PREFIX
 }

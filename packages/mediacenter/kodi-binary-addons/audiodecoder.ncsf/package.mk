@@ -17,8 +17,8 @@
 ################################################################################
 
 PKG_NAME="audiodecoder.ncsf"
-PKG_VERSION="8004589"
-PKG_REV="2"
+PKG_VERSION="8835a04"
+PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/notspiff/audiodecoder.ncsf"

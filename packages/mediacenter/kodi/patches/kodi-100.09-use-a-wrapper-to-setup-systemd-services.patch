@@ -1,18 +1,8 @@
-From faebee708dc7c24d177fa6b8874b3f1374a08e25 Mon Sep 17 00:00:00 2001
-From: MilhouseVH <milhouseVH.github@nmacleod.com>
-Date: Wed, 5 Jul 2017 15:58:57 +0100
-Subject: [PATCH] use a wrapper to setup systemd services
-
----
- xbmc/addons/Addon.cpp | 35 +++++++++++++++++++++++++++++++++++
- xbmc/addons/Addon.h   |  2 ++
- 2 files changed, 37 insertions(+)
-
 diff --git a/xbmc/addons/Addon.cpp b/xbmc/addons/Addon.cpp
-index 639ee5c..7f205a7 100644
+index 476ab29..ec5faa5 100644
 --- a/xbmc/addons/Addon.cpp
 +++ b/xbmc/addons/Addon.cpp
-@@ -396,18 +396,36 @@ AddonVersion CAddon::GetDependencyVersion(const std::string &dependencyID) const
+@@ -340,6 +340,13 @@ AddonVersion CAddon::GetDependencyVersion(const std::string &dependencyID) const
    return AddonVersion("0.0.0");
  }
  
@@ -26,34 +16,34 @@ index 639ee5c..7f205a7 100644
  void OnEnabled(const std::string& id)
  {
    // If the addon is a special, call enabled handler
-   AddonPtr addon;
-   if (CAddonMgr::GetInstance().GetAddon(id, addon, ADDON_PVRDLL))
+@@ -348,6 +355,11 @@ void OnEnabled(const std::string& id)
+       CAddonMgr::GetInstance().GetAddon(id, addon, ADDON_ADSPDLL))
      return addon->OnEnabled();
-+
+ 
 +  // OE: systemctl enable & start on addon enable
 +  if (CAddonMgr::GetInstance().GetAddon(id, addon, ADDON_SERVICE))
 +    CallOEWrapper(addon->ID(), false);
 +  // OE
- }
- 
- void OnDisabled(const std::string& id)
- {
- 
-   AddonPtr addon;
 +
+   if (CAddonMgr::GetInstance().ServicesHasStarted())
+   {
+     if (CAddonMgr::GetInstance().GetAddon(id, addon, ADDON_SERVICE))
+@@ -372,6 +384,11 @@ void OnDisabled(const std::string& id)
+       std::static_pointer_cast<CService>(addon)->Stop();
+   }
+ 
 +  // OE: systemctl stop & disable on addon disable
 +  if (CAddonMgr::GetInstance().GetAddon(id, addon, ADDON_SERVICE, false))
 +    CallOEWrapper(addon->ID(), true);
 +  // OE
 +
-   if (CAddonMgr::GetInstance().GetAddon(id, addon, ADDON_PVRDLL, false))
-     return addon->OnDisabled();
+   if (CAddonMgr::GetInstance().GetAddon(id, addon, ADDON_CONTEXT_ITEM, false))
+     CContextMenuManager::GetInstance().Unload(*std::static_pointer_cast<CContextMenuAddon>(addon));
  }
-@@ -443,11 +461,28 @@ void OnPostInstall(const AddonPtr& addon, bool update, bool modal)
-   }
-   // OE
- 
-+  AddonPtr localAddon;
+@@ -399,6 +416,15 @@ void OnPreInstall(const AddonPtr& addon)
+ void OnPostInstall(const AddonPtr& addon, bool update, bool modal)
+ {
+   AddonPtr localAddon;
 +
 +  // OE: systemctl stop & disable / enable & start on addon upgrade
 +  if (CAddonMgr::GetInstance().GetAddon(addon->ID(), localAddon, ADDON_SERVICE))
@@ -63,34 +53,31 @@ index 639ee5c..7f205a7 100644
 +  }
 +  // OE
 +
-   addon->OnPostInstall(update, modal);
- }
- 
- void OnPreUnInstall(const AddonPtr& addon)
+   if (CAddonMgr::GetInstance().ServicesHasStarted())
+   {
+     if (CAddonMgr::GetInstance().GetAddon(addon->ID(), localAddon, ADDON_SERVICE))
+@@ -415,6 +441,11 @@ void OnPreUnInstall(const AddonPtr& addon)
  {
-+  AddonPtr localAddon;
-+
+   AddonPtr localAddon;
+ 
 +  // OE: systemctl stop & disable on addon uninstall
 +  if (CAddonMgr::GetInstance().GetAddon(addon->ID(), localAddon, ADDON_SERVICE))
 +    CallOEWrapper(addon->ID(), true);
 +  // OE
 +
-   addon->OnPreUnInstall();
- }
- 
+   if (CAddonMgr::GetInstance().ServicesHasStarted())
+   {
+     if (CAddonMgr::GetInstance().GetAddon(addon->ID(), localAddon, ADDON_SERVICE))
 diff --git a/xbmc/addons/Addon.h b/xbmc/addons/Addon.h
-index 35203a2..8e4b95e 100644
+index 515afe1..36287d6 100644
 --- a/xbmc/addons/Addon.h
 +++ b/xbmc/addons/Addon.h
-@@ -84,6 +84,8 @@ public:
-   const InfoMap& ExtraInfo() const override { return m_addonInfo.ExtraInfo(); }
-   const ADDONDEPS& GetDeps() const override { return m_addonInfo.GetDeps(); }
+@@ -121,6 +121,8 @@ public:
+   const InfoMap& ExtraInfo() const override { return m_props.extrainfo; }
+   const ADDONDEPS& GetDeps() const override { return m_props.dependencies; }
  
 +  void CallOEWrapper(const std::string& ID, bool disable);
 +
-   std::string FanArt() const override
-   {
-     auto it = m_addonInfo.Art().find("fanart");
--- 
-2.7.4
-
+   /*! \brief Check whether the this addon can be configured or not
+    \return true if the addon has settings, false otherwise
+    \sa LoadSettings, LoadUserSettings, SaveSettings, HasUserSettings, GetSetting, UpdateSetting

@@ -19,7 +19,6 @@
 
 PKG_NAME="attr"
 PKG_VERSION="2.4.47"
-PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE=""
@@ -45,7 +44,7 @@ fi
 
 pre_configure_target() {
 # attr fails to build in subdirs
-  cd $ROOT/$PKG_BUILD
+  cd $PKG_BUILD
     rm -rf .$TARGET_NAME
 }
 

@@ -20,7 +20,6 @@
 
 PKG_NAME="dvb-apps"
 PKG_VERSION="3d43b280298c"
-PKG_REV="0"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://www.linuxtv.org/wiki/index.php/LinuxTV_dvb-apps"
@@ -30,12 +29,3 @@ PKG_SECTION="tools"
 PKG_SHORTDESC="Digitial Video Broadcasting (DVB) applications"
 PKG_LONGDESC="Applications and utilities geared towards the initial setup, testing and operation of an DVB device supporting the DVB-S, DVB-C, DVB-T, and ATSC standards."
 PKG_AUTORECONF="no"
-
-make_target() {
-  make -C lib
-  make -C util
-}
-
-makeinstall_target() {
-  : # nop
-}

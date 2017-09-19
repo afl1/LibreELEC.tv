@@ -18,7 +18,6 @@
 
 PKG_NAME="plymouth-lite"
 PKG_VERSION="0.6.0"
-PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.meego.com"
@@ -37,7 +36,7 @@ fi
 
 pre_configure_init() {
   # plymouth-lite dont support to build in subdirs
-  cd $ROOT/$PKG_BUILD
+  cd $PKG_BUILD
     rm -rf .$TARGET_NAME-init
 }
 

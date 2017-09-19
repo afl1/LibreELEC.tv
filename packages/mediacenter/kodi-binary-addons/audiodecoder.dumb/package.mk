@@ -17,8 +17,8 @@
 ################################################################################
 
 PKG_NAME="audiodecoder.dumb"
-PKG_VERSION="fbe7090"
-PKG_REV="2"
+PKG_VERSION="6c15ef8"
+PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/notspiff/audiodecoder.dumb"

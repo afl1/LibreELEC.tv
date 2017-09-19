@@ -18,7 +18,6 @@
 
 PKG_NAME="mpc"
 PKG_VERSION="1.0.3"
-PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="LGPL"
 PKG_SITE="http://www.multiprecision.org"
@@ -33,5 +32,5 @@ PKG_AUTORECONF="no"
 
 PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --enable-static --disable-shared \
-                         --with-gmp=$ROOT/$TOOLCHAIN \
-                         --with-mpfr=$ROOT/$TOOLCHAIN"
+                         --with-gmp=$TOOLCHAIN \
+                         --with-mpfr=$TOOLCHAIN"

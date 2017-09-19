@@ -1,6 +1,6 @@
 ################################################################################
-#      This file is part of LibreELEC - http://www.libreelec.tv
-#      Copyright (C) 2016 Team LibreELEC
+#      This file is part of LibreELEC - https://libreelec.tv
+#      Copyright (C) 2016-present Team LibreELEC
 #
 #  LibreELEC is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -17,8 +17,7 @@
 ################################################################################
 
 PKG_NAME="w_scan"
-PKG_VERSION="20141122"
-PKG_REV="1"
+PKG_VERSION="20170107"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://wirbel.htpc-forum.de/w_scan/index2.html"
@@ -32,7 +31,7 @@ PKG_AUTORECONF="yes"
 # aml 3.14 is meh
 pre_configure_target() {
 if [ "$TARGET_KERNEL_ARCH" = "arm64" ]; then
-  sed -i 's/DVB_HEADER=0/DVB_HEADER=1/g' $ROOT/$PKG_BUILD/configure*
-  sed -i 's/HAS_DVB_API5=0/HAS_DVB_API5=1/g' $ROOT/$PKG_BUILD/configure*
+  sed -i 's/DVB_HEADER=0/DVB_HEADER=1/g' $PKG_BUILD/configure*
+  sed -i 's/HAS_DVB_API5=0/HAS_DVB_API5=1/g' $PKG_BUILD/configure*
 fi
 }

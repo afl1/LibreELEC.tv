@@ -18,7 +18,6 @@
 
 PKG_NAME="libpng"
 PKG_VERSION="1.6.25"
-PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="OSS"
 PKG_SITE="http://www.libpng.org/"
@@ -41,7 +40,7 @@ PKG_CONFIGURE_OPTS_HOST="--enable-static --disable-shared"
 
 pre_configure_host() {
   export CFLAGS="$CFLAGS -fPIC -DPIC"
-  export CPPFLAGS="$CPPFLAGS -I$ROOT/$TOOLCHAIN/include"
+  export CPPFLAGS="$CPPFLAGS -I$TOOLCHAIN/include"
 }
 
 pre_configure_target() {

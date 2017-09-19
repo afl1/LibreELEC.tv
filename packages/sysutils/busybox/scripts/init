@@ -424,7 +424,7 @@
         # ensuring accurate progress - take the sync hit during the
         # transfer, rather than when flushing file buffers after the progress
         # meter declares the transfer already complete
-        dd if=$UPDATE_DIR/$2 of=$3 bs=1M conv=fsync 2>/dev/null
+        dd if=$UPDATE_DIR/$2 of=$3 bs=16M conv=fsync 2>/dev/null
         StopProgress
 
       # loopback file needs writable /flash all the time
@@ -440,7 +440,7 @@
 
     if [ -f "$UPDATE_DIR/$2" -a -b "$3" ]; then
       StartProgress spinner "Updating $1... "
-        result="$(dd if="$UPDATE_DIR/$2" of="$3" conv=fsync 2>&1)"
+        result="$(dd if="$UPDATE_DIR/$2" of="$3" bs=8M conv=fsync 2>&1)"
         StopProgress "done"
       echo "${result}"
     fi
@@ -582,7 +582,7 @@
       if [ "$(( $FSCK_RET & 8 ))" = 8 ] ; then
         # fubar
         echo "Forced fsck failed. Your system is broken beyond repair"
-        echo "Please re-install @DISTRONAME@"
+        echo "Please re-install LibreELEC"
         echo ""
         echo "Press enter to shutdown now"
         echo ""
@@ -771,13 +771,13 @@
 
     echo "UPGRADE IN PROGRESS"
     echo ""
-    echo "Please do not reboot or turn off your @DISTRONAME@ device!"
+    echo "Please do not reboot or turn off your LibreELEC device!"
     echo ""
 
     if [ -f "$UPDATE_TAR" ] ; then
       TARRESULT="0"
 
-      echo "Found new .tar archive"
+      echo "Found new $UPDATE_TAR archive"
       UPDATE_FILENAME="$UPDATE_TAR"
       StartProgress spinner "Extracting contents of archive... "
         mkdir -p $UPDATE_DIR/.tmp &>/dev/null
@@ -805,7 +805,7 @@
       GZRESULT="0"
 
       if [ -f "$UPDATE_IMG_GZ" ]; then
-        echo "Found new compressed image file"
+        echo "Found new $UPDATE_IMG_GZ compressed image file"
         UPDATE_FILENAME="$UPDATE_IMG_GZ"
         StartProgress spinner "Decompressing image file... "
           gunzip -d -c "$UPDATE_IMG_GZ" 1>$IMG_FILE 2>/tmp/gzresult.txt || GZRESULT="1"
@@ -860,10 +860,10 @@
       # don't make temporary files but instead copy
       # directly from mountpoint to /flash
       UPDATE_DIR=$UPDATE_ROOT/.tmp/mnt
-      if [ ! -b $IMAGE_KERNEL -o -z "@KERNEL_NAME@" ]; then
+      if [ ! -b $IMAGE_KERNEL -o -z "kernel.img" ]; then
         UPDATE_KERNEL=$(basename $IMAGE_KERNEL)
       else
-        UPDATE_KERNEL="@KERNEL_NAME@"
+        UPDATE_KERNEL="kernel.img"
       fi
     else
       UPDATE_FILENAME="$UPDATE_DIR/$UPDATE_SYSTEM"

@@ -35,17 +35,17 @@ PKG_AUTORECONF="no"
 
 if [ "$TARGET_KERNEL_ARCH" = "arm64" -a "$TARGET_ARCH" = "arm" ]; then
   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET gcc-linaro-aarch64-linux-gnu:host"
-  export PATH=$ROOT/$TOOLCHAIN/lib/gcc-linaro-aarch64-linux-gnu/bin/:$PATH
+  export PATH=$TOOLCHAIN/lib/gcc-linaro-aarch64-linux-gnu/bin/:$PATH
   TARGET_PREFIX=aarch64-linux-gnu-
 fi
 
 make_target() {
-  LDFLAGS="" make -C $(kernel_path) M=$ROOT/$PKG_BUILD/mali \
+  LDFLAGS="" make -C $(kernel_path) M=$PKG_BUILD/mali \
     CONFIG_MALI400=m CONFIG_MALI450=m
 }
 
 makeinstall_target() {
-  LDFLAGS="" make -C $(kernel_path) M=$ROOT/$PKG_BUILD/mali \
+  LDFLAGS="" make -C $(kernel_path) M=$PKG_BUILD/mali \
     INSTALL_MOD_PATH=$INSTALL/usr INSTALL_MOD_STRIP=1 DEPMOD=: \
   modules_install
 }

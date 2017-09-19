@@ -17,8 +17,8 @@
 ################################################################################
 
 PKG_NAME="screensaver.shadertoy"
-PKG_VERSION="2638205"
-PKG_REV="2"
+PKG_VERSION="eb31b44"
+PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/popcornmix/screensaver.shadertoy"
@@ -43,7 +43,7 @@ if [ "$OPENGLES_SUPPORT" = yes ]; then
 fi
 
 pre_configure_target() {
-  if [ "$KODIPLAYER_DRIVER" = bcm2835-driver ]; then
+  if [ "$KODIPLAYER_DRIVER" = bcm2835-firmware ]; then
     BCM2835_INCLUDES="-I$SYSROOT_PREFIX/usr/include/interface/vcos/pthreads/ \
                       -I$SYSROOT_PREFIX/usr/include/interface/vmcs_host/linux"
     export CFLAGS="$CFLAGS $BCM2835_INCLUDES"

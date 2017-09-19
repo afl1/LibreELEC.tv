@@ -18,7 +18,6 @@
 
 PKG_NAME="gcc-linaro-arm-eabi"
 PKG_VERSION="4.9-2016.02"
-PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE=""
@@ -37,6 +36,6 @@ make_host() {
 }
 
 makeinstall_host() {
-  mkdir -p $ROOT/$TOOLCHAIN/lib/gcc-linaro-arm-eabi/
-    cp -a * $ROOT/$TOOLCHAIN/lib/gcc-linaro-arm-eabi
+  mkdir -p $TOOLCHAIN/lib/gcc-linaro-arm-eabi/
+    cp -a * $TOOLCHAIN/lib/gcc-linaro-arm-eabi
 }

@@ -18,7 +18,6 @@
 
 PKG_NAME="icu"
 PKG_VERSION="57.1"
-PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="Custom"
 PKG_SITE="http://www.icu-project.org"
@@ -36,7 +35,7 @@ PKG_CONFIGURE_OPTS_HOST="--enable-static --disable-shared"
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-static \
                            --disable-shared \
-                           --with-cross-build=$ROOT/$PKG_BUILD/.$HOST_NAME"
+                           --with-cross-build=$PKG_BUILD/.$HOST_NAME"
 
 PKG_CONFIGURE_SCRIPT="source/configure"
 

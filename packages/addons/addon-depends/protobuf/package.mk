@@ -15,7 +15,6 @@
 
 PKG_NAME="protobuf"
 PKG_VERSION="3.1.0"
-PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="OSS"
 PKG_SITE="https://developers.google.com/protocol-buffers/"
@@ -29,7 +28,7 @@ PKG_LONGDESC="protobuf: Protocol Buffers - Google's data interchange format"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-PKG_CMAKE_SCRIPT="cmake/CMakeLists.txt"
+PKG_CMAKE_SCRIPT="$PKG_BUILD/cmake/CMakeLists.txt"
 
 PKG_CMAKE_OPTS_HOST="-DCMAKE_NO_SYSTEM_FROM_IMPORTED=1 \
                      -DBUILD_SHARED_LIBS=0 \

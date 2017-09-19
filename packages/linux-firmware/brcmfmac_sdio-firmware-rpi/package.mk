@@ -18,7 +18,6 @@
 
 PKG_NAME="brcmfmac_sdio-firmware-rpi"
 PKG_VERSION="0.1"
-PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/LibreELEC/LibreELEC.tv"
@@ -37,6 +36,12 @@ make_target() {
 
 makeinstall_target() {
   DESTDIR=$INSTALL/usr ./install
+}
+
+post_makeinstall_target() {
+  # Install rpi btuart script to bring up Bluetooth
+  mkdir -p $INSTALL/usr/bin
+    cp -P $PKG_DIR/scripts/rpi-btuart $INSTALL/usr/bin
 }
 
 post_install() {

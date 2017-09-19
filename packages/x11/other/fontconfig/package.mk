@@ -18,7 +18,6 @@
 
 PKG_NAME="fontconfig"
 PKG_VERSION="2.12.1"
-PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="OSS"
 PKG_SITE="http://www.fontconfig.org"
@@ -42,8 +41,8 @@ pre_configure_target() {
 # ensure we dont use '-O3' optimization.
   CFLAGS=`echo $CFLAGS | sed -e "s|-O3|-O2|"`
   CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-O3|-O2|"`
-  CFLAGS="$CFLAGS -I$ROOT/$PKG_BUILD"
-  CXXFLAGS="$CXXFLAGS -I$ROOT/$PKG_BUILD"
+  CFLAGS="$CFLAGS -I$PKG_BUILD"
+  CXXFLAGS="$CXXFLAGS -I$PKG_BUILD"
 }
 
 post_makeinstall_target() {

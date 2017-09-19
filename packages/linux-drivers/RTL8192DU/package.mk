@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="RTL8192DU"
-PKG_VERSION="9e7eb15"
+PKG_VERSION="efc8508"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/lwfinger/rtl8192du"
@@ -34,7 +34,7 @@ PKG_AUTORECONF="no"
 
 if [ "$TARGET_KERNEL_ARCH" = "arm64" -a "$TARGET_ARCH" = "arm" ]; then
   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET gcc-linaro-aarch64-linux-gnu:host"
-  export PATH=$ROOT/$TOOLCHAIN/lib/gcc-linaro-aarch64-linux-gnu/bin/:$PATH
+  export PATH=$TOOLCHAIN/lib/gcc-linaro-aarch64-linux-gnu/bin/:$PATH
   TARGET_PREFIX=aarch64-linux-gnu-
 fi
 

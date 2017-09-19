@@ -17,8 +17,8 @@
 ################################################################################
 
 PKG_NAME="visualization.goom"
-PKG_VERSION="0c93889"
-PKG_REV="2"
+PKG_VERSION="a23f4ad"
+PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/notspiff/visualization.goom"

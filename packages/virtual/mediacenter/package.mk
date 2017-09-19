@@ -18,7 +18,6 @@
 
 PKG_NAME="mediacenter"
 PKG_VERSION=""
-PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://libreelec.tv"
@@ -31,6 +30,10 @@ PKG_LONGDESC=""
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
+_add_binary_addon() {
+  [ -f $ROOT/$PACKAGES/mediacenter/kodi-binary-addons/$1/package.mk ] && PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET $1" || true
+}
+
 if [ "$MEDIACENTER" = "kodi" ]; then
   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET $MEDIACENTER-theme-$SKIN_DEFAULT"
 
@@ -41,9 +44,29 @@ if [ "$MEDIACENTER" = "kodi" ]; then
 # some python stuff needed for various addons
   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET Pillow \
                                           simplejson \
-                                          pycrypto"
+                                          pycryptodome"
 # other packages
   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET LibreELEC-settings \
-                                          xmlstarlet \
-                                          peripheral.joystick"
+                                          xmlstarlet"
+  
+  if [ "$JOYSTICK_SUPPORT" = "yes" ]; then
+    PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET peripheral.joystick"
+  fi
+
+  _ADDONS_PVR=yes
+  _ADDONS_OTHER=no
+
+  # various PVR clients
+  if [ "${_ADDONS_PVR}" = "yes" ]; then
+    _add_binary_addon "pvr.hts"
+    _add_binary_addon "pvr.iptvsimple"
+  fi
+
+  if [ "${_ADDONS_OTHER}" = "yes" ]; then
+    _add_binary_addon "inputstream.adaptive"
+    _add_binary_addon "inputstream.smoothstream"
+    _add_binary_addon "inputstream.rtmp"
+    _add_binary_addon "imagedecoder.raw"
+    _add_binary_addon "vfs.rar"
+  fi
 fi

@@ -18,7 +18,6 @@
 
 PKG_NAME="pcre"
 PKG_VERSION="8.39"
-PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="OSS"
 PKG_SITE="http://www.pcre.org/"
@@ -33,7 +32,7 @@ PKG_IS_ADDON="no"
 PKG_USE_CMAKE="no"
 PKG_AUTORECONF="no"
 
-PKG_CONFIGURE_OPTS_HOST="--prefix=$ROOT/$TOOLCHAIN \
+PKG_CONFIGURE_OPTS_HOST="--prefix=$TOOLCHAIN \
              --enable-utf8 \
              --enable-unicode-properties \
              --with-gnu-ld"

@@ -1,5 +1,5 @@
 ################################################################################
-#      This file is part of LibreELEC - https://libreelec.tv
+#      This file is part of LibreELEC - http://www.libreelec.tv
 #      Copyright (C) 2016 Team LibreELEC
 #
 #  LibreELEC is free software: you can redistribute it and/or modify
@@ -17,8 +17,8 @@
 ################################################################################
 
 PKG_NAME="pvr.octonet"
-PKG_VERSION="9bbd7cf"
-PKG_REV="2"
+PKG_VERSION="ff2d4a7"
+PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.kodi.tv"

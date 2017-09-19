@@ -17,8 +17,8 @@
 ################################################################################
 
 PKG_NAME="screensaver.greynetic"
-PKG_VERSION="8b7b810"
-PKG_REV="2"
+PKG_VERSION="980e301"
+PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/notspiff/screensaver.greynetic"

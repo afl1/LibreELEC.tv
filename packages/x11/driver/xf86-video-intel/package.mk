@@ -17,8 +17,7 @@
 ################################################################################
 
 PKG_NAME="xf86-video-intel"
-PKG_VERSION="9ac7a33"
-PKG_REV="1"
+PKG_VERSION="028c946"
 PKG_ARCH="x86_64"
 PKG_LICENSE="OSS"
 PKG_SITE="http://intellinuxgraphics.org/"
@@ -51,7 +50,7 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-backlight \
                            --disable-tear-free \
                            --disable-create2 \
                            --disable-async-swap \
-                           --with-default-dri=3 \
+                           --with-default-dri=2 \
                            --with-xorg-module-dir=$XORG_PATH_MODULES"
 
 pre_configure_target() {

@@ -18,7 +18,6 @@
 
 PKG_NAME="libxml2"
 PKG_VERSION="2.9.4"
-PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="MIT"
 PKG_SITE="http://xmlsoft.org"
@@ -38,10 +37,10 @@ PKG_CONFIGURE_OPTS_ALL="ac_cv_header_ansidecl_h=no \
              --disable-silent-rules \
              --enable-ipv6 \
              --without-python \
-             --with-zlib=$ROOT/$TOOLCHAIN \
+             --with-zlib=$TOOLCHAIN \
              --without-lzma"
 
-PKG_CONFIGURE_OPTS_HOST="$PKG_CONFIGURE_OPTS_ALL --with-zlib=$ROOT/$TOOLCHAIN"
+PKG_CONFIGURE_OPTS_HOST="$PKG_CONFIGURE_OPTS_ALL --with-zlib=$TOOLCHAIN"
 
 PKG_CONFIGURE_OPTS_TARGET="$PKG_CONFIGURE_OPTS_ALL --with-zlib=$SYSROOT_PREFIX/usr --with-sysroot=$SYSROOT_PREFIX"
 

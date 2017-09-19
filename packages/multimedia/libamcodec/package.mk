@@ -28,6 +28,8 @@ case $TARGET_KERNEL_ARCH in
   arm64)
     PKG_VERSION="bccd426"
     PKG_URL="https://github.com/afl1/libamcodec/archive/$PKG_VERSION.tar.gz"
+    PKG_VERSION="2fba80c"
+    PKG_URL="https://github.com/surkovalex/libamcodec/archive/$PKG_VERSION.tar.gz"
     ;;
 esac
 PKG_DEPENDS_TARGET="toolchain alsa-lib"

@@ -18,11 +18,10 @@
 
 PKG_NAME="newt"
 PKG_VERSION="0.52.19"
-PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
-PKG_SITE="https://fedorahosted.org/newt/"
-PKG_URL="https://fedorahosted.org/releases/n/e/newt/$PKG_NAME-$PKG_VERSION.tar.gz"
+PKG_SITE="https://pagure.io/newt"
+PKG_URL="https://releases.pagure.org/newt/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain slang popt"
 PKG_SECTION="tools"
 PKG_SHORTDESC="newt: A programming library for color text mode, widget based user interfaces"
@@ -37,13 +36,13 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-nls \
 
 pre_configure_target() {
  # newt fails to build in subdirs
- cd $ROOT/$PKG_BUILD
+ cd $PKG_BUILD
  rm -rf .$TARGET_NAME
 }
 
 pre_configure_host() {
  # newt fails to build in subdirs
- cd $ROOT/$PKG_BUILD
+ cd $PKG_BUILD
  rm -rf .$HOST_NAME
 }
 

@@ -17,8 +17,8 @@
 ################################################################################
 
 PKG_NAME="screensavers.rsxs"
-PKG_VERSION="e302833"
-PKG_REV="2"
+PKG_VERSION="781f76f"
+PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.kodi.tv"
@@ -42,9 +42,7 @@ addon() {
 
     mkdir -p $ADDON_BUILD/$_ADDON_ID/
     cp -PR $PKG_BUILD/.install_pkg/usr/share/$MEDIACENTER/addons/$_ADDON_ID/* $ADDON_BUILD/$_ADDON_ID/
-
-    ADDONSO=$(xmlstarlet sel -t -v "/addon/extension/@library_linux" $ADDON_BUILD/$_ADDON_ID/addon.xml)
-    cp -PL $PKG_BUILD/.install_pkg/usr/lib/$MEDIACENTER/addons/$_ADDON_ID/$ADDONSO $ADDON_BUILD/$_ADDON_ID/
+    cp -PL $PKG_BUILD/.install_pkg/usr/lib/$MEDIACENTER/addons/$_ADDON_ID/*.so $ADDON_BUILD/$_ADDON_ID/
 
     MULTI_ADDONS="$MULTI_ADDONS $_ADDON_ID"
   done

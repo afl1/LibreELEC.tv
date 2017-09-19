@@ -138,7 +138,7 @@ post_makeinstall_target() {
 # add UTF-8 charmap for Generic (charmap is needed for installer)
   if [ "$PROJECT" = "Generic" ]; then
     mkdir -p $INSTALL/usr/share/i18n/charmaps
-    cp -PR $ROOT/$PKG_BUILD/localedata/charmaps/UTF-8 $INSTALL/usr/share/i18n/charmaps
+    cp -PR $PKG_BUILD/localedata/charmaps/UTF-8 $INSTALL/usr/share/i18n/charmaps
     gzip $INSTALL/usr/share/i18n/charmaps/UTF-8
   fi
 
@@ -146,25 +146,23 @@ post_makeinstall_target() {
     rm -rf $INSTALL/usr/share/i18n/locales
 
     mkdir -p $INSTALL/usr/share/i18n/locales
-      cp -PR $ROOT/$PKG_BUILD/localedata/locales/POSIX $INSTALL/usr/share/i18n/locales
+      cp -PR $PKG_BUILD/localedata/locales/POSIX $INSTALL/usr/share/i18n/locales
   fi
 
 # create default configs
   mkdir -p $INSTALL/etc
-    cp $PKG_DIR/config/nsswitch.conf $INSTALL/etc
+    cp $PKG_DIR/config/nsswitch-target.conf $INSTALL/etc/nsswitch.conf
     cp $PKG_DIR/config/host.conf $INSTALL/etc
     cp $PKG_DIR/config/gai.conf $INSTALL/etc
 
   if [ "$TARGET_ARCH" = "arm" -a "$TARGET_FLOAT" = "hard" ]; then
     ln -sf ld.so $INSTALL/usr/lib/ld-linux.so.3
   fi
-
-  find $INSTALL -type f -name \*.so -exec $STRIP --strip-debug {} \;
 }
 
 configure_init() {
-  cd $ROOT/$PKG_BUILD
-    rm -rf $ROOT/$PKG_BUILD/.$TARGET_NAME-init
+  cd $PKG_BUILD
+    rm -rf $PKG_BUILD/.$TARGET_NAME-init
 }
 
 make_init() {
@@ -173,12 +171,21 @@ make_init() {
 
 makeinstall_init() {
   mkdir -p $INSTALL/usr/lib
-    cp -PR $ROOT/$PKG_BUILD/.$TARGET_NAME/elf/ld*.so* $INSTALL/usr/lib
-    cp -PR $ROOT/$PKG_BUILD/.$TARGET_NAME/libc.so* $INSTALL/usr/lib
-    cp -PR $ROOT/$PKG_BUILD/.$TARGET_NAME/nptl/libpthread.so* $INSTALL/usr/lib
-    cp -PR $ROOT/$PKG_BUILD/.$TARGET_NAME/rt/librt.so* $INSTALL/usr/lib
+    cp -PR $PKG_BUILD/.$TARGET_NAME/elf/ld*.so* $INSTALL/usr/lib
+    cp -PR $PKG_BUILD/.$TARGET_NAME/libc.so* $INSTALL/usr/lib
+    cp -PR $PKG_BUILD/.$TARGET_NAME/math/libm.so* $INSTALL/usr/lib
+    cp -PR $PKG_BUILD/.$TARGET_NAME/nptl/libpthread.so* $INSTALL/usr/lib
+    cp -PR $PKG_BUILD/.$TARGET_NAME/rt/librt.so* $INSTALL/usr/lib
+    cp -PR $PKG_BUILD/.$TARGET_NAME/resolv/libnss_dns.so* $INSTALL/usr/lib
+    cp -PR $PKG_BUILD/.$TARGET_NAME/resolv/libresolv.so* $INSTALL/usr/lib
 
     if [ "$TARGET_ARCH" = "arm" -a "$TARGET_FLOAT" = "hard" ]; then
       ln -sf ld.so $INSTALL/usr/lib/ld-linux.so.3
     fi
+}
+
+post_makeinstall_init() {
+# create default configs
+  mkdir -p $INSTALL/etc
+    cp $PKG_DIR/config/nsswitch-init.conf $INSTALL/etc/nsswitch.conf
 }

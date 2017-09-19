@@ -24,7 +24,7 @@ PKG_LICENSE="BSD"
 PKG_SITE="https://www.openssl.org"
 PKG_URL="https://www.openssl.org/source/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_HOST="ccache:host"
-PKG_DEPENDS_TARGET="toolchain libressl"
+PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="security"
 PKG_SHORTDESC="The Open Source toolkit for Secure Sockets Layer and Transport Layer Security"
 PKG_LONGDESC="The Open Source toolkit for Secure Sockets Layer and Transport Layer Security"
@@ -55,23 +55,25 @@ PKG_CONFIGURE_OPTS_SHARED="--openssldir=/etc/ssl \
                            no-zlib-dynamic \
                            no-static-engine"
 
+MAKEFLAGS="-j1"
+
 pre_configure_host() {
-  mkdir -p $ROOT/$PKG_BUILD/.$HOST_NAME
-  cp -a $ROOT/$PKG_BUILD/* $ROOT/$PKG_BUILD/.$HOST_NAME/
+  mkdir -p $PKG_BUILD/.$HOST_NAME
+  cp -a $PKG_BUILD/* $PKG_BUILD/.$HOST_NAME/
 }
 
 configure_host() {
-  cd $ROOT/$PKG_BUILD/.$HOST_NAME
+  cd $PKG_BUILD/.$HOST_NAME
   ./Configure --prefix=/ $PKG_CONFIGURE_OPTS_SHARED linux-x86_64 $CFLAGS $LDFLAGS
 }
 
 makeinstall_host() {
-  make INSTALL_PREFIX=$ROOT/$TOOLCHAIN install_sw
+  make INSTALL_PREFIX=$TOOLCHAIN install_sw
 }
 
 pre_configure_target() {
-  mkdir -p $ROOT/$PKG_BUILD/.$TARGET_NAME
-  cp -a $ROOT/$PKG_BUILD/* $ROOT/$PKG_BUILD/.$TARGET_NAME/
+  mkdir -p $PKG_BUILD/.$TARGET_NAME
+  cp -a $PKG_BUILD/* $PKG_BUILD/.$TARGET_NAME/
 
   case $TARGET_ARCH in
     x86_64)
@@ -88,7 +90,7 @@ pre_configure_target() {
 }
 
 configure_target() {
-  cd $ROOT/$PKG_BUILD/.$TARGET_NAME
+  cd $PKG_BUILD/.$TARGET_NAME
   ./Configure --prefix=/usr $PKG_CONFIGURE_OPTS_SHARED $PLATFORM_FLAGS $OPENSSL_TARGET $CFLAGS $LDFLAGS
 }
 

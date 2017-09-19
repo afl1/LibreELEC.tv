@@ -1,6 +1,6 @@
 ################################################################################
 #      This file is part of LibreELEC - https://libreelec.tv
-#      Copyright (C) 2016-2017 Team LibreELEC
+#      Copyright (C) 2016-present Team LibreELEC
 #
 #  LibreELEC is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -23,7 +23,7 @@ PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/crazycat69/linux_media"
 PKG_URL="$DISTRO_SRC/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain linux"
-PKG_BUILD_DEPENDS_TARGET="toolchain linux"
+PKG_BUILD_DEPENDS_TARGET="toolchain linux dvb_tv-aml wetekdvb"
 PKG_NEED_UNPACK="$LINUX_DEPENDS"
 PKG_SECTION="driver"
 PKG_SHORTDESC="DVB drivers that replace the version shipped with the kernel"
@@ -33,7 +33,7 @@ PKG_AUTORECONF="no"
 
 if [ "$TARGET_KERNEL_ARCH" = "arm64" -a "$TARGET_ARCH" = "arm" ]; then
   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET gcc-linaro-aarch64-linux-gnu:host"
-  export PATH=$ROOT/$TOOLCHAIN/lib/gcc-linaro-aarch64-linux-gnu/bin/:$PATH
+  export PATH=$TOOLCHAIN/lib/gcc-linaro-aarch64-linux-gnu/bin/:$PATH
   TARGET_PREFIX=aarch64-linux-gnu-
 fi
 
@@ -85,6 +85,7 @@ make_target() {
       cp -a "$DVB_TV_AML_DIR" "linux/drivers/media/dvb_tv"
       echo "obj-y += dvb_tv/" >> "linux/drivers/media/Makefile"
     fi 
+    echo "obj-y += amlogic/dvb_tv/" >> "linux/drivers/media/Makefile"
   fi
 
   make VER=$KERNEL_VER SRCDIR=$(kernel_path)
@@ -92,5 +93,5 @@ make_target() {
 
 makeinstall_target() {
   mkdir -p $INSTALL/usr/lib/modules/$KERNEL_VER/updates
-  find $ROOT/$PKG_BUILD/v4l/ -name \*.ko -exec cp {} $INSTALL/usr/lib/modules/$KERNEL_VER/updates \;
+  find $PKG_BUILD/v4l/ -name \*.ko -exec cp {} $INSTALL/usr/lib/modules/$KERNEL_VER/updates \;
 }

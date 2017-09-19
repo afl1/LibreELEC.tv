@@ -17,8 +17,8 @@
 ################################################################################
 
 PKG_NAME="audiodecoder.qsf"
-PKG_VERSION="945257e"
-PKG_REV="2"
+PKG_VERSION="5edc117"
+PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/notspiff/audiodecoder.qsf"

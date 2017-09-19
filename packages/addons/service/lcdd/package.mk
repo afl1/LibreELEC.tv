@@ -1,6 +1,6 @@
 ################################################################################
 #      This file is part of LibreELEC - https://libreelec.tv
-#      Copyright (C) 2016 Team LibreELEC
+#      Copyright (C) 2016-2017 Team LibreELEC
 #
 #  LibreELEC is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -17,14 +17,14 @@
 ################################################################################
 
 PKG_NAME="lcdd"
-PKG_VERSION="1554506"
-PKG_REV="101"
+PKG_VERSION="466edd3"
+PKG_REV="104"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://lcdproc.org/"
 PKG_URL="https://github.com/lcdproc/lcdproc/archive/$PKG_VERSION.tar.gz"
 PKG_SOURCE_DIR="lcdproc-$PKG_VERSION*"
-PKG_DEPENDS_TARGET="toolchain freetype libftdi1 libhid libusb netbsd-curses serdisplib"
+PKG_DEPENDS_TARGET="toolchain freetype libftdi1 libhid libugpio libusb netbsd-curses serdisplib"
 PKG_SECTION="service"
 PKG_SHORTDESC="LCDproc: Software to display system information from your Linux/*BSD box on a LCD"
 PKG_LONGDESC="LCDproc ($PKG_VERSION) is a piece of software that displays real-time system information from your Linux/*BSD box on a LCD. The server supports several serial devices: Matrix Orbital, Crystal Fontz, Bayrad, LB216, LCDM001 (kernelconcepts.de), Wirz-SLI, Cwlinux(.com) and PIC-an-LCD; and some devices connected to the LPT port: HD44780, STV5730, T6963, SED1520 and SED1330. Various clients are available that display things like CPU load, system load, memory usage, uptime, and a lot more."
@@ -33,6 +33,8 @@ PKG_AUTORECONF="yes"
 PKG_IS_ADDON="yes"
 PKG_ADDON_NAME="LCDproc"
 PKG_ADDON_TYPE="xbmc.service"
+
+CFLAGS="$CFLAGS -DHAVE_SYS_POLL_H=1"
 
 PKG_CONFIGURE_OPTS_TARGET="--with-ft-prefix=$SYSROOT_PREFIX/usr \
                            --enable-libusb \
@@ -49,7 +51,7 @@ pre_make_target() {
 }
 
 addon() {
-  drivers="none|$(cat $ROOT/$PKG_BUILD/.$TARGET_NAME/config.log | sed -n "s|^DRIVERS=' \(.*\)'|\1|p" | sed "s|.so||g" | tr ' ' '|')"
+  drivers="none|$(cat $PKG_BUILD/.$TARGET_NAME/config.log | sed -n "s|^DRIVERS=' \(.*\)'|\1|p" | sed "s|.so||g" | tr ' ' '|')"
 
   mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/config
 

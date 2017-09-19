@@ -1,6 +1,6 @@
 ################################################################################
 #      This file is part of LibreELEC - https://libreelec.tv
-#      Copyright (C) 2016 Team LibreELEC
+#      Copyright (C) 2016-present Team LibreELEC
 #
 #  LibreELEC is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -18,20 +18,14 @@
 
 PKG_NAME="ffmpegx"
 PKG_VERSION="libreelec"
-PKG_REV="5"
-PKG_ARCH="any"
+PKG_REV="9"
 PKG_LICENSE="LGPLv2.1+"
 PKG_SITE="https://ffmpeg.org"
 PKG_DEPENDS_TARGET="toolchain ffmpeg lame x264"
-PKG_SECTION="multimedia"
-PKG_SHORTDESC="FFmpeg+"
 PKG_LONGDESC="FFmpeg built static with additional features"
 
-PKG_IS_ADDON="no"
-PKG_AUTORECONF="no"
-
 pre_configure_target() {
-  cd "$ROOT/$PKG_BUILD"
+  cd "$PKG_BUILD"
   rm -rf ".$TARGET_NAME"
   cp -PR $(get_build_dir ffmpeg)/* .
   make clean
@@ -46,6 +40,11 @@ pre_configure_target() {
     FFMPEG_RPI_HADE="--enable-mmal --enable-omx-rpi"
   fi
 
+# ffmpeg does not build with libx264 on aarch64
+  if [ "$TARGET_ARCH" != "aarch64" ]; then
+    FFMPEG_X264="--enable-libx264"
+  fi
+
   if [ "$TARGET_ARCH" == "arm" ]; then
     FFMPEG_ARM_AO="--enable-hardcoded-tables"
   fi
@@ -56,6 +55,7 @@ configure_target() {
     \
     `#Licensing options` \
     --enable-gpl \
+    --enable-nonfree \
     \
     `#Documentation options` \
     --disable-doc \
@@ -81,7 +81,7 @@ configure_target() {
     --as="$CC" \
     --cc="$CC" \
     --ld="$CC" \
-    --pkg-config="$ROOT/$TOOLCHAIN/bin/pkg-config" \
+    --pkg-config="$TOOLCHAIN/bin/pkg-config" \
     --host-cc="$HOST_CC" \
     --host-cflags="$HOST_CFLAGS" \
     --host-ldflags="$HOST_LDFLAGS" \

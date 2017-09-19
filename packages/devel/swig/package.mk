@@ -18,7 +18,6 @@
 
 PKG_NAME="swig"
 PKG_VERSION="3.0.10"
-PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.swig.org"
@@ -31,7 +30,7 @@ PKG_LONGDESC="SWIG is a software development tool that connects programs written
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-PKG_CONFIGURE_OPTS_HOST="--with-pcre-prefix=$ROOT/$TOOLCHAIN \
+PKG_CONFIGURE_OPTS_HOST="--with-pcre-prefix=$TOOLCHAIN \
                          --with-boost=no \
                          --without-pcre \
                          --without-x \

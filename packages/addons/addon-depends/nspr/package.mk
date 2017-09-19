@@ -20,7 +20,6 @@
 
 PKG_NAME="nspr"
 PKG_VERSION="4.13"
-PKG_REV="2"
 PKG_ARCH="any"
 PKG_LICENSE="Mozilla Public License"
 PKG_SITE="http://www.linuxfromscratch.org/blfs/view/svn/general/nspr.html"
@@ -38,8 +37,8 @@ if [ "$TARGET_ARCH" = "x86_64" ] ; then
 fi
 
 PKG_CONFIGURE_OPTS_TARGET="--with-pthreads $TARGET_USE_64"
-PKG_MAKE_OPTS_TARGET="NSINSTALL=$ROOT/$TOOLCHAIN/bin/nsinstall"
-PKG_MAKEINSTALL_OPTS_TARGET="NSINSTALL=$ROOT/$TOOLCHAIN/bin/nsinstall"
+PKG_MAKE_OPTS_TARGET="NSINSTALL=$TOOLCHAIN/bin/nsinstall"
+PKG_MAKEINSTALL_OPTS_TARGET="NSINSTALL=$TOOLCHAIN/bin/nsinstall"
 
 configure_target() {
   cd $(get_build_dir nss)/nspr

@@ -16,12 +16,13 @@
 #  along with LibreELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 PKG_NAME="ccid"
-PKG_VERSION="1.4.26"
+PKG_VERSION="1.4.27"
+PKG_VER="4218"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="LGPL"
 PKG_SITE="http://pcsclite.alioth.debian.org/ccid.html"
-PKG_URL="https://alioth.debian.org/frs/download.php/file/4205/${PKG_NAME}-${PKG_VERSION}.tar.bz2"
+PKG_URL="https://alioth.debian.org/frs/download.php/file/${PKG_VER}/${PKG_NAME}-${PKG_VERSION}.tar.bz2"
 PKG_DEPENDS_TARGET="toolchain pcsc-lite"
 PKG_PRIORITY="optional"
 PKG_SECTION="driver"

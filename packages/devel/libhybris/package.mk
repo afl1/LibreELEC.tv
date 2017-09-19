@@ -33,7 +33,7 @@ PKG_AUTORECONF="yes"
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-arch=$TARGET_ARCH \
                            --with-default-egl-platform=fbdev \
-                           --with-android-headers=$ROOT/$BUILD/android-headers-23/23 \
+                           --with-android-headers=$BUILD/android-headers-23/23 \
                            --with-default-hybris-ld-library-path=/system/lib \
                            --enable-mali-quirks \
                            --enable-experimental"

@@ -1,5 +1,9 @@
+112f
+- release 4.2.3-39
+
 112e
 - release 4.2.3-20
+- fix for DVB-C annex B
 
 112
 - release 4.2.2-49

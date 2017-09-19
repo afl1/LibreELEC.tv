@@ -18,7 +18,6 @@
 
 PKG_NAME="make"
 PKG_VERSION="4.2.1"
-PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPLv3"
 PKG_SITE="https://www.gnu.org/software/make/"
@@ -34,5 +33,5 @@ PKG_AUTORECONF="no"
 export CC=$LOCAL_CC
 
 post_makeinstall_host() {
-  ln -sf make $ROOT/$TOOLCHAIN/bin/gmake
+  ln -sf make $TOOLCHAIN/bin/gmake
 }

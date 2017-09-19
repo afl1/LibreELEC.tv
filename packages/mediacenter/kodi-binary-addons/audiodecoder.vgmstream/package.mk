@@ -17,8 +17,8 @@
 ################################################################################
 
 PKG_NAME="audiodecoder.vgmstream"
-PKG_VERSION="7397172"
-PKG_REV="2"
+PKG_VERSION="562c3a4"
+PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.kodi.tv"

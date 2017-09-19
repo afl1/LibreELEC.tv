@@ -18,7 +18,6 @@
 
 PKG_NAME="avahi"
 PKG_VERSION="0.6.32"
-PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://avahi.org/"
@@ -68,7 +67,7 @@ PKG_CONFIGURE_OPTS_TARGET="py_cv_mod_gtk_=yes \
                            --disable-manpages \
                            --disable-xmltoman \
                            --disable-tests \
-                           --disable-compat-libdns_sd \
+                           --enable-compat-libdns_sd \
                            --disable-compat-howl \
                            --with-xml=expat \
                            --with-avahi-user=avahi \
@@ -102,6 +101,7 @@ post_makeinstall_target() {
   rm -f $INSTALL/usr/bin/avahi-bookmarks
   rm -f $INSTALL/usr/bin/avahi-publish*
   rm -f $INSTALL/usr/bin/avahi-resolve*
+  rm -f $INSTALL/usr/lib/libdns_sd*
 
   mkdir -p $INSTALL/usr/share/services
     cp -P $PKG_DIR/default.d/*.conf $INSTALL/usr/share/services

@@ -18,7 +18,6 @@
 
 PKG_NAME="ninja"
 PKG_VERSION="1.6.0"
-PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="Apache"
 PKG_SITE="http://martine.github.io/ninja/"
@@ -39,5 +38,5 @@ make_host() {
 }
 
 makeinstall_host() {
-  cp ninja $ROOT/$TOOLCHAIN/bin/
+  cp ninja $TOOLCHAIN/bin/
 }

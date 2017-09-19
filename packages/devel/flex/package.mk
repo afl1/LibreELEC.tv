@@ -18,7 +18,6 @@
 
 PKG_NAME="flex"
 PKG_VERSION="2.5.39"
-PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://flex.sourceforge.net/"
@@ -34,10 +33,10 @@ PKG_AUTORECONF="no"
 PKG_CONFIGURE_OPTS_HOST="--enable-static --disable-shared --disable-rpath --with-gnu-ld"
 
 post_makeinstall_host() {
-  cat > $ROOT/$TOOLCHAIN/bin/lex << "EOF"
+  cat > $TOOLCHAIN/bin/lex << "EOF"
 #!/bin/sh
 exec flex "$@"
 EOF
 
-  chmod -v 755 $ROOT/$TOOLCHAIN/bin/lex
+  chmod -v 755 $TOOLCHAIN/bin/lex
 }

@@ -1,5 +1,8 @@
-104b
-- upgrade seiteini.pack to 20170630
+105b
+- Upgrade WebGrab+Plus to 2.1.3
+
+105a
+- upgrade seiteini.pacsk to 20170630
 - Upgrade WebGrab+Plus to 2.1
 
 104

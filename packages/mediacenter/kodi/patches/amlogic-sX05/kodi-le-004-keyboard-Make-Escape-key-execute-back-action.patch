@@ -25,9 +25,9 @@ index d4dffed..3d7ec5f 100644
        <browser_back mod="longpress">PreviousMenu</browser_back>
        <play_pause mod="longpress">Enter</play_pause>
 +      <escape>PreviousMenu</escape>
-       <browser_search>VoiceRecognizer</browser_search>
-       <menu>VoiceRecognizer</menu>
      </keyboard>
-
+   </VirtualKeyboard>
+   <TVChannels>
 -- 
 1.8.3.1
+
