@@ -17,8 +17,8 @@
 ################################################################################
 
 PKG_NAME="webgrabplus"
-PKG_VERSION="57a8463"
-PKG_REV="105b"
+PKG_VERSION="5417a50"
+PKG_REV="105c"
 PKG_ARCH="any"
 PKG_LICENSE="prop."
 PKG_SITE="http://www.webgrabplus.com/"

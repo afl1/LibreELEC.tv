@@ -1,3 +1,6 @@
+105c
+- Upgrade WebGrab+Plus to 2.1.4
+
 105b
 - Upgrade WebGrab+Plus to 2.1.3
 
