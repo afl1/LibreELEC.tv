@@ -20,8 +20,8 @@ diff --git a/Makefile.ffmpeg b/Makefile.ffmpeg
  
  $(LIB_ROOT)/$(YASM)/.tvh_build: \
  		$(LIB_ROOT)/$(YASM)/.tvh_download
--	cd $(LIB_ROOT)/$(YASM) && $(CONFIGURE) \
-+	cd $(LIB_ROOT)/$(YASM) && $(CONFIGURE) CC=$(HOST_CC) \
+-	cd $(LIB_ROOT)/$(YASM) && $(CONFIGURE_PI) \
++	cd $(LIB_ROOT)/$(YASM) && $(CONFIGURE_PI) CC=$(HOST_CC) \
  		--libdir=/$(EPREFIX0)/lib
  	DESTDIR=$(EBUILDIR) \
  		$(MAKE) -C $(LIB_ROOT)/$(YASM) install
