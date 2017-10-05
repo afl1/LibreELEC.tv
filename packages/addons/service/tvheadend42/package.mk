@@ -17,9 +17,9 @@
 ################################################################################
 
 PKG_NAME="tvheadend42"
-PKG_VERSION="0d1cd06"
-PKG_VERSION_NUMBER="4.3-488"
-PKG_REV="200"
+PKG_VERSION="d7d83b6"
+PKG_VERSION_NUMBER="4.3-516"
+PKG_REV="200b"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.tvheadend.org"
