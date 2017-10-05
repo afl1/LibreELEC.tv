@@ -16,33 +16,35 @@
 #  along with LibreELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
-PKG_NAME="brcmap6xxx-aml"
+PKG_NAME="ap6xxx-aml"
 PKG_ARCH="arm aarch64"
 PKG_LICENSE="GPL"
-PKG_SITE="http://openlinux.amlogic.com:8000/download/ARM/wifi/"
-PKG_VERSION="de3f5c5"
-PKG_URL="https://github.com/openwetek/brcmap6xxx-aml/archive/$PKG_VERSION.tar.gz"
-PKG_DEPENDS_TARGET="toolchain linux wlan-firmware-aml"
+PKG_SITE=""
+PKG_VERSION="99b3459"
+PKG_URL="https://github.com/khadas/android_hardware_wifi_broadcom_drivers_ap6xxx/archive/$PKG_VERSION.tar.gz"
+PKG_SOURCE_DIR="android_hardware_wifi_broadcom_drivers_ap6xxx-$PKG_VERSION*"
+PKG_DEPENDS_TARGET="toolchain linux"
 PKG_NEED_UNPACK="$LINUX_DEPENDS"
 PKG_SECTION="driver"
-PKG_SHORTDESC="brcmap6xxx-aml: Linux drivers for AP6xxx WLAN chips used in some devices based on Amlogic SoCs"
-PKG_LONGDESC="brcmap6xxx-aml: Linux drivers for AP6xxx WLAN chips used in some devices based on Amlogic SoCs"
+PKG_SHORTDESC="ap6xxx-aml: Linux drivers for AP6xxx WLAN chips used in some devices based on Amlogic SoCs"
+PKG_LONGDESC="ap6xxx-aml: Linux drivers for AP6xxx WLAN chips used in some devices based on Amlogic SoCs"
 
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
+if [ "$TARGET_KERNEL_ARCH" = "arm64" -a "$TARGET_ARCH" = "arm" ]; then
+  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET gcc-linaro-aarch64-linux-gnu:host"
+  export PATH=$TOOLCHAIN/lib/gcc-linaro-aarch64-linux-gnu/bin/:$PATH
+  TARGET_PREFIX=aarch64-linux-gnu-
+fi
+
 make_target() {
-  cd bcmdhd_1_201_59_x
-  LDFLAGS="" make V=1 \
-    -C $(kernel_path) M=$PKG_BUILD/bcmdhd_1_201_59_x \
+  LDFLAGS="" make -C $(kernel_path) M=$PKG_BUILD/bcmdhd_1_201_59_x \
     ARCH=$TARGET_KERNEL_ARCH \
     CROSS_COMPILE=$TARGET_PREFIX
 }
 
 makeinstall_target() {
-  mkdir -p $INSTALL/usr/lib/modules/$(get_module_dir)/bcmdhd
-  cp *.ko $INSTALL/usr/lib/modules/$(get_module_dir)/bcmdhd
-
-  mkdir -p $INSTALL/usr/lib/firmware/brcm
-  cp $PKG_DIR/config/config.txt $INSTALL/usr/lib/firmware/brcm
+  mkdir -p $INSTALL/usr/lib/modules/$(get_module_dir)/ap6xxx-aml
+  cp $PKG_BUILD/bcmdhd_1_201_59_x/dhd.ko $INSTALL/usr/lib/modules/$(get_module_dir)/ap6xxx-aml
 }

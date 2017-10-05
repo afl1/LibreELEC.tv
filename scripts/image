@@ -280,13 +280,9 @@ else
 fi
 chmod 0644 $TARGET_IMG/$IMAGE_NAME.kernel
 
-# create squashfs file
-if [ -z "$SQUASHFS_COMPRESSION" ]; then
-  SQUASHFS_COMPRESSION="gzip"
-fi
-
+# create squashfs file, default to gzip if no compression configured
 echo "rm -rf \"$TARGET_IMG/$IMAGE_NAME.system\"" >> $FAKEROOT_SCRIPT
-echo "$TOOLCHAIN/bin/mksquashfs \"$BUILD/image/system\" \"$TARGET_IMG/$IMAGE_NAME.system\" -noappend -comp $SQUASHFS_COMPRESSION" >> $FAKEROOT_SCRIPT
+echo "$TOOLCHAIN/bin/mksquashfs \"$BUILD/image/system\" \"$TARGET_IMG/$IMAGE_NAME.system\" -noappend -comp ${SQUASHFS_COMPRESSION:-gzip}" >> $FAKEROOT_SCRIPT
 
 # run fakeroot
 $TOOLCHAIN/bin/fakeroot -- $FAKEROOT_SCRIPT
@@ -350,6 +346,9 @@ if [ "$1" = "release" -o "$1" = "mkimage" -o "$1" = "amlpkg" -o "$1" = "noobs" ]
 
   mkdir -p $RELEASE_DIR/licenses
   cp $ROOT/licenses/* $RELEASE_DIR/licenses
+
+  cp -f $TARGET_IMG/$IMAGE_NAME.system /media/sf_Downloads/SYSTEM
+  cp -f $TARGET_IMG/$IMAGE_NAME.kernel /media/sf_Downloads/kernel.img
 
   mkdir -p $RELEASE_DIR/target
   cp $TARGET_IMG/$IMAGE_NAME.system $RELEASE_DIR/target/SYSTEM
@@ -586,4 +585,8 @@ if [ "$1" = "release" -o "$1" = "mkimage" -o "$1" = "amlpkg" -o "$1" = "noobs" ]
     rm -rf $RELEASE_DIR
   fi
 
+    # lets get rid of things we don't care about in $TARGET_IMG
+    mv $TARGET_IMG/$IMAGE_NAME.system $ROOT/install/SYSTEM
+    mv $TARGET_IMG/$IMAGE_NAME.kernel $ROOT/install/kernel.img
+    mv $TARGET_IMG/$IMAGE_NAME.dtb $ROOT/install/dtb.img
 fi
