@@ -1,0 +1,12 @@
+--- a/xbmc/cores/VideoPlayer/VideoRenderers/HwDecRender/RendererAML.h	2017-08-21 19:42:52.030136000 +0200
++++ b/xbmc/cores/VideoPlayer/VideoRenderers/HwDecRender/RendererAML.h	2017-08-21 21:01:34.404118620 +0200
+@@ -62,7 +62,7 @@
+ private:
+ 
+   int m_iRenderBuffer;
+-  static const int m_numRenderBuffers = 4;
++  static const int m_numRenderBuffers = 6;
+ 
+   struct BUFFER
+   {
+
