@@ -24,21 +24,29 @@ Subject: [PATCH] VideoPlayer: chapter seek fix
    int ret;
    {
      CSingleLock lock(m_critSection);
-@@ -1146,11 +1146,20 @@
+@@ -1146,11 +1146,28 @@
    if(m_currentPts == DVD_NOPTS_VALUE)
      CLog::Log(LOGDEBUG, "%s - unknown position after seek", __FUNCTION__);
    else
 -    CLog::Log(LOGDEBUG, "%s - seek ended up on time %d", __FUNCTION__, (int)(m_currentPts / DVD_TIME_BASE * 1000));
 -
 +  {
-+    CLog::Log(LOGDEBUG, "CDVDDemuxFFmpeg::%s - seek ended up on time %d", __FUNCTION__, (int)(m_currentPts / DVD_TIME_BASE * 1000));
++    CLog::Log(LOGDEBUG, "CDVDDemuxFFmpeg::%s - seek ended up on time %0.3fs", __FUNCTION__, m_currentPts / DVD_TIME_BASE);
 +    double diff = (double)seek_pts/AV_TIME_BASE - m_currentPts / DVD_TIME_BASE;
-+    if (fabs(diff) > 1.0)
++    if (diff > 1.0)
 +    {
 +      ret = av_seek_frame(m_pFormatContext, -1, seek_pts + (int)(diff *  AV_TIME_BASE / 2), backwards ? AVSEEK_FLAG_BACKWARD : 0);
 +      if (ret >= 0)
 +        UpdateCurrentPTS();
-+      CLog::Log(LOGDEBUG, "CDVDDemuxFFmpeg::%s - Seek ended up on time %d", __FUNCTION__, (int)(m_currentPts / DVD_TIME_BASE * 1000));
++      CLog::Log(LOGDEBUG, "CDVDDemuxFFmpeg::%s - 2.seek ended up on time %0.3fs", __FUNCTION__, m_currentPts / DVD_TIME_BASE);
++      double diff1 = (double)seek_pts/AV_TIME_BASE - m_currentPts / DVD_TIME_BASE;
++      if (diff1 > 1.0)
++      {
++        ret = av_seek_frame(m_pFormatContext, -1, seek_pts + (int)((diff + diff1) *  AV_TIME_BASE / 2), backwards ? AVSEEK_FLAG_BACKWARD : 0);
++        if (ret >= 0)
++          UpdateCurrentPTS();
++        CLog::Log(LOGDEBUG, "CDVDDemuxFFmpeg::%s - 3.seek ended up on time %0.3fs", __FUNCTION__, m_currentPts / DVD_TIME_BASE);
++      }  
 +    }  
 +  }
    // in this case the start time is requested time
@@ -54,7 +62,7 @@ Subject: [PATCH] VideoPlayer: chapter seek fix
    double dts = ConvertTimestamp(ch->start, ch->time_base.den, ch->time_base.num);
 -  return SeekTime(DVD_TIME_TO_MSEC(dts), true, startpts);
 +  bool rtn = SeekTime(DVD_TIME_TO_MSEC(dts), true, startpts);
-+  CLog::Log(LOGDEBUG, "CDVDDemuxFFmpeg::%s - seeking chapter:%d start:%0.4f dts:%0.4f startpts:%0.4f ", __FUNCTION__, chapter, (double)ch->start * ch->time_base.num  / ch->time_base.den , DVD_TIME_TO_MSEC(dts)/1000.0, *startpts);
++  CLog::Log(LOGDEBUG, "CDVDDemuxFFmpeg::%s - seeking chapter:%d start:%0.3f startpts:%0.3f ", __FUNCTION__, chapter, (double)ch->start * ch->time_base.num  / ch->time_base.den, DVD_TIME_TO_MSEC(*startpts) / 1000.0);
 +  return rtn;
  }
  
