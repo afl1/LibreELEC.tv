@@ -22,7 +22,7 @@ PKG_REV="1"
 PKG_ARCH="arm aarch64"
 PKG_LICENSE="GPL"
 PKG_SITE="https://boundarydevices.com/new-silex-wifi-802-11ac-bt4-1-module/"
-PKG_VERSION="7ec8faa"
+PKG_VERSION="8e1b647"
 PKG_URL="https://github.com/boundarydevices/qcacld-2.0/archive/$PKG_VERSION.tar.gz"
 PKG_SOURCE_DIR="qcacld-2.0-$PKG_VERSION*"
 PKG_DEPENDS_TARGET="toolchain linux"
@@ -39,6 +39,11 @@ if [ "$TARGET_KERNEL_ARCH" = "arm64" -a "$TARGET_ARCH" = "arm" ]; then
   export PATH=$TOOLCHAIN/lib/gcc-linaro-aarch64-linux-gnu/bin/:$PATH
   TARGET_PREFIX=aarch64-linux-gnu-
 fi
+
+post_unpack() {
+  sed -i 's,-Wall,,g; s,-Werror,,g' $PKG_BUILD/Kbuild
+  sed -i 's,CDEFINES :=,CDEFINES := -Wno-misleading-indentation -Wno-unused-variable -Wno-unused-function,g' $PKG_BUILD/Kbuild
+}
 
 make_target() {
   KERNEL_SRC="$(kernel_path)" ARCH=$TARGET_KERNEL_ARCH CROSS_COMPILE=$TARGET_PREFIX \
