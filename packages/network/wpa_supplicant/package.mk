@@ -17,7 +17,8 @@
 ################################################################################
 
 PKG_NAME="wpa_supplicant"
-PKG_VERSION="2.5"
+PKG_VERSION="2.6"
+PKG_SHA256="b4936d34c4e6cdd44954beba74296d964bc2c9668ecaa5255e499636fe2b1450"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://w1.fi/wpa_supplicant/"
