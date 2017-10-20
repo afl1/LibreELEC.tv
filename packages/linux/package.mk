@@ -65,6 +65,12 @@ case "$LINUX" in
     PKG_SOURCE_DIR="xbian-sources-kernel-${PKG_COMMIT}*"
     PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET imx6-status-led imx6-soc-fan irqbalanced"
     ;;
+  custom)
+    PKG_VERSION="$KERNEL_VERSION"
+    PKG_URL="$KERNEL_URL"
+    PKG_SOURCE_DIR="$KERNEL_SOURCE_DIR"
+    PKG_PATCH_DIRS="$KERNEL_PATCH_DIRS"
+    ;;
   *)
     PKG_VERSION="4.13.6"
     PKG_SHA256="47d419ceae1d353dad565b858301ac9670c747deb37936c8a935915b3bdd6050"
@@ -204,7 +210,7 @@ make_target() {
     $SCRIPTS/install initramfs
   )
 
-  if [ "$BOOTLOADER" = "u-boot" -a -n "$KERNEL_UBOOT_EXTRA_TARGET" ]; then
+  if [ "$BOOTLOADER" = "u-boot" -a -n "$KERNEL_UBOOT_EXTRA_TARGET" -a -z "$BUILD_ANDROID_BOOTIMG" ]; then
     for extra_target in "$KERNEL_UBOOT_EXTRA_TARGET"; do
       LDFLAGS="" make $extra_target
     done
@@ -212,11 +218,6 @@ make_target() {
 
   LDFLAGS="" make $KERNEL_TARGET $KERNEL_MAKE_EXTRACMD
 
-  if [ "$BUILD_ANDROID_BOOTIMG" = "yes" ]; then
-    LDFLAGS="" mkbootimg --kernel arch/$TARGET_KERNEL_ARCH/boot/$KERNEL_TARGET --ramdisk $BUILD/image/initramfs.cpio \
-      $ANDROID_BOOTIMG_OPTIONS --output arch/$TARGET_KERNEL_ARCH/boot/boot.img
-    mv -f arch/$TARGET_KERNEL_ARCH/boot/boot.img arch/$TARGET_KERNEL_ARCH/boot/$KERNEL_TARGET
-  fi
 }
 
 makeinstall_target() {
