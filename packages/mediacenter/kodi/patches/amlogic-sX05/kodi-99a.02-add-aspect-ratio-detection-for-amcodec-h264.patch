@@ -19,14 +19,14 @@ diff --git a/xbmc/cores/VideoPlayer/DVDCodecs/Video/DVDVideoCodecAmlogic.cpp b/x
 index da46973..4173d93 100644
 --- a/xbmc/cores/VideoPlayer/DVDCodecs/Video/DVDVideoCodecAmlogic.cpp
 +++ b/xbmc/cores/VideoPlayer/DVDCodecs/Video/DVDVideoCodecAmlogic.cpp
-@@ -51,6 +51,7 @@ CDVDVideoCodecAmlogic::CDVDVideoCodecAmlogic(CProcessInfo &processInfo) : CDVDVi
-   m_framerate(0.0),
-   m_video_rate(0),
-   m_mpeg2_sequence(NULL),
-+  m_h264_sequence(NULL),
-   m_drop(false),
-   m_has_keyframe(false),
-   m_bitparser(NULL),
+@@ -91,6 +91,7 @@
+   , m_framerate(0.0)
+   , m_video_rate(0)
+   , m_mpeg2_sequence(NULL)
++  , m_h264_sequence(NULL)
+   , m_has_keyframe(false)
+   , m_bitparser(NULL)
+   , m_bitstream(NULL)
 @@ -120,6 +121,12 @@ bool CDVDVideoCodecAmlogic::Open(CDVDStreamInfo &hints, CDVDCodecOptions &option
          // 4K is supported only on Amlogic S802/S812 chip
          return false;
@@ -49,16 +49,16 @@ index da46973..4173d93 100644
  
    if (m_bitstream)
      delete m_bitstream, m_bitstream = NULL;
-@@ -352,6 +361,10 @@ bool CDVDVideoCodecAmlogic::GetPicture(DVDVideoPicture* pDvdVideoPicture)
-   if (m_mpeg2_sequence && pDvdVideoPicture->pts >= m_mpeg2_sequence_pts)
+@@ -425,6 +449,10 @@
+   if (m_mpeg2_sequence && pVideoPicture->pts >= m_mpeg2_sequence_pts)
      m_aspect_ratio = m_mpeg2_sequence->ratio;
- 
+
 +  // check for h264 aspect ratio changes
-+  if (m_h264_sequence && pDvdVideoPicture->pts >= m_h264_sequence_pts)
++  if (m_h264_sequence && pVideoPicture->pts >= m_h264_sequence_pts)
 +    m_aspect_ratio = m_h264_sequence->ratio;
 +
-   pDvdVideoPicture->iDisplayWidth  = pDvdVideoPicture->iWidth;
-   pDvdVideoPicture->iDisplayHeight = pDvdVideoPicture->iHeight;
+   pVideoPicture->iDisplayWidth  = pVideoPicture->iWidth;
+   pVideoPicture->iDisplayHeight = pVideoPicture->iHeight;
    if (m_aspect_ratio > 1.0 && !m_hints.forced_aspect)
 @@ -520,6 +533,24 @@ void CDVDVideoCodecAmlogic::FrameRateTracking(uint8_t *pData, int iSize, double
      return;
@@ -97,15 +97,15 @@ index 9e57295..d519d28 100644
  class CBitstreamParser;
  class CBitstreamConverter;
  
-@@ -101,6 +102,8 @@ protected:
+@@ -109,6 +110,8 @@
    float           m_aspect_ratio;
    mpeg2_sequence *m_mpeg2_sequence;
    double          m_mpeg2_sequence_pts;
 +  h264_sequence  *m_h264_sequence;
 +  double          m_h264_sequence_pts;
-   bool            m_drop;
    bool            m_has_keyframe;
- 
+
+   CBitstreamParser *m_bitparser;
 diff --git a/xbmc/utils/BitstreamConverter.cpp b/xbmc/utils/BitstreamConverter.cpp
 index be942a1..c3a84bd 100644
 --- a/xbmc/utils/BitstreamConverter.cpp

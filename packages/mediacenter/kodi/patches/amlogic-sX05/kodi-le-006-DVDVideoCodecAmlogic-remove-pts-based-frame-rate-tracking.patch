@@ -12,14 +12,14 @@ diff --git a/xbmc/cores/VideoPlayer/DVDCodecs/Video/DVDVideoCodecAmlogic.cpp b/x
 index 8ea3617..abfb580 100644
 --- a/xbmc/cores/VideoPlayer/DVDCodecs/Video/DVDVideoCodecAmlogic.cpp
 +++ b/xbmc/cores/VideoPlayer/DVDCodecs/Video/DVDVideoCodecAmlogic.cpp
-@@ -45,7 +45,6 @@ CDVDVideoCodecAmlogic::CDVDVideoCodecAmlogic(CProcessInfo &processInfo) : CDVDVi
-   m_Codec(NULL),
-   m_pFormatName("amcodec"),
-   m_opened(false),
--  m_last_pts(0.0),
-   m_frame_queue(NULL),
-   m_queue_depth(0),
-   m_framerate(0.0),
+@@ -85,7 +85,6 @@
+   , m_pFormatName("amcodec")
+   , m_opened(false)
+   , m_codecControlFlags(0)
+-  , m_last_pts(0.0)
+   , m_frame_queue(NULL)
+   , m_queue_depth(0)
+   , m_framerate(0.0)
 @@ -597,69 +596,6 @@ void CDVDVideoCodecAmlogic::FrameRateTracking(uint8_t *pData, int iSize, double
  
      pthread_mutex_unlock(&m_queue_mutex);
