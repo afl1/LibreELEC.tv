@@ -18,7 +18,6 @@
 
 PKG_NAME="libcec"
 PKG_VERSION="8adc786"
-#PKG_SHA256="22f4af981599481edfb5945d97978153396ca6944b737bae4f6ff4ecc6ecc5e4"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://libcec.pulse-eight.com/"
@@ -54,6 +53,11 @@ if [ "$KODIPLAYER_DRIVER" = "libamcodec" ]; then
   fi
 else
   PKG_CMAKE_OPTS_TARGET="$PKG_CMAKE_OPTS_TARGET -DHAVE_AOCEC_API=0 -DHAVE_AMLOGIC_API=0"
+fi
+
+if [ "$CEC_FRAMEWORK_SUPPORT" = "yes" ]; then
+  PKG_PATCH_DIRS="cec-framework"
+  PKG_CMAKE_OPTS_TARGET="$PKG_CMAKE_OPTS_TARGET -DHAVE_LINUX_API=1"
 fi
 
 pre_configure_target() {
