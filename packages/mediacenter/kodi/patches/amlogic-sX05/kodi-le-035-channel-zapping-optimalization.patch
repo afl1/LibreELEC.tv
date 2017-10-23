@@ -10,7 +10,7 @@ index ce0f01a..1adf29d 100644
  
    if (m_caching == CACHESTATE_INIT)
    {
-+    m_clock.Discontinuity(DVD_MSEC_TO_TIME(-300));
++//    m_clock.Discontinuity(DVD_MSEC_TO_TIME(-300));
      // if all enabled streams have been inited we are done
      if ((m_CurrentVideo.id >= 0 || m_CurrentAudio.id >= 0) &&
 @@ -1963,15 +1963,17 @@ void CVideoPlayer::HandlePlaySpeed()
@@ -53,16 +53,18 @@ index ce0f01a..1adf29d 100644
  
        if (m_CurrentVideo.starttime != DVD_NOPTS_VALUE && m_CurrentVideo.packets > 0 &&
            m_playSpeed == DVD_PLAYSPEED_PAUSE)
-@@ -2028,8 +2047,8 @@ void CVideoPlayer::HandlePlaySpeed()
-       }
+@@ -2028,9 +2047,9 @@ void CVideoPlayer::HandlePlaySpeed()
        else if (m_CurrentAudio.starttime != DVD_NOPTS_VALUE && m_CurrentAudio.packets > 0)
        {
          if (m_pInputStream->IsRealtime())
 -          clock = m_CurrentAudio.starttime - m_CurrentAudio.cachetotal - DVD_MSEC_TO_TIME(400);
-+          clock = m_CurrentAudio.starttime - m_CurrentAudio.cachetime + 12000.0 * static_cast<double>(static_cast<int>(m_CurrentAudio.packets) - 50);
++          clock = m_CurrentAudio.starttime - m_CurrentAudio.cachetime + 14000.0 * static_cast<double>(static_cast<int>(m_CurrentAudio.packets) - 60);
          else
-           clock = m_CurrentAudio.starttime - m_CurrentAudio.cachetime;
- 
+-          clock = m_CurrentAudio.starttime - m_CurrentAudio.cachetime;
++          clock = m_CurrentAudio.starttime - m_CurrentAudio.cachetime - DVD_MSEC_TO_TIME(750);
+         if (m_CurrentVideo.starttime != DVD_NOPTS_VALUE &&
+             (m_CurrentVideo.packets > 0) &&
+             m_CurrentVideo.starttime - m_CurrentVideo.cachetotal < clock)
 diff --git a/xbmc/cores/VideoPlayer/VideoPlayerAudio.cpp b/xbmc/cores/VideoPlayer/VideoPlayerAudio.cpp
 index 38428e2..4279440 100644
 --- a/xbmc/cores/VideoPlayer/VideoPlayerAudio.cpp
