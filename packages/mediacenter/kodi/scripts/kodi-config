@@ -42,6 +42,13 @@ if [ ! -f $HOME/.kodi/userdata/guisettings.xml ] ; then
   fi
 fi
 
+if [ ! -f $HOME/.kodi/cdm/libwidevinecdm.so ] ; then
+  if [ -f /usr/lib/libwidevinecdm.so ] ; then
+    mkdir -p $HOME/.kodi/cdm
+    ln -sf /usr/lib/libwidevinecdm.so $HOME/.kodi/cdm/libwidevinecdm.so
+  fi
+fi
+
 KODI_ARGS="--lircdev /run/lirc/lircd"
 
 echo "KODI_ARGS=\"$KODI_ARGS\"" > /run/libreelec/kodi.conf
