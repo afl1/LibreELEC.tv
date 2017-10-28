@@ -89,7 +89,6 @@ configure_target() {
     --host-cc="$HOST_CC" \
     --host-cflags="$HOST_CFLAGS" \
     --host-ldflags="$HOST_LDFLAGS" \
-    --host-libs="-lm" \
     --extra-cflags="$CFLAGS" \
     --extra-ldflags="$LDFLAGS" \
     --extra-libs="$FFMPEG_LIBS" \
