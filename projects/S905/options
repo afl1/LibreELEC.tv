@@ -1,6 +1,9 @@
 ################################################################################
 # setup system defaults
 ################################################################################
+get_branch() {
+  git rev-parse --abbrev-ref HEAD
+}
 
     TARGET_CPU="cortex-a53"
 
@@ -18,8 +21,31 @@
   # Bootloader to use (syslinux / u-boot / atv-bootloader / bcm2835-bootloader)
     BOOTLOADER="u-boot"
 
+  # u-boot version to use (default)
+    UBOOT_VERSION=""
+
+  # Configuration for u-boot
+    UBOOT_CONFIG=""
+
+  # Target Configfile for u-boot
+    UBOOT_CONFIGFILE=""
+
   # Kernel target
     KERNEL_TARGET="Image.lzo"
+
+  # Kernel extra targets to build
+    KERNEL_UBOOT_EXTRA_TARGET="gxl_p230_2g.dtb"
+    case $MODEL in
+     KI_Plus)
+      KERNEL_UBOOT_EXTRA_TARGET="gxbb_p200.dtb"
+      ;;
+     KI_Pro)
+      KERNEL_UBOOT_EXTRA_TARGET="gxl_p230_2g.dtb"
+      ;;
+     KII_Pro)
+      KERNEL_UBOOT_EXTRA_TARGET="gbb_p200_2G.dtb"
+      ;;
+    esac
 
   # Build Android kernel image using mkbootimg
     BUILD_ANDROID_BOOTIMG="yes"
@@ -29,19 +55,6 @@
 
   # Additional kernel make parameters (for example to specify the u-boot loadaddress)
     KERNEL_MAKE_EXTRACMD=""
-
-  # Kernel and u-boot options
-    case $SYSTEM in
-      C2)
-        UBOOT_VERSION="hardkernel"
-        UBOOT_CONFIG="odroidc2_defconfig"
-        UBOOT_CONFIGFILE="boot.ini"
-        KERNEL_UBOOT_EXTRA_TARGET="odroidc2.dtb"
-        ;;
-      *)
-        KERNEL_UBOOT_EXTRA_TARGET="gxbb_p200.dtb gxbb_p200_2G.dtb gxl_p212_1g.dtb gxl_p212_2g.dtb gxl_p230_2g.dtb"
-        ;;
-    esac
 
   # kernel image name
     KERNEL_NAME="kernel.img"
@@ -53,7 +66,10 @@
     KERNEL_URL="https://github.com/kszaq/linux-amlogic-le/archive/$KERNEL_VERSION.tar.gz"
     KERNEL_SOURCE_DIR="linux-amlogic-le-$KERNEL_VERSION*"
     KERNEL_PATCH_DIRS="amlogic-3.14"
-
+    BUILD_DATE=`date +%Y%m%d%H%M`
+    CUSTOM_VERSION="8.2-devel-$BUILD_DATE-g$KERNEL_VERSION-I"
+  #  CUSTOM_VERSION="$(get_branch)-I"
+    CUSTOM_IMAGE_NAME="LibreELEC-S905.arm-$CUSTOM_VERSION"
 ################################################################################
 # setup build defaults
 ################################################################################
@@ -143,6 +159,7 @@
   # set the addon dirs
     ADDON_SERVER_URL="http://kszaq.libreelec.tv/addons"
     ADDON_URL="$ADDON_SERVER_URL/$ADDON_PATH"
+
 
   # OEM packages for OEM's (yes / no)
     OEM_SUPPORT="yes"

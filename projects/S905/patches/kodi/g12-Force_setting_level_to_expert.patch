@@ -1,0 +1,33 @@
+diff --git a/xbmc/view/ViewStateSettings.cpp b/xbmc/view/ViewStateSettings.cpp
+index cf3beb3..aa83b0e 100644
+--- a/xbmc/view/ViewStateSettings.cpp
++++ b/xbmc/view/ViewStateSettings.cpp
+@@ -131,12 +131,14 @@ bool CViewStateSettings::Load(const TiXmlNode *settings)
+   pElement = settings->FirstChild(XML_GENERAL);
+   if (pElement != NULL)
+   {
++    /*
++    // Force setting level to expert
+     int settingLevel;
+     if (XMLUtils::GetInt(pElement, XML_SETTINGLEVEL, settingLevel, (const int)SettingLevelBasic, (const int)SettingLevelExpert))
+       m_settingLevel = (SettingLevel)settingLevel;
+     else
+-      m_settingLevel = SettingLevelStandard;
+-
++    */
++      m_settingLevel = SettingLevelExpert;
+     const TiXmlNode* pEventLogNode = pElement->FirstChild(XML_EVENTLOG);
+     if (pEventLogNode != NULL)
+     {
+--- a/system/settings/settings.xml	2016-10-25 08:15:32.331928019 +0200
++++ b/system/settings/settings.xml	2016-10-25 12:49:06.077160262 +0200
+@@ -3147,7 +3147,7 @@
+       <group id="2" label="14270">
+         <setting id="locale.country" type="string" label="14271" help="36115">
+           <level>0</level>
+-          <default>USA (12h)</default>
++          <default>Central Europe</default>
+           <constraints>
+             <options>regions</options>
+           </constraints>
+
