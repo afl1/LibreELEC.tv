@@ -17,9 +17,10 @@
 ################################################################################
 
 PKG_NAME="tvheadend42"
-PKG_VERSION="407c8a3"
-PKG_VERSION_NUMBER="4.2.3-20"
-PKG_REV="112"
+PKG_VERSION="39dac90"
+#PKG_SHA256="662f9a268b4fba8fa85ef86115c3b80e0f8a621c19c9721788aef453502c3fa1"
+PKG_VERSION_NUMBER="4.2.4-5"
+PKG_REV="4-5"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.tvheadend.org"
@@ -37,7 +38,7 @@ PKG_ADDON_TYPE="xbmc.service"
 
 # transcoding only for generic
 if [ "$TARGET_ARCH" = x86_64 ]; then
-  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET libva-intel-driver"
+  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET intel-vaapi-driver"
   TVH_TRANSCODING="--enable-ffmpeg_static --enable-libav --enable-libfdkaac --disable-libtheora --enable-libvorbis --enable-libvpx --enable-libx264 --enable-libx265 --disable-qsv"
 else
   TVH_TRANSCODING="--disable-ffmpeg_static --disable-libav"
