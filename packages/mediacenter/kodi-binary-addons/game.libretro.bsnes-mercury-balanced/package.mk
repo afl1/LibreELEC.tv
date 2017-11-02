@@ -17,9 +17,9 @@
 ################################################################################
 
 PKG_NAME="game.libretro.bsnes-mercury-balanced"
-PKG_VERSION="797ade9"
-PKG_SHA256="93610e2a1a76ee9218210c9e1e50eb61cc656729d44d7113a4d1459de76a4fbc"
-PKG_REV="103"
+PKG_VERSION="4e92fc2"
+PKG_SHA256="7700bdb0cef6045ca361333358370a6e56bb0a8f9da43f1e5c85941334201397"
+PKG_REV="104"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/kodi-game/game.libretro.bsnes-mercury-balanced"

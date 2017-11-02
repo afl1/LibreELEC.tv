@@ -17,9 +17,9 @@
 ################################################################################
 
 PKG_NAME="game.libretro.reicast"
-PKG_VERSION="e2c03e9"
-PKG_SHA256="1603041af67721a525d8767ca89d12cfa162521636074d784becd631f8a5ac5a"
-PKG_REV="103"
+PKG_VERSION="f69d75a"
+PKG_SHA256="23931685b9cc3dc215cd06cc96bdd53033a4ba3bda538727a1b485ee977bf46a"
+PKG_REV="104"
 # no openGL suport in retroplayer yet
 PKG_ARCH="none"
 PKG_LICENSE="GPL"

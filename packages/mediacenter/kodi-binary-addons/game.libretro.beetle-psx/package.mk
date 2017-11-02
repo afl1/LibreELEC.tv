@@ -17,9 +17,9 @@
 ################################################################################
 
 PKG_NAME="game.libretro.beetle-psx"
-PKG_VERSION="1d73494"
-PKG_SHA256="675ca3a9df39d919af4bd6fd0144116df09e359e383797cce01f0389d867c43d"
-PKG_REV="103"
+PKG_VERSION="4d8c451"
+PKG_SHA256="e2eb0a873cc6747ccae5d38e3b98910a53cb0f9f7a7e81ccf69afd22a2d43161"
+PKG_REV="104"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/kodi-game/game.libretro.beetle-psx"

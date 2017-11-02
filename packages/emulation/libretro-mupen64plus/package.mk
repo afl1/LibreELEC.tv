@@ -17,8 +17,8 @@
 ################################################################################
 
 PKG_NAME="libretro-mupen64plus"
-PKG_VERSION="9b01671"
-PKG_SHA256="70acf1793eb0410e5e5812aa7ee5265a780b1d0d7ba198a7eb78fe3bb9fd4a8f"
+PKG_VERSION="4b41ada"
+PKG_SHA256="c9c564f1145806624238829c8147a4c8f57668e670b6ceb41c4c9eb338973c6f"
 PKG_ARCH="any"
 PKG_LICENSE="GPLv2"
 PKG_SITE="https://github.com/libretro/mupen64plus-libretro"

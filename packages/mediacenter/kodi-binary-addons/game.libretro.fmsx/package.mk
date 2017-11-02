@@ -17,9 +17,9 @@
 ################################################################################
 
 PKG_NAME="game.libretro.fmsx"
-PKG_VERSION="a22dc05"
-PKG_SHA256="2f1e401bd1446080692cb2c89ea1284a6f069145957bd3654a3708ec87d85e8a"
-PKG_REV="103"
+PKG_VERSION="c8300e4"
+PKG_SHA256="543f29390ec179968b990fcae8e33f76349ca0f46b55968a9ab9a25f35585793"
+PKG_REV="104"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/kodi-game/game.libretro.fmsx"

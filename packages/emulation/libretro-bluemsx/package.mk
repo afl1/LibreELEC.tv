@@ -17,8 +17,8 @@
 ################################################################################
 
 PKG_NAME="libretro-bluemsx"
-PKG_VERSION="a67b0f3"
-PKG_SHA256="aa3f51fdcb6646b90611070ecf58d016e9790cc6b787016a76b32a5d6680a844"
+PKG_VERSION="41f7f15"
+PKG_SHA256="a274bae20d4f0178f9247a412c4fd903c3576dc20e58baf33e8c892f44876804"
 PKG_ARCH="any"
 PKG_LICENSE="GPLv2"
 PKG_SITE="https://github.com/libretro/blueMSX-libretro"
