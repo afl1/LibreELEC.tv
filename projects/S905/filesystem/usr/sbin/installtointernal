@@ -1,3 +1,4 @@
+
 #!/bin/sh
 
 ################################################################################
@@ -35,13 +36,13 @@ install_to_nand() {
     mount -o rw,remount /flash
     if [ -e /dev/dtb ] ; then
       echo -n "Backing up device tree..."
-      dd if=/dev/dtb of="/flash/dtb$BACKUP_DATE.img" bs=256k conv=fsync 2> /dev/null
+      dd if=/dev/dtb of="/flash/dtb$BACKUP_DATE.img" bs=256k conv=fsync status=none
       echo "done."
     fi
 
     if [ -e /dev/recovery ] ; then
       echo -n "Backing up recovery partition..."
-      dd if=/dev/recovery of="/flash/recovery$BACKUP_DATE.img" bs=64k conv=fsync 2> /dev/null
+      dd if=/dev/recovery of="/flash/recovery$BACKUP_DATE.img" bs=64k conv=fsync status=none
       echo "done."
     fi
 
@@ -51,7 +52,7 @@ install_to_nand() {
     echo "done."
 
     echo -n "Writing kernel image..."
-    dd if="$IMAGE_KERNEL" of=/dev/boot bs=64k 2> /dev/null
+    dd if="$IMAGE_KERNEL" of=/dev/boot bs=1M status=none
     echo "done."
 
     echo -n "Copying SYSTEM files..."
@@ -67,21 +68,31 @@ install_to_nand() {
 
     if [ -f $IMAGE_DTB ] ; then
       echo -n "Writing device tree image..."
-      dd if=/dev/zero of=/dev/dtb bs=256k count=1 2> /dev/null
-      dd if="$IMAGE_DTB" of=/dev/dtb bs=256k 2> /dev/null
+      dd if=/dev/zero of=/dev/dtb bs=256k count=1
+      dd if="$IMAGE_DTB" of=/dev/dtb bs=256k
       echo "done."
     fi
-
-    echo -n "Formatting DATA partition..."
-    mke2fs -F -q -t ext4 -m 0 /dev/data > /dev/null
-    e2fsck -n /dev/data &> /dev/null
-    echo "done."
 
     read -p "Do you want to copy your user data to internal data partition? [Y/n] " choice
     case "$choice" in
       [nN]*)
+        read -p "Do you want to format DATA partition? [Y/n] " choice
+        case "$choice" in
+          [nN]*)
+            ;;
+          *)
+            echo -n "Formatting DATA partition..."
+            mke2fs -F -q -t ext4 -m 0 /dev/data > /dev/null
+            e2fsck -n /dev/data &> /dev/null
+            echo "done."
+        esac  
         ;;
       *)
+        echo -n "Formatting DATA partition..."
+        mke2fs -F -q -t ext4 -m 0 /dev/data > /dev/null
+        e2fsck -n /dev/data &> /dev/null
+        echo "done."
+
         echo -n "Stopping Kodi..."
         systemctl stop kodi
         echo "done."
@@ -94,9 +105,11 @@ install_to_nand() {
 
     echo "All done! Rebooting now..."
     echo "WARNING: If your internal memory layout is different from standard Amlogic, you have to perform this operation again!"
-    echo "Your system will continue booting from SD/USB until you remove it."
+    echo "Your system will reboot from internal memory."
 
-    reboot
+    if /usr/sbin/fw_printenv whereToBootFrom 2&>1 > /dev/null; then /usr/sbin/fw_setenv whereToBootFrom internal; fi
+    /usr/sbin/fw_setenv bootfromnand 1
+    /usr/sbin/reboot switch_system
 
   else
     echo "No LE image found on /flash! Exiting..."
@@ -114,3 +127,5 @@ read -p "Type \"yes\" if you know what you are doing or anything else to exit: "
 case "$choice" in
   yes) install_to_nand ;;
 esac
+
+
