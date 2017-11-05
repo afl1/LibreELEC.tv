@@ -19,7 +19,7 @@ diff --git a/xbmc/cores/VideoPlayer/DVDCodecs/Video/DVDVideoCodecAmlogic.cpp b/x
 index da46973..4173d93 100644
 --- a/xbmc/cores/VideoPlayer/DVDCodecs/Video/DVDVideoCodecAmlogic.cpp
 +++ b/xbmc/cores/VideoPlayer/DVDCodecs/Video/DVDVideoCodecAmlogic.cpp
-@@ -91,6 +91,7 @@
+@@ -51,6 +51,7 @@ CDVDVideoCodecAmlogic::CDVDVideoCodecAmlogic(CProcessInfo &processInfo) : CDVDVi
    , m_framerate(0.0)
    , m_video_rate(0)
    , m_mpeg2_sequence(NULL)
@@ -49,10 +49,10 @@ index da46973..4173d93 100644
  
    if (m_bitstream)
      delete m_bitstream, m_bitstream = NULL;
-@@ -425,6 +449,10 @@
+@@ -352,6 +361,10 @@ bool CDVDVideoCodecAmlogic::GetPicture(DVDVideoPicture* pVideoPicture)
    if (m_mpeg2_sequence && pVideoPicture->pts >= m_mpeg2_sequence_pts)
      m_aspect_ratio = m_mpeg2_sequence->ratio;
-
+ 
 +  // check for h264 aspect ratio changes
 +  if (m_h264_sequence && pVideoPicture->pts >= m_h264_sequence_pts)
 +    m_aspect_ratio = m_h264_sequence->ratio;
@@ -97,14 +97,14 @@ index 9e57295..d519d28 100644
  class CBitstreamParser;
  class CBitstreamConverter;
  
-@@ -109,6 +110,8 @@
+@@ -101,6 +102,8 @@ protected:
    float           m_aspect_ratio;
    mpeg2_sequence *m_mpeg2_sequence;
    double          m_mpeg2_sequence_pts;
 +  h264_sequence  *m_h264_sequence;
 +  double          m_h264_sequence_pts;
    bool            m_has_keyframe;
-
+ 
    CBitstreamParser *m_bitparser;
 diff --git a/xbmc/utils/BitstreamConverter.cpp b/xbmc/utils/BitstreamConverter.cpp
 index be942a1..c3a84bd 100644

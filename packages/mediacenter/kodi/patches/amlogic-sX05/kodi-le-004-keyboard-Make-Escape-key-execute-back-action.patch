@@ -20,14 +20,14 @@ index d4dffed..3d7ec5f 100644
        <escape mod="longpress">Back</escape>
        <i>Info</i>
        <menu>ContextMenu</menu>
-@@ -195,6 +195,7 @@
+@@ -193,6 +193,7 @@
+       <browser_back>Backspace</browser_back>
        <browser_back mod="longpress">PreviousMenu</browser_back>
        <play_pause mod="longpress">Enter</play_pause>
-       <browser_search>VoiceRecognizer</browser_search>
 +      <escape>PreviousMenu</escape>
+       <browser_search>VoiceRecognizer</browser_search>
        <menu>VoiceRecognizer</menu>
      </keyboard>
-   </VirtualKeyboard>
+
 -- 
 1.8.3.1
-
