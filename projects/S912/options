@@ -1,8 +1,8 @@
 ################################################################################
 # setup system defaults
 ################################################################################
-get_branch() {
-  git rev-parse --abbrev-ref HEAD
+get_revision() {
+  git describe --tags
 }
 
     TARGET_CPU="cortex-a53"
@@ -10,12 +10,14 @@ get_branch() {
     case $TARGET_ARCH in
       aarch64)
         TARGET_CPU_FLAGS="+crc+fp+simd"
-        TARGET_FEATURES="64bit neon"       ;;
+        TARGET_FEATURES="64bit neon"
+       ;;
       arm)
         TARGET_CPU_FLAGS="+crc"
         TARGET_FPU="neon-fp-armv8"
         TARGET_FLOAT="hard"
-        TARGET_FEATURES="32bit neon"       ;;
+        TARGET_FEATURES="32bit neon"
+       ;;
     esac
 
   # Bootloader to use (syslinux / u-boot / atv-bootloader / bcm2835-bootloader)
@@ -60,8 +62,8 @@ get_branch() {
 #    KERNEL_SOURCE_DIR="linux-amlogic-$KERNEL_VERSION*"
     KERNEL_PATCH_DIRS="amlogic-3.14"
     BUILD_DATE=`date +%Y%m%d%H%M`
-    CUSTOM_VERSION="9.0-devel-$BUILD_DATE-g$KERNEL_VERSION-I"
-  #  CUSTOM_VERSION="$(get_branch)-I"
+    CUSTOM_VERSION="9.0-devel-$BUILD_DATE-g$KERNEL_VERSION-K"
+    CUSTOM_VERSION="$(get_revision)-K"
     CUSTOM_IMAGE_NAME="LibreELEC-S912.arm-$CUSTOM_VERSION"
 ################################################################################
 # setup build defaults
