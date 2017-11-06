@@ -16,7 +16,7 @@
 #  along with LibreELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
-PKG_NAME="device-trees"
+PKG_NAME="aml-s9xx-device-trees"
 PKG_VERSION="0.1"
 PKG_REV="1"
 PKG_LICENSE="OSS"
@@ -24,7 +24,7 @@ PKG_DEPENDS_TARGET="toolchain linux"
 
 PKG_AUTORECONF="no"
 
-EXTRA_TREES=(gxbb_p201.dtb gxl_p212_1g.dtb gxl_p212_2g.dtb gxbb_p200_1G_wetek_hub.dtb gxbb_p200_2G_wetek_play_2.dtb gxm_q200_2g.dtb gxm_q201_1g.dtb gxm_q201_2g.dtb)
+EXTRA_TREES=(gxbb_p201.dtb gxl_p212_1g.dtb gxl_p212_2g.dtb gxbb_p200_1G_wetek_hub.dtb gxbb_p200_2G_wetek_play_2.dtb gxm_q200_2g.dtb gxm_q201_1g.dtb gxm_q201_2g.dtb gxl_p230_2g.dtb)
 
 if [ "$TARGET_KERNEL_ARCH" = "arm64" -a "$TARGET_ARCH" = "arm" ]; then
   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET gcc-linaro-aarch64-linux-gnu:host"
