@@ -1,44 +1,35 @@
 diff --git a/v4l/compat.h b/v4l/compat.h
+index 1696726..0765fcc 100644
 --- a/v4l/compat.h
 +++ b/v4l/compat.h
-@@ -1588,7 +1588,7 @@
+@@ -1588,7 +1588,7 @@ static inline __s32 sign_extend32(__u32 value, int index)
  #endif
-
+ 
  #ifdef NEED_WRITEL_RELAXED
 -#define writel_relaxed writel
-+//#define writel_relaxed writel
++// #define writel_relaxed writel
  #endif
-
+ 
  #ifdef NEED_GET_USER_PAGES_UNLOCKED
 diff --git a/v4l/versions.txt b/v4l/versions.txt
+index d110820..5391d5b 100644
 --- a/v4l/versions.txt
 +++ b/v4l/versions.txt
 @@ -1,6 +1,8 @@
  # Use this for stuff for drivers that don't compile
  [9.255.255]
- INTEL_ATOMISP
 +VIDEO_S5C73M3
 +DVB_CXD2880
-
- [4.12.0]
- # needs V4L2_FWNODE
-@@ -13,7 +15,6 @@
- VIDEO_OV5647
- VIDEO_MT9V032
- VIDEO_S5K5BAF
--VIDEO_S5C73M3
- VIDEO_SMIAPP
- VIDEO_OMAP3
- VIDEO_PXA27x
-@@ -31,10 +32,6 @@
+ 
+ [4.7.0]
  # needs i2c_mux_alloc
  DVB_LGDT3306A
-
--[4.4.0]
--# needs regmap_write_bits
--DVB_CXD2820R
--
- [4.2.0]
- # needs led_trigger_remove
- V4L2_FLASH_LED_CLASS
-
+@@ -94,7 +96,6 @@ VIDEO_OV5645
+ [3.6.0]
+ # needs include/linux/sizes.h
+ VIDEO_M5MOLS
+-VIDEO_S5C73M3
+ # needs dma_mmap_coherent and sg_alloc_table_from_pages.
+ VIDEOBUF2_DMA_CONTIG 
+ 
+--
