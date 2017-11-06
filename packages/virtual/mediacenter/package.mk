@@ -28,6 +28,10 @@ PKG_SHORTDESC="Mediacenter: Metapackage"
 PKG_LONGDESC="Mediacenter: Metapackage"
 PKG_AUTORECONF="no"
 
+_add_binary_addon() {
+  [ -f $ROOT/$PACKAGES/mediacenter/kodi-binary-addons/$1/package.mk ] && PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET $1" || true
+}
+
 if [ "$MEDIACENTER" = "kodi" ]; then
   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET $MEDIACENTER-theme-$SKIN_DEFAULT"
 
@@ -42,12 +46,23 @@ if [ "$MEDIACENTER" = "kodi" ]; then
 # other packages
   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET LibreELEC-settings \
                                           xmlstarlet"
+  _ADDONS_PVR=yes
+  _ADDONS_OTHER=yes
 
-# streaming media packages
-  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET inputstream.adaptive \
-                                          inputstream.rtmp \
-                                          imagedecoder.raw \
-                                          vfs.rar"
+  # various PVR clients
+  if [ "${_ADDONS_PVR}" = "yes" ]; then
+    _add_binary_addon "pvr.hts"
+    _add_binary_addon "pvr.iptvsimple"
+    _add_binary_addon "pvr.vuplus"
+  fi
+
+  if [ "${_ADDONS_OTHER}" = "yes" ]; then
+    _add_binary_addon "inputstream.adaptive"
+    _add_binary_addon "inputstream.smoothstream"
+    _add_binary_addon "inputstream.rtmp"
+    _add_binary_addon "imagedecoder.raw"
+    _add_binary_addon "vfs.rar"
+  fi
 
   if [ "$JOYSTICK_SUPPORT" = "yes" ]; then
     PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET peripheral.joystick"
