@@ -352,6 +352,11 @@ if [ "$1" = "release" -o "$1" = "mkimage" -o "$1" = "amlpkg" -o "$1" = "noobs" ]
   mkdir -p $RELEASE_DIR/licenses
   cp $ROOT/licenses/* $RELEASE_DIR/licenses
 
+  if [ -d /media/sf_Downloads ]; then
+    cp -f $TARGET_IMG/$IMAGE_NAME.system /media/sf_Downloads/SYSTEM
+    cp -f $TARGET_IMG/$IMAGE_NAME.kernel /media/sf_Downloads/kernel.img
+  fi
+
   mkdir -p $RELEASE_DIR/target
   cp $TARGET_IMG/$IMAGE_NAME.system $RELEASE_DIR/target/SYSTEM
   cp $TARGET_IMG/$IMAGE_NAME.kernel $RELEASE_DIR/target/KERNEL
@@ -585,4 +590,9 @@ if [ "$1" = "release" -o "$1" = "mkimage" -o "$1" = "amlpkg" -o "$1" = "noobs" ]
     # cleanup release dir
     rm -rf $RELEASE_DIR
   fi
+
+    # lets get rid of things we don't care about in $TARGET_IMG
+    rm $TARGET_IMG/$IMAGE_NAME.system
+    rm $TARGET_IMG/$IMAGE_NAME.kernel
+    mv -f $TARGET_IMG/$IMAGE_NAME.dtb $TARGET_IMG/dtb.img
 fi
