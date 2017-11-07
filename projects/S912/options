@@ -150,7 +150,7 @@ get_revision() {
   # set the addon dirs
 #    ADDON_SERVER_URL="http://kszaq.libreelec.tv/addons"
     ADDON_SERVER_URL="http://kodi.adamg.co.uk/libreelec/addons"
-    ADDON_URL="$ADDON_SERVER_URL/$ADDON_PATH"
+    ADDON_URL="$ADDON_SERVER_URL/$ADDON_VERSION/S905/$TARGET_ARCH"
 
   # OEM packages for OEM's (yes / no)
     OEM_SUPPORT="yes"
