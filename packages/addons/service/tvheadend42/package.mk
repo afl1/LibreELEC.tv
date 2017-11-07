@@ -1,5 +1,5 @@
 ################################################################################
-#      This file is part of LibreELEC - https://libreelec.tv
+#      This file is part of LibreELEC - https://LibreELEC.tv
 #      Copyright (C) 2016-present Team LibreELEC
 #
 #  LibreELEC is free software: you can redistribute it and/or modify
@@ -17,10 +17,10 @@
 ################################################################################
 
 PKG_NAME="tvheadend42"
-PKG_VERSION="407c8a3"
-PKG_SHA256="8569ab42650ca02e47d3d88276342fe2ffde4f40bd11893a3bf6879a79f36fb3"
-PKG_VERSION_NUMBER="4.2.3-20"
-PKG_REV="112"
+PKG_VERSION="a5ecd97"
+PKG_SHA256="f0adf1c4f20f27c7935f97cd6d1ef1e7f99a3311f99d3a18c7ec9578400a70a4"
+PKG_VERSION_NUMBER="4.3-607"
+PKG_REV="33-607"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.tvheadend.org"
@@ -33,7 +33,7 @@ PKG_LONGDESC="Tvheadend ($PKG_VERSION_NUMBER): is a TV streaming server for Linu
 PKG_AUTORECONF="no"
 
 PKG_IS_ADDON="yes"
-PKG_ADDON_NAME="Tvheadend Server 4.2"
+PKG_ADDON_NAME="Tvheadend Server 4.3"
 PKG_ADDON_TYPE="xbmc.service"
 
 # transcoding only for generic
