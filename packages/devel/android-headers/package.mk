@@ -26,8 +26,6 @@ PKG_URL="$PKG_SITE/${PKG_NAME}_${PKG_VERSION}.orig.tar.gz"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="devel"
 PKG_SHORTDESC="android-headers: Android Platform Headers from AOSP releases"
-
-PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
 make_target() {
