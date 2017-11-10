@@ -18,8 +18,8 @@
 ################################################################################
 
 PKG_NAME="dvb-firmware"
-PKG_VERSION="1.2.2"
-PKG_SHA256="2e39a0a85db54de7f38bd8e522e48445257f4edefe61d1e264079b0c45bc1fcc"
+PKG_VERSION="a350e8c"
+PKG_SHA256="363e2d897bd3f1fff1de29b38c113f495b2f3da99328299747f52020d5c96bd3"
 PKG_ARCH="any"
 PKG_LICENSE="Free-to-use"
 PKG_SITE="https://github.com/LibreELEC/dvb-firmware"
