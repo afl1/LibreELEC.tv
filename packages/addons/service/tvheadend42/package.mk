@@ -17,10 +17,10 @@
 ################################################################################
 
 PKG_NAME="tvheadend42"
-PKG_VERSION="a5ecd97"
-PKG_SHA256="f0adf1c4f20f27c7935f97cd6d1ef1e7f99a3311f99d3a18c7ec9578400a70a4"
-PKG_VERSION_NUMBER="4.3-607"
-PKG_REV="33-607"
+PKG_VERSION="10e6dbe9"
+PKG_SHA256="ed8860a6792f2c075f6ef4504e997f353a80d4c3d75ecd1fc212eda980ab8a56"
+PKG_VERSION_NUMBER="4.3-628"
+PKG_REV="43-628"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.tvheadend.org"
