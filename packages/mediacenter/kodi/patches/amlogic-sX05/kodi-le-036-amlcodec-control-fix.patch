@@ -179,15 +179,25 @@ Subject: [PATCH] VideoPlayer: AMLCodec control fixies
  }
 --- a/xbmc/cores/VideoPlayer/VideoPlayerVideo.cpp	2017-08-10 00:33:35.164554941 +0200
 +++ b/xbmc/cores/VideoPlayer/VideoPlayerVideo.cpp	2017-08-10 11:51:08.091697999 +0200
-@@ -136,6 +136,8 @@
+@@ -136,6 +136,7 @@
    }
  
-   CLog::Log(LOGNOTICE, "Creating video codec with codec id: %i", hint.codec);
-+  m_hints.pClock = m_pClock;
+-  CLog::Log(LOGNOTICE, "Creating video codec with codec id: %i", hint.codec);
++  CLog::Log(LOGNOTICE, "CVideoPlayerVideo::%s - Creating codec: %i",__FUNCTION__,  hint.codec);
 +  hint.pClock = m_pClock;
  
    if (m_messageQueue.IsInited())
    {
+@@ -219,7 +219,8 @@
+   }
+   if (!codec)
+   {
+-    CLog::Log(LOGNOTICE, "Creating video codec with codec id: %i", hint.codec);
++    CLog::Log(LOGNOTICE, "CVideoPlayerVideo::%s - Creating Codec: %i",__FUNCTION__,  hint.codec);
++    hint.pClock = m_pClock;
+     hint.codecOptions |= CODEC_ALLOW_FALLBACK;
+     codec = CDVDFactoryCodec::CreateVideoCodec(hint, m_processInfo);
+     if (!codec)
 @@ -863,6 +868,8 @@
    // don't wait when going ff
    if (m_speed > DVD_PLAYSPEED_NORMAL)
