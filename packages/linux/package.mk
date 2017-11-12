@@ -72,8 +72,8 @@ case "$LINUX" in
     PKG_PATCH_DIRS="$KERNEL_PATCH_DIRS"
     ;;
   *)
-    PKG_VERSION="4.13.11"
-    PKG_SHA256="a4bf7238d6b1256052243462096f3cf8cca5af058928c41a6c3122264e14f4ef"
+    PKG_VERSION="4.13.12"
+    PKG_SHA256="bf98065bf0e3aa5af379d0808f157be48ca4e452a55468fc4ce814b17cf9de74"
     PKG_URL="https://www.kernel.org/pub/linux/kernel/v4.x/$PKG_NAME-$PKG_VERSION.tar.xz"
     PKG_PATCH_DIRS="default"
     ;;
@@ -191,12 +191,6 @@ pre_make_target() {
 
   # regdb
   cp $(get_build_dir wireless-regdb)/db.txt $PKG_BUILD/net/wireless/db.txt
-
-  if [ "$BOOTLOADER" = "u-boot" ]; then
-    ( cd $ROOT
-      $SCRIPTS/build u-boot
-    )
-  fi
 }
 
 make_target() {
@@ -223,8 +217,10 @@ make_target() {
 makeinstall_target() {
   if [ "$BOOTLOADER" = "u-boot" ]; then
     mkdir -p $INSTALL/usr/share/bootloader
-    for dtb in arch/$TARGET_KERNEL_ARCH/boot/dts/*.dtb; do
-      cp $dtb $INSTALL/usr/share/bootloader 2>/dev/null || :
+    for dtb in arch/$TARGET_KERNEL_ARCH/boot/dts/*.dtb arch/$TARGET_KERNEL_ARCH/boot/dts/*/*.dtb; do
+      if [ -f $dtb ]; then
+        cp -v $dtb $INSTALL/usr/share/bootloader
+      fi
     done
     if [ -d arch/$TARGET_KERNEL_ARCH/boot/dts/amlogic -a -f "arch/$TARGET_KERNEL_ARCH/boot/dts/amlogic/$KERNEL_UBOOT_EXTRA_TARGET" ]; then
       cp "arch/$TARGET_KERNEL_ARCH/boot/dts/amlogic/$KERNEL_UBOOT_EXTRA_TARGET" $INSTALL/usr/share/bootloader/dtb.img 2>/dev/null || :

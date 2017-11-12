@@ -1,8 +1,6 @@
-#!/bin/sh
-
 ################################################################################
 #      This file is part of LibreELEC - https://libreelec.tv
-#      Copyright (C) 2017-present Team LibreELEC
+#      Copyright (C) 2016-present Team LibreELEC
 #
 #  LibreELEC is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -18,9 +16,25 @@
 #  along with LibreELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
-. config/options $1
+PKG_NAME="edid-decode"
+PKG_VERSION="f56f329"
+PKG_SHA256="d9347ddf6933c6f90c79230b1898da5686083f0e5ebb7ef67acb011108cfaeae"
+PKG_ARCH="any"
+PKG_LICENSE="None"
+PKG_SITE="https://cgit.freedesktop.org/xorg/app/edid-decode/"
+PKG_URL="https://cgit.freedesktop.org/xorg/app/edid-decode/snapshot/$PKG_VERSION.tar.xz"
+PKG_SOURCE_DIR="$PKG_VERSION*"
+PKG_DEPENDS_TARGET="toolchain"
+PKG_SECTION="debug"
+PKG_SHORTDESC="Decode EDID data in human-readable format"
+PKG_LONGDESC="Decode EDID data in human-readable format"
 
-mkdir -p $RELEASE_DIR/3rdparty/bootloader
-  cp -a $(get_build_dir linux)/arch/$TARGET_KERNEL_ARCH/boot/dts/meson64_odroidc2.dtb $RELEASE_DIR/3rdparty/bootloader
-  cp -a $(get_build_dir $BOOTLOADER)/u-boot.bin $RELEASE_DIR/3rdparty/bootloader
-  cp -a $PROJECT_DIR/$PROJECT/bootloader/boot.ini $RELEASE_DIR/3rdparty/bootloader
+make_target() {
+  echo "$CC $CFLAGS -Wall $LDFLAGS -lm -o edid-decode edid-decode.c"
+  $CC $CFLAGS -Wall $LDFLAGS -lm -o edid-decode edid-decode.c
+}
+
+makeinstall_target() {
+  mkdir -p $INSTALL/usr/bin
+    cp edid-decode $INSTALL/usr/bin
+}
