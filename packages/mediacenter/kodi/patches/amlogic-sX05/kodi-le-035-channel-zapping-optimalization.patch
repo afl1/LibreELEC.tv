@@ -36,13 +36,13 @@ index ce0f01a..1adf29d 100644
        if (m_CurrentAudio.syncState == IDVDStreamPlayer::SYNC_WAITSYNC)
 -        CLog::Log(LOGDEBUG, "VideoPlayer::Sync - Audio - pts: %f, cache: %f, totalcache: %f",
 -                             m_CurrentAudio.starttime, m_CurrentAudio.cachetime, m_CurrentAudio.cachetotal);
-+        CLog::Log(LOGDEBUG, "VideoPlayer::Sync - Audio - pts: %0.3f, cache: %0.3f, totalcache: %0.3f, packets:%d",
-+                             m_CurrentAudio.starttime/1000, m_CurrentAudio.cachetime/1000, m_CurrentAudio.cachetotal/1000, m_CurrentAudio.packets);
++        CLog::Log(LOGDEBUG, "VideoPlayer::Sync - Audio - pts: %0.3f, cache: %0.3f, totalcache: %0.3f, packets:%d level:%d",
++                             m_CurrentAudio.starttime/1000, m_CurrentAudio.cachetime/1000, m_CurrentAudio.cachetotal/1000, m_CurrentAudio.packets, m_VideoPlayerAudio->GetLevel());
        if (m_CurrentVideo.syncState == IDVDStreamPlayer::SYNC_WAITSYNC)
 -        CLog::Log(LOGDEBUG, "VideoPlayer::Sync - Video - pts: %f, cache: %f, totalcache: %f",
 -                             m_CurrentVideo.starttime, m_CurrentVideo.cachetime, m_CurrentVideo.cachetotal);
-+        CLog::Log(LOGDEBUG, "VideoPlayer::Sync - Video - pts: %0.3f, cache: %0.3f, totalcache: %0.3f, packets:%d",
-+                             m_CurrentVideo.starttime/1000, m_CurrentVideo.cachetime/1000, m_CurrentVideo.cachetotal/1000, m_CurrentVideo.packets);
++        CLog::Log(LOGDEBUG, "VideoPlayer::Sync - Video - pts: %0.3f, cache: %0.3f, totalcache: %0.3f, packets:%d level:%d",
++                             m_CurrentVideo.starttime/1000, m_CurrentVideo.cachetime/1000, m_CurrentVideo.cachetotal/1000, m_CurrentVideo.packets, m_processInfo->GetLevelVQ());
  
        if (m_CurrentVideo.starttime != DVD_NOPTS_VALUE && m_CurrentVideo.packets > 0 &&
            m_playSpeed == DVD_PLAYSPEED_PAUSE)
