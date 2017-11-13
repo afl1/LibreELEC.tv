@@ -91,20 +91,27 @@ diff -Naurp kodi-17.0-beta5-e92818a/xbmc/utils/SystemInfo.cpp kodi-17.0-beta5-e9
    default:
      return "";
    }
-@@ -571,18 +566,20 @@ std::string CSysInfo::GetKernelName(bool
- std::string CSysInfo::GetKernelVersionFull(void)
- {
+@@ -555,25 +555,18 @@
    static std::string kernelVersionFull;
+   if (!kernelVersionFull.empty())
+     return kernelVersionFull;
 +  static std::string kernelVersionR;
 +  static std::string kernelVersionV;
 +  static std::string kernelVersionM;
-   if (!kernelVersionFull.empty())
-     return kernelVersionFull;
- 
--#if defined(TARGET_WINDOWS)
+
+-#if defined(TARGET_WINDOWS_DESKTOP)
 -  OSVERSIONINFOEXW osvi;
 -  if (sysGetVersionExWByRef(osvi))
 -    kernelVersionFull = StringUtils::Format("%d.%d", osvi.dwMajorVersion, osvi.dwMinorVersion);
+-#elif  defined(TARGET_WINDOWS_STORE)
+-  // get the system version number
+-  auto sv = AnalyticsInfo::VersionInfo->DeviceFamilyVersion;
+-  wchar_t* end;
+-  unsigned long long  v = wcstoull(sv->Data(), &end, 10);
+-  unsigned long long v1 = (v & 0xFFFF000000000000L) >> 48;
+-  unsigned long long v2 = (v & 0x0000FFFF00000000L) >> 32;
+-  kernelVersionFull = StringUtils::Format("%lld.%lld", v1, v2);
+-
 -#elif defined(TARGET_POSIX)
    struct utsname un;
    if (uname(&un) == 0)
@@ -116,9 +123,10 @@ diff -Naurp kodi-17.0-beta5-e92818a/xbmc/utils/SystemInfo.cpp kodi-17.0-beta5-e9
 +    kernelVersionM.assign(un.machine);
 +  }
 +  kernelVersionFull = kernelVersionR + " " + kernelVersionM;
- 
+
    if (kernelVersionFull.empty())
      kernelVersionFull = "0.0.0"; // can't detect
+   static std::string kernelVersionFull;
 @@ -757,7 +754,7 @@ std::string CSysInfo::GetOsPrettyNameWit
    }
  
@@ -159,3 +167,4 @@ diff -Naurp kodi-17.0-beta5-e92818a/xbmc/windows/GUIWindowSystemInfo.cpp kodi-17
      SetControlLabel(i++, "%s: %s", 12390, SYSTEM_UPTIME);
      SetControlLabel(i++, "%s: %s", 12394, SYSTEM_TOTALUPTIME);
    }
+
