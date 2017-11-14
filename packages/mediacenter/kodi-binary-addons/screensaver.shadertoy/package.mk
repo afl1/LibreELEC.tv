@@ -1,37 +1,37 @@
 ################################################################################
-#      This file is part of OpenELEC - http://www.openelec.tv
-#      Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
+#      This file is part of LibreELEC - https://libreelec.tv
+#      Copyright (C) 2009-2016 Team LibreELEC
 #
-#  OpenELEC is free software: you can redistribute it and/or modify
+#  LibreELEC is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
 #  the Free Software Foundation, either version 2 of the License, or
 #  (at your option) any later version.
 #
-#  OpenELEC is distributed in the hope that it will be useful,
+#  LibreELEC is distributed in the hope that it will be useful,
 #  but WITHOUT ANY WARRANTY; without even the implied warranty of
 #  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #  GNU General Public License for more details.
 #
 #  You should have received a copy of the GNU General Public License
-#  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.
+#  along with LibreELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
-PKG_NAME="visualization.shadertoy"
-PKG_VERSION="764d59d"
-PKG_SHA256="0b050831c6f9b7de89d7cebb6d6b7984a4675db3744cd5c7c8aebaf6251c9181"
+PKG_NAME="screensaver.shadertoy"
+PKG_VERSION="2638205"
+PKG_SHA256="0c04af6aa45f1838ad785a2914a47ad4ce5c6b7998f73d848aa92b4480096b58"
 PKG_REV="2"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
-PKG_SITE="https://github.com/notspiff/visualization.shadertoy"
-PKG_URL="https://github.com/notspiff/visualization.shadertoy/archive/$PKG_VERSION.tar.gz"
+PKG_SITE="https://github.com/popcornmix/screensaver.shadertoy"
+PKG_URL="https://github.com/popcornmix/screensaver.shadertoy/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain kodi-platform"
 PKG_SECTION=""
-PKG_SHORTDESC="visualization.shadertoy"
-PKG_LONGDESC="visualization.shadertoy"
+PKG_SHORTDESC="screensaver.shadertoy"
+PKG_LONGDESC="screensaver.shadertoy"
 PKG_AUTORECONF="no"
 
 PKG_IS_ADDON="yes"
-PKG_ADDON_TYPE="xbmc.player.musicviz"
+PKG_ADDON_TYPE="xbmc.ui.screensaver"
 
 if [ ! "$OPENGL" = "no" ]; then
 # for OpenGL (GLX) support
