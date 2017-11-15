@@ -46,22 +46,4 @@ index ce0f01a..1adf29d 100644
  
        if (m_CurrentVideo.starttime != DVD_NOPTS_VALUE && m_CurrentVideo.packets > 0 &&
            m_playSpeed == DVD_PLAYSPEED_PAUSE)
-@@ -2030,7 +2030,7 @@
-       else if (m_CurrentAudio.starttime != DVD_NOPTS_VALUE && m_CurrentAudio.packets > 0)
-       {
-         if (m_pInputStream->IsRealtime())
--          clock = m_CurrentAudio.starttime - m_CurrentAudio.cachetotal - DVD_MSEC_TO_TIME(400);
-+          clock = m_CurrentAudio.starttime - m_CurrentAudio.cachetotal - DVD_MSEC_TO_TIME(600);
-         else
-           clock = m_CurrentAudio.starttime - m_CurrentAudio.cachetime;
- 
-@@ -2048,6 +2048,8 @@
-             else
-               clock = m_CurrentVideo.starttime - m_CurrentVideo.cachetotal;
-           }
-+          else
-+            clock += m_CurrentVideo.starttime - m_CurrentAudio.starttime - DVD_MSEC_TO_TIME(400);
-         }
-       }
-       else if (m_CurrentVideo.starttime != DVD_NOPTS_VALUE && m_CurrentVideo.packets > 0)
 --
