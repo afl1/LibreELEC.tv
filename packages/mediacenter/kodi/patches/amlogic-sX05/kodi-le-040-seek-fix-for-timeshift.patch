@@ -73,9 +73,9 @@
  
    if(pts != DVD_NOPTS_VALUE && sync)
 +  {
-+    CLog::Log(LOGDEBUG, LOGVIDEO, "CVideoPlayer::FlushBuffers - set clock:%0.3f", pts / 1000000.0 - 1.2);
++    CLog::Log(LOGDEBUG, LOGVIDEO, "CVideoPlayer::FlushBuffers - set clock:%0.3f", pts / 1000000.0 - 0.6);
 -    m_clock.Discontinuity(pts);
-+    m_clock.Discontinuity(pts - 1200000.0);
++    m_clock.Discontinuity(pts - 600000.0);
 +  }
 +
    UpdatePlayState(0);
