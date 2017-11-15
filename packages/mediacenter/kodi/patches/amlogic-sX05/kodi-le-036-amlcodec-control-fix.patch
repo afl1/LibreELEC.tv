@@ -207,16 +207,6 @@ Subject: [PATCH] VideoPlayer: AMLCodec control fixies
 +        __FUNCTION__, timeToDisplay, pPicture->pts/1000000, iPlayingClock/1000000.0, buffer);
    if (buffer < 0)
    {
---- a/xbmc/cores/VideoPlayer/VideoRenderers/HwDecRender/RendererAML.cpp	2017-08-08 11:26:45.000000000 +0200
-+++ b/xbmc/cores/VideoPlayer/VideoRenderers/HwDecRender/RendererAML.cpp	2017-08-10 22:46:47.710636550 +0200
-@@ -95,6 +95,7 @@
- void CRendererAML::AddVideoPicture(const VideoPicture &picture, int index, double currentClock)
- {
-   ReleaseBuffer(index);
-+  CLog::Log(LOGDEBUG, LOGVIDEO, "CRendererAML::AddVideoPicture: idx:%d, pts:%0.3lf", index, picture.pts / 1000000);
- 
-   BUFFER &buf(m_buffers[index]);
-   if (picture.videoBuffer)
 --- a/xbmc/cores/VideoPlayer/DVDStreamInfo.h	2017-08-19 19:05:15.000000000 +0200
 +++ b/xbmc/cores/VideoPlayer/DVDStreamInfo.h	2017-09-07 15:04:58.009993157 +0200
 @@ -30,6 +30,7 @@

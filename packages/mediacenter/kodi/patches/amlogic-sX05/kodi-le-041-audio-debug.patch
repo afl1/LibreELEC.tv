@@ -69,25 +69,6 @@
  
    int framesOutput = m_audioSink.AddPackets(audioframe);
  
---- a/xbmc/cores/VideoPlayer/DVDCodecs/Audio/DVDAudioCodecFFmpeg.cpp	2017-10-23 07:55:21.000000000 +0200
-+++ b/xbmc/cores/VideoPlayer/DVDCodecs/Audio/DVDAudioCodecFFmpeg.cpp	2017-10-27 12:33:12.691037000 +0200
-@@ -156,6 +156,7 @@
-   {
-     return iBytesUsed;
-   }
-+  CLog::Log(LOGDEBUG, LOGAUDIO, "CDVDAudioCodecFFmpeg::AddData pts:%0.3f size:%d", avpkt.pts/1000000.0, packet.iSize);
- 
-   /* some codecs will attempt to consume more data than what we gave */
-   if (iBytesUsed > iSize)
-@@ -213,6 +214,8 @@
-     frame.pts = (double)bpts * DVD_TIME_BASE / AV_TIME_BASE;
-   else
-     frame.pts = DVD_NOPTS_VALUE;
-+  if(bpts != AV_NOPTS_VALUE)
-+    CLog::Log(LOGDEBUG, LOGAUDIO, "CDVDAudioCodecFFmpeg::GetData pts:%0.3f duration:%0.3f", frame.pts/1000000.0, frame.duration/1000000.0);
- }
- 
- int CDVDAudioCodecFFmpeg::GetData(uint8_t** dst)
 --- a/xbmc/cores/AudioEngine/Engines/ActiveAE/ActiveAE.cpp	2017-10-27 13:59:43.184417658 +0200
 +++ b/xbmc/cores/AudioEngine/Engines/ActiveAE/ActiveAE.cpp	2017-10-27 15:42:53.276715999 +0200
 @@ -2392,6 +2392,7 @@
@@ -106,13 +87,4 @@
      }
  
      if (fabs(error) < 30)
-@@ -2453,6 +2455,8 @@
-         CLog::Log(LOGDEBUG,"ActiveAE::SyncStream - average error %f below threshold of %f", error, 30.0);
-       }
-     }
-+    else
-+        CLog::Log(LOGDEBUG, LOGAUDIO, "ActiveAE::SyncStream - average error %f", error);
- 
-     return ret;
-   }
 --
