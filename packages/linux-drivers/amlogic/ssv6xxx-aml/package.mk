@@ -1,7 +1,7 @@
 ################################################################################
-#      This file is part of LibreELEC - https://LibreELEC.tv
-#      Copyright (C) 2016 Team LibreELEC
-#      Copyright (C) 2016 kszaq
+#      This file is part of LibreELEC - https://libreelec.tv
+#      Copyright (C) 2017-present Team LibreELEC
+#      Copyright (C) 2017 kszaq
 #
 #  LibreELEC is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -22,6 +22,7 @@ PKG_REV="1"
 PKG_ARCH="arm aarch64"
 PKG_LICENSE="GPL"
 PKG_VERSION="1041e7d"
+PKG_SHA256="f983aef19014f23536a6327d026f92a39d3af14f7001ee9d70ab696f8382b20a"
 PKG_URL="http://kszaq.libreelec.tv/sources/ssv6xxx-$PKG_VERSION.tar.gz"
 PKG_SOURCE_DIR="ssv6xxx-${PKG_VERSION}*"
 PKG_DEPENDS_TARGET="toolchain linux"
@@ -29,13 +30,8 @@ PKG_NEED_UNPACK="$LINUX_DEPENDS"
 PKG_SECTION="driver"
 PKG_SHORTDESC="ssv6xxx-aml"
 PKG_LONGDESC="ssv6xxx-aml"
-PKG_AUTORECONF="no"
-
-if [ "$TARGET_KERNEL_ARCH" = "arm64" -a "$TARGET_ARCH" = "arm" ]; then
-  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET gcc-linaro-aarch64-linux-gnu:host"
-  export PATH=$TOOLCHAIN/lib/gcc-linaro-aarch64-linux-gnu/bin/:$PATH
-  TARGET_PREFIX=aarch64-linux-gnu-
-fi
+PKG_TOOLCHAIN="manual"
+PKG_IS_KERNEL_PKG="yes"
 
 pre_configure_target() {
   sed -i 's,hw_cap_p2p = on,hw_cap_p2p = off,g' ssv6051/firmware/ssv6051-wifi.cfg
@@ -57,10 +53,10 @@ make_target() {
 
 makeinstall_target() {
   # kernel module
-  mkdir -p $INSTALL/usr/lib/kernel-overlays/base/lib/modules/$(get_module_dir)/$PKG_NAME
-    cp $PKG_BUILD/ssv6051/ssv6051.ko $INSTALL/usr/lib/kernel-overlays/base/lib/modules/$(get_module_dir)/$PKG_NAME/
+  mkdir -p $INSTALL/$(get_full_module_dir)/$PKG_NAME
+  cp $PKG_BUILD/ssv6051/ssv6051.ko $INSTALL/$(get_full_module_dir)/$PKG_NAME
 
   # firmware
-  mkdir -p $INSTALL/usr/lib/kernel-overlays/base/lib/firmware/ssv6051
-    cp $PKG_BUILD/ssv6051/firmware/* $INSTALL/usr/lib/kernel-overlays/base/lib/firmware/ssv6051/
+  mkdir -p $INSTALL/$(get_full_firmware_dir)/ssv6051
+  cp $PKG_BUILD/ssv6051/firmware/* $INSTALL/$(get_full_firmware_dir)/ssv6051
 }
