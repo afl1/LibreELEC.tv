@@ -180,15 +180,13 @@ diff --git a/xbmc/cores/VideoPlayer/DVDCodecs/Video/DVDVideoCodecAmlogic.cpp b/x
 index a27d3e3..4904ed2 100644
 --- a/xbmc/cores/VideoPlayer/DVDCodecs/Video/DVDVideoCodecAmlogic.cpp
 +++ b/xbmc/cores/VideoPlayer/DVDCodecs/Video/DVDVideoCodecAmlogic.cpp
-@@ -168,6 +168,13 @@ bool CDVDVideoCodecAmlogic::Open(CDVDStreamInfo &hints, CDVDCodecOptions &option
+@@ -168,6 +168,11 @@ bool CDVDVideoCodecAmlogic::Open(CDVDStreamInfo &hints, CDVDCodecOptions &option
      case AV_CODEC_ID_CAVS:
        m_pFormatName = "am-avs";
        break;
 +    case AV_CODEC_ID_VP9:
 +      if (!aml_support_vp9())
-+      {
-+        return false;
-+      }
++        goto FAIL;
 +      m_pFormatName = "am-vp9";
 +      break;
      case AV_CODEC_ID_HEVC:
