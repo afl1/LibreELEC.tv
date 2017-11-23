@@ -73,15 +73,6 @@ Subject: [PATCH] VideoPlayer: AMLCodec control fixies
        m_ptsOverflow
      );
    return true;
-@@ -1896,7 +1896,7 @@
-   if (drop)
-     vbuf.flags |= V4L2_BUF_FLAG_DONE;
- 
--  CLog::Log(LOGDEBUG, LOGVIDEO, "CAMLCodec::ReleaseFrame idx:%u", index);
-+  CLog::Log(LOGDEBUG, LOGVIDEO, "CAMLCodec::ReleaseFrame idx:%u drop:%d", index, drop);
- 
-   if ((ret = m_amlVideoFile->IOControl(VIDIOC_QBUF, &vbuf)) < 0)
-     CLog::Log(LOGERROR, "CAMLCodec::ReleaseFrame - VIDIOC_QBUF failed: %s", strerror(errno));
 @@ -1911,7 +1911,7 @@
    //Driver change from 10 to 0ms latency, throttle here
    std::chrono::time_point<std::chrono::system_clock> now(std::chrono::system_clock::now());
@@ -91,12 +82,11 @@ Subject: [PATCH] VideoPlayer: AMLCodec control fixies
  DRAIN:
    if (m_amlVideoFile->IOControl(VIDIOC_DQBUF, &vbuf) < 0)
    {
-@@ -1921,7 +1921,11 @@
+@@ -1921,7 +1921,10 @@
      std::chrono::milliseconds elapsed(std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now() - now).count());
  
      if (elapsed < std::chrono::milliseconds(waitTime))
 +    {
-+      m_try++;
 +      CLog::Log(LOGDEBUG, "CAMLCodec::DequeueBuffer: Try again after: %ums", waitTime);
        std::this_thread::sleep_for(std::chrono::milliseconds(waitTime) - elapsed);
 +    } 
@@ -113,7 +103,7 @@ Subject: [PATCH] VideoPlayer: AMLCodec control fixies
    return 0;
  }
  
-@@ -1955,11 +1953,14 @@
+@@ -1955,11 +1953,15 @@
    struct buf_status bs;
    m_dll->codec_get_vbuf_state(&am_private->vcodec, &bs);
  
@@ -126,23 +116,25 @@ Subject: [PATCH] VideoPlayer: AMLCodec control fixies
      m_frameSizes.pop_front();
 +    CLog::Log(LOGDEBUG, LOGVIDEO, "CAMLCodec::GetTimeSize: len:%d dl:%d fs:%u front:%u",
 +      m_frameSizes.size(), bs.data_len, m_frameSizeSum, m_frameSizes.front());
++    m_try = 0;
    }
    if (bs.free_len < (bs.data_len >> 1))
      return 7.0;
-@@ -1984,8 +1984,15 @@
+@@ -1984,8 +1984,16 @@
      return CDVDVideoCodec::VC_ERROR;
  
    float timesize(GetTimeSize());
 -  if(!m_drain && timesize < 1.0)
 +  double ttd =  (double)m_cur_pts / PTS_FREQ - (double)m_hints.pClock->GetClock() / DVD_TIME_BASE;
 +  double x = timesize == 0.0 ? 100.0 : ttd > 2.0 ? 0.3 / timesize : ttd / timesize;
-+  if ((x > 0.2 && !m_drain && timesize < 1.0) || (m_try > 1 && timesize < 0.3))
++  if (!m_drain && ((x > 0.2 && timesize < 1.0) || (!m_try && timesize < 0.3)))
 +  {
-+    m_try = 0;
++    m_try = 1;
 +    CLog::Log(LOGDEBUG, "CAMLCodec::GetPicture: VC_BUFFER LEV:%0.2f ttd:%0.0fms x:%0.2f",
 +      timesize, ttd * 1000.0, x);
      return CDVDVideoCodec::VC_BUFFER;
 +  }
++  m_try = 0;
  
    if (DequeueBuffer() == 0)
    {

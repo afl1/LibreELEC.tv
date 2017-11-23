@@ -169,3 +169,4 @@ diff -Naurp kodi-17.0-beta5-e92818a/xbmc/windows/GUIWindowSystemInfo.cpp kodi-17
      SetControlLabel(i++, "%s: %s", 12394, SYSTEM_TOTALUPTIME);
    }
 
+
