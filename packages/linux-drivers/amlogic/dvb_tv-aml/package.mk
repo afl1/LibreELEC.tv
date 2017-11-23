@@ -28,7 +28,6 @@ PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="driver"
 PKG_SHORTDESC="dvb_tv-aml: Internal DVB tuner driver for Amlogic devices developed by afl1"
 PKG_LONGDESC="dvb_tv-aml: Internal DVB tuner driver for Amlogic devices developed by afl1"
-PKG_AUTORECONF="no"
 
 make_target() {
   : # nop

@@ -31,7 +31,7 @@ PKG_PRIORITY="optional"
 PKG_SECTION="driver"
 PKG_SHORTDESC="gpu-aml: Linux drivers for Mali GPUs found in Amlogic Meson SoCs"
 PKG_LONGDESC="gpu-aml: Linux drivers for Mali GPUs found in Amlogic Meson SoCs"
-PKG_AUTORECONF="no"
+PKG_TOOLCHAIN="manual"
 PKG_IS_KERNEL_PKG="yes"
 
 if [ "$TARGET_KERNEL_ARCH" = "arm64" -a "$TARGET_ARCH" = "arm" ]; then

@@ -28,7 +28,7 @@ PKG_URL="http://kszaq.libreelec.tv/sources/qca-firmware_${PKG_VERSION}_armhf.deb
 PKG_SOURCE_DIR="qca-firmware-$PKG_VERSION"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="firmware"
-PKG_AUTORECONF="no"
+PKG_TOOLCHAIN="manual"
 
 unpack() {
   mkdir -p "$BUILD/$PKG_NAME-$PKG_VERSION"

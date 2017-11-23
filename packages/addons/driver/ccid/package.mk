@@ -29,9 +29,7 @@ PKG_PRIORITY="optional"
 PKG_SECTION="driver"
 PKG_SHORTDESC="CCID free software driver"
 PKG_LONGDESC="CCID free software driver"
-PKG_IS_ADDON="no"
-PKG_AUTORECONF="yes"
-
+PKG_TOOLCHAIN="autotools"
 PKG_MAINTAINER="Stefan Saraev (seo at irc.freenode.net)"
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-static --enable-twinserial"

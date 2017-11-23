@@ -28,7 +28,7 @@ PKG_PRIORITY="optional"
 PKG_SECTION="kszaq"
 PKG_SHORTDESC="rng-tools: Daemon to use a Hardware TRNG"
 PKG_LONGDESC="The rngd daemon acts as a bridge between a Hardware TRNG (true random number generator) such as the ones in some Intel/AMD/VIA chipsets, and the kernel's PRNG (pseudo-random number generator)."
-PKG_AUTORECONF="yes"
+PKG_TOOLCHAIN="autotools"
 
 post_install() {
   enable_service rng-tools.service

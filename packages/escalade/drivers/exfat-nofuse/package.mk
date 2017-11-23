@@ -9,7 +9,7 @@ PKG_URL="https://github.com/dorimanx/exfat-nofuse/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="escalade"
 PKG_SHORTDESC="Linux non-fuse read/write kernel driver for exFat"
-PKG_AUTORECONF="no"
+PKG_TOOLCHAIN="manual"
 
 if [ "$TARGET_KERNEL_ARCH" = "arm64" -a "$TARGET_ARCH" = "arm" ]; then
   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET gcc-linaro-aarch64-linux-gnu:host"

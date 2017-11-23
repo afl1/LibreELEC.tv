@@ -29,9 +29,6 @@ PKG_SECTION="virtual"
 PKG_SHORTDESC="OEM: Metapackage for various OEM packages"
 PKG_LONGDESC="OEM: Metapackage for various OEM packages"
 
-PKG_IS_ADDON="no"
-PKG_AUTORECONF="no"
-
 post_install() {
   if [ -n "$DEVICE" -a -d "$PROJECT_DIR/$PROJECT/devices/$DEVICE/filesystem" ]; then
     cp -LR $PROJECT_DIR/$PROJECT/devices/$DEVICE/filesystem/* $BUILD/image/system

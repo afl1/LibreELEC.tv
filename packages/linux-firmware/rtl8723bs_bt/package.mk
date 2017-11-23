@@ -28,7 +28,7 @@ PKG_PRIORITY="optional"
 PKG_SECTION="firmware"
 PKG_SHORTDESC="rtl8723bs_bt"
 PKG_LONGDESC="rtl8723bs_bt"
-PKG_AUTORECONF="no"
+PKG_TOOLCHAIN="manual"
 
 PKG_IS_ADDON="yes"
 PKG_ADDON_TYPE="xbmc.pvrclient"

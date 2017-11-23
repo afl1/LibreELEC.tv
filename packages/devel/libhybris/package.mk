@@ -27,7 +27,7 @@ PKG_SOURCE_DIR="$PKG_NAME-$PKG_VERSION*/hybris"
 PKG_DEPENDS_TARGET="toolchain android-headers"
 PKG_SECTION="devel"
 PKG_SHORTDESC="libhybris: Allows to run bionic-based HW adaptations in glibc systems - libs"
-PKG_AUTORECONF="yes"
+PKG_TOOLCHAIN="autotools"
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-arch=$TARGET_ARCH \
                            --with-default-egl-platform=fbdev \
