@@ -1,5 +1,5 @@
 ################################################################################
-#      This file is part of LibreELEC - https://LibreELEC.tv
+#      This file is part of LibreELEC - https://libreelec.tv
 #      Copyright (C) 2016-present Team LibreELEC
 #
 #  LibreELEC is free software: you can redistribute it and/or modify
@@ -17,31 +17,48 @@
 ################################################################################
 
 PKG_NAME="tvheadend42"
-PKG_VERSION="c4919de"
-PKG_REVISION="637"
-PKG_SHA256="1b54f7c6398ccf5d761e178f2be41da6ea8b3d91818707b657ac45db4edeeb8d"
-PKG_VERSION_NUMBER="4.3-$PKG_REVISION"
-PKG_REV="43-$PKG_REVISION"
+PKG_VERSION="ceaf330"
+PKG_SHA256="c6b3b366136d9e86630cb2ebd2cab823448d0eeb02ef15e72bc0accd8dc9d923"
+PKG_VERSION_NUMBER="4.2.4-23"
+PKG_REV="113"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.tvheadend.org"
 PKG_URL="https://github.com/tvheadend/tvheadend/archive/$PKG_VERSION.tar.gz"
 PKG_SOURCE_DIR="tvheadend-${PKG_VERSION}*"
-PKG_DEPENDS_TARGET="toolchain curl dvb-tools libdvbcsa libiconv openssl pngquant:host Python2:host yasm"
+PKG_DEPENDS_TARGET="toolchain avahi curl dvb-apps ffmpegx libdvbcsa libiconv openssl pngquant:host Python2:host"
 PKG_SECTION="service"
 PKG_SHORTDESC="Tvheadend: a TV streaming server for Linux"
 PKG_LONGDESC="Tvheadend ($PKG_VERSION_NUMBER): is a TV streaming server for Linux supporting DVB-S/S2, DVB-C, DVB-T/T2, IPTV, SAT>IP, ATSC and ISDB-T"
 
 PKG_IS_ADDON="yes"
-PKG_ADDON_NAME="Tvheadend Server 4.3"
+PKG_ADDON_NAME="Tvheadend Server 4.2"
 PKG_ADDON_TYPE="xbmc.service"
 
-# transcoding only for generic
-if [ "$TARGET_ARCH" = x86_64 ]; then
-  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET intel-vaapi-driver"
-  TVH_TRANSCODING="--enable-ffmpeg_static --enable-libav --enable-libfdkaac --disable-libtheora --enable-libvorbis --enable-libvpx --enable-libx264 --enable-libx265 --disable-qsv"
-else
-  TVH_TRANSCODING="--disable-ffmpeg_static --disable-libav"
+# basic transcoding options
+PKG_TVH_TRANSCODING="\
+  --disable-ffmpeg_static \
+  --disable-libfdkaac_static \
+  --disable-libopus_static \
+  --disable-libtheora \
+  --disable-libtheora_static \
+  --disable-libvorbis_static \
+  --disable-libvpx_static \
+  --disable-libx264_static \
+  --disable-libx265_static \
+  --enable-libav \
+  --enable-libfdkaac \
+  --enable-libopus \
+  --enable-libvorbis \
+  --enable-libvpx \
+  --enable-libx264 \
+  --enable-libx265"
+
+# specific transcoding options
+if [[ "$TARGET_ARCH" != "x86_64" ]]; then
+  PKG_TVH_TRANSCODING="$PKG_TVH_TRANSCODING \
+    --disable-libvpx \
+    --disable-libx265"
 fi
 
 PKG_CONFIGURE_OPTS_TARGET="--prefix=/usr \
@@ -58,9 +75,9 @@ PKG_CONFIGURE_OPTS_TARGET="--prefix=/usr \
                            --enable-epoll \
                            --enable-inotify \
                            --enable-pngquant \
+                           --disable-libmfx_static \
                            --disable-nvenc \
                            --disable-uriparser \
-                           $TVH_TRANSCODING \
                            --enable-tvhcsa \
                            --enable-trace \
                            --nowerror \
@@ -77,31 +94,19 @@ pre_configure_target() {
   cd $PKG_BUILD
   rm -rf .$TARGET_NAME
 
-# transcoding
-  if [ "$TARGET_ARCH" = x86_64 ]; then
-    export AS=$TOOLCHAIN/bin/yasm
-    export LDFLAGS="$LDFLAGS -lX11 -lm -lvdpau -lva -lva-drm -lva-x11"
-    export ARCH=$TARGET_ARCH
-  fi
+# pass ffmpegx to build
+  PKG_CONFIG_PATH="$(get_build_dir ffmpegx)/.INSTALL_PKG/usr/local/lib/pkgconfig"
+  CFLAGS="$CFLAGS -I$(get_build_dir ffmpegx)/.INSTALL_PKG/usr/local/include"
+  LDFLAGS="$LDFLAGS -L$(get_build_dir ffmpegx)/.INSTALL_PKG/usr/local/lib"
 
-  export CROSS_COMPILE=$TARGET_PREFIX
+  export CROSS_COMPILE="$TARGET_PREFIX"
   export CFLAGS="$CFLAGS -I$SYSROOT_PREFIX/usr/include/iconv -L$SYSROOT_PREFIX/usr/lib/iconv"
 }
-
-# transcoding link tvheadend with g++
-if [ "$TARGET_ARCH" = x86_64 ]; then
-  pre_make_target() {
-    export CXX=$CXX
-  }
-fi
 
 post_make_target() {
   $CC -O -fbuiltin -fomit-frame-pointer -fPIC -shared -o capmt_ca.so src/extra/capmt_ca.c -ldl
 }
 
-makeinstall_target() {
-  : # nothing to do here
-}
 
 addon() {
   mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/bin
