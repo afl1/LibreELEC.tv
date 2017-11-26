@@ -58,8 +58,8 @@ make_target() {
 
 makeinstall_target() {
   # kernel module
-  mkdir -p $INSTALL/usr/lib/kernel-overlays/base/lib/modules/$(get_module_dir)/$PKG_NAME
-    cp $PKG_BUILD/ssv6051/ssv6051.ko $INSTALL/usr/lib/kernel-overlays/base/lib/modules/$(get_module_dir)/$PKG_NAME/
+  mkdir -p $INSTALL/$(get_full_module_dir)/$PKG_NAME
+    cp $PKG_BUILD/ssv6051/ssv6051.ko $INSTALL/$(get_full_module_dir)/$PKG_NAME/
 
   # firmware
   mkdir -p $INSTALL/usr/lib/kernel-overlays/base/lib/firmware/ssv6051

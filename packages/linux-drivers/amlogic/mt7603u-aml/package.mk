@@ -44,9 +44,9 @@ make_target() {
 }
 
 makeinstall_target() {
-  mkdir -p $INSTALL/usr/lib/kernel-overlays/base/lib/modules/$(get_module_dir)/$PKG_NAME
-  cp $PKG_BUILD/os/linux/mtprealloc.ko $INSTALL/usr/lib/kernel-overlays/base/lib/modules/$(get_module_dir)/$PKG_NAME
-  cp $PKG_BUILD/os/linux/mt7603usta.ko $INSTALL/usr/lib/kernel-overlays/base/lib/modules/$(get_module_dir)/$PKG_NAME
+  mkdir -p $INSTALL/$(get_full_module_dir)/$PKG_NAME
+  cp $PKG_BUILD/os/linux/mtprealloc.ko $INSTALL/$(get_full_module_dir)/$PKG_NAME
+  cp $PKG_BUILD/os/linux/mt7603usta.ko $INSTALL/$(get_full_module_dir)/$PKG_NAME
 
   mkdir -p $INSTALL/usr/lib/kernel-overlays/base/lib/firmware
   cp $PKG_BUILD/conf/MT7603USTA.dat $INSTALL/usr/lib/kernel-overlays/base/lib/firmware

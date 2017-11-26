@@ -52,6 +52,6 @@ make_target() {
 }
 
 makeinstall_target() {
-  mkdir -p $INSTALL/usr/lib/kernel-overlays/base/lib/modules/$(get_module_dir)/$PKG_NAME
-    find $PKG_BUILD -name *.ko -exec cp {} $INSTALL/usr/lib/kernel-overlays/base/lib/modules/$(get_module_dir)/$PKG_NAME \;
+  mkdir -p $INSTALL/$(get_full_module_dir)/$PKG_NAME
+    find $PKG_BUILD -name *.ko -exec cp {} $INSTALL/$(get_full_module_dir)/$PKG_NAME \;
 }

@@ -28,6 +28,7 @@ PKG_NEED_UNPACK="$LINUX_DEPENDS"
 PKG_SECTION="driver"
 PKG_SHORTDESC="DVB drivers that replace the version shipped with the kernel"
 PKG_LONGDESC="DVB drivers that replace the version shipped with the kernel"
+PKG_TOOLCHAIN="manual"
 PKG_IS_KERNEL_PKG="yes"
 
 if [ "$PROJECT" = "S905" ] || [ "$PROJECT" = "S912" ]; then

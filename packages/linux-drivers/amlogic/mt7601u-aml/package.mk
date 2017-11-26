@@ -44,9 +44,9 @@ make_target() {
 }
 
 makeinstall_target() {
-  mkdir -p $INSTALL/usr/lib/kernel-overlays/base/lib/modules/$(get_module_dir)/$PKG_NAME
-  cp $PKG_BUILD/mtprealloc.ko $INSTALL/usr/lib/kernel-overlays/base/lib/modules/$(get_module_dir)/$PKG_NAME
-  cp $PKG_BUILD/mt7601usta.ko $INSTALL/usr/lib/kernel-overlays/base/lib/modules/$(get_module_dir)/$PKG_NAME
+  mkdir -p $INSTALL/$(get_full_module_dir)/$PKG_NAME
+  cp $PKG_BUILD/mtprealloc.ko $INSTALL/$(get_full_module_dir)/$PKG_NAME
+  cp $PKG_BUILD/mt7601usta.ko $INSTALL/$(get_full_module_dir)/$PKG_NAME
 
   mkdir -p $INSTALL/usr/lib/kernel-overlays/base/lib/firmware
   cp $PKG_BUILD/RT2870STA_7601.dat $INSTALL/usr/lib/kernel-overlays/base/lib/firmware

@@ -44,6 +44,6 @@ make_target() {
 }
 
 makeinstall_target() {
-  mkdir -p $INSTALL/usr/lib/kernel-overlays/base/lib/modules/$(get_module_dir)/ap6xxx-aml
-  cp $PKG_BUILD/bcmdhd.1.363.59.144.x.cn/dhd.ko $INSTALL/usr/lib/kernel-overlays/base/lib/modules/$(get_module_dir)/ap6xxx-aml
+  mkdir -p $INSTALL/$(get_full_module_dir)/ap6xxx-aml
+  cp $PKG_BUILD/bcmdhd.1.363.59.144.x.cn/dhd.ko $INSTALL/$(get_full_module_dir)/ap6xxx-aml
 }
