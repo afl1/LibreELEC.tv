@@ -79,8 +79,8 @@ if [ "$DEVEL_VERSION" = "devel" ] ; then
   AML_UPDATE_NAME="$DISTRONAME-$LIBREELEC_ARCH-$OS_VERSION-$DEVEL_VERSION"
 fi
 
-if [ -n "$SYSTEM" ]; then
-  IMAGE_NAME="$IMAGE_NAME-$SYSTEM"
+if [ -n "$UBOOT_SYSTEM" ]; then
+  IMAGE_NAME="$IMAGE_NAME-$UBOOT_SYSTEM"
 fi
 
 if [ -n "$CUSTOM_IMAGE_NAME" ]; then
@@ -174,7 +174,7 @@ $SCRIPTS/install network
 [ "$UDEVIL" = "yes" ] && $SCRIPTS/install udevil
 
 # NTFS 3G support
-[ "$EXFAT" = "yes" ] && $SCRIPTS/install exfat-utilities
+[ "$EXFAT" = "yes" ] && $SCRIPTS/install fuse-exfat
 
 # NTFS 3G support
 [ "$NTFS3G" = "yes" ] && $SCRIPTS/install ntfs-3g_ntfsprogs
@@ -579,8 +579,8 @@ if [ "$1" = "release" -o "$1" = "mkimage" -o "$1" = "amlpkg" -o "$1" = "noobs" ]
     rm -rf $RELEASE_DIR
   fi
 
-    # lets get rid of things we don't care about in $TARGET_IMG
-    rm $TARGET_IMG/$IMAGE_NAME.system
-    rm $TARGET_IMG/$IMAGE_NAME.kernel
-    mv -f $TARGET_IMG/$IMAGE_NAME.dtb $TARGET_IMG/dtb.img
+  # lets get rid of things we don't care about in $TARGET_IMG
+  rm $TARGET_IMG/$IMAGE_NAME.system
+  rm $TARGET_IMG/$IMAGE_NAME.kernel
+  mv -f $TARGET_IMG/$IMAGE_NAME.dtb $TARGET_IMG/dtb.img
 fi

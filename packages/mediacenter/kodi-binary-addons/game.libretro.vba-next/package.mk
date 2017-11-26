@@ -17,8 +17,8 @@
 ################################################################################
 
 PKG_NAME="game.libretro.vba-next"
-PKG_VERSION="8cd4831"
-PKG_SHA256="56093b5cf1cfb7e498897d0d93fd657f34798060cdacc61e829c3df5b2c05d50"
+PKG_VERSION="f90a0fc"
+PKG_SHA256="88464860a0ad53b41a9dde4439af09098156dd2ab69137dc26edbdc6f18c37d4"
 PKG_REV="104"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"

@@ -1,7 +1,7 @@
 ################################################################################
-#      This file is part of LibreELEC - https://LibreELEC.tv
-#      Copyright (C) 2016 Team LibreELEC
-#      Copyright (C) 2016 kszaq
+#      This file is part of LibreELEC - https://libreelec.tv
+#      Copyright (C) 2017-present Team LibreELEC
+#      Copyright (C) 2017 kszaq
 #
 #  LibreELEC is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -22,6 +22,7 @@ PKG_REV="1"
 PKG_ARCH="arm aarch64"
 PKG_LICENSE="GPL"
 PKG_VERSION="1041e7d"
+PKG_SHA256="f983aef19014f23536a6327d026f92a39d3af14f7001ee9d70ab696f8382b20a"
 PKG_URL="http://kszaq.libreelec.tv/sources/ssv6xxx-$PKG_VERSION.tar.gz"
 PKG_SOURCE_DIR="ssv6xxx-${PKG_VERSION}*"
 PKG_DEPENDS_TARGET="toolchain linux"
@@ -59,9 +60,9 @@ make_target() {
 makeinstall_target() {
   # kernel module
   mkdir -p $INSTALL/$(get_full_module_dir)/$PKG_NAME
-    cp $PKG_BUILD/ssv6051/ssv6051.ko $INSTALL/$(get_full_module_dir)/$PKG_NAME/
+  cp $PKG_BUILD/ssv6051/ssv6051.ko $INSTALL/$(get_full_module_dir)/$PKG_NAME
 
   # firmware
-  mkdir -p $INSTALL/usr/lib/kernel-overlays/base/lib/firmware/ssv6051
-    cp $PKG_BUILD/ssv6051/firmware/* $INSTALL/usr/lib/kernel-overlays/base/lib/firmware/ssv6051/
+  mkdir -p $INSTALL/$(get_full_firmware_dir)/ssv6051
+  cp $PKG_BUILD/ssv6051/firmware/* $INSTALL/$(get_full_firmware_dir)/ssv6051
 }

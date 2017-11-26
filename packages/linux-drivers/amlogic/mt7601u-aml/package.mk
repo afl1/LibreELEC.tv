@@ -23,6 +23,7 @@ PKG_ARCH="arm aarch64"
 PKG_LICENSE="GPL"
 PKG_SITE="http://openlinux.amlogic.com:8000/download/ARM/wifi/"
 PKG_VERSION="4e61a61"
+PKG_SHA256="814a63d8654f87a76cc06425ad2120daa32646f5220341a26296e4a6643b013a"
 PKG_URL="https://github.com/khadas/android_hardware_wifi_mtk_drivers_mt7601/archive/$PKG_VERSION.tar.gz"
 PKG_SOURCE_DIR="android_hardware_wifi_mtk_drivers_mt7601-$PKG_VERSION*"
 PKG_DEPENDS_TARGET="toolchain linux"
@@ -48,6 +49,6 @@ makeinstall_target() {
   cp $PKG_BUILD/mtprealloc.ko $INSTALL/$(get_full_module_dir)/$PKG_NAME
   cp $PKG_BUILD/mt7601usta.ko $INSTALL/$(get_full_module_dir)/$PKG_NAME
 
-  mkdir -p $INSTALL/usr/lib/kernel-overlays/base/lib/firmware
-  cp $PKG_BUILD/RT2870STA_7601.dat $INSTALL/usr/lib/kernel-overlays/base/lib/firmware
+  mkdir -p $INSTALL/$(get_full_firmware_dir)
+  cp $PKG_BUILD/RT2870STA_7601.dat $INSTALL/$(get_full_firmware_dir)
 }

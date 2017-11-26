@@ -30,16 +30,12 @@ PKG_LONGDESC="These package contains Wetek's DVB driver "
 PKG_IS_KERNEL_PKG="yes"
 PKG_TOOLCHAIN="manual"
 
-make_target() {
-  : # nothing todo
-}
-
 makeinstall_target() {
   mkdir -p $INSTALL/$(get_full_module_dir)/$PKG_NAME
   cp wetekdvb.ko $INSTALL/$(get_full_module_dir)/$PKG_NAME
 
   mkdir -p $INSTALL/$(get_full_firmware_dir)
-    cp firmware/* $INSTALL/$(get_full_firmware_dir)
+  cp firmware/* $INSTALL/$(get_full_firmware_dir)
 }
 
 post_install() {

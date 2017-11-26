@@ -1,6 +1,7 @@
 ################################################################################
-#      This file is part of LibreELEC - https://LibreELEC.tv
-#      Copyright (C) 2016 Team LibreELEC
+#      This file is part of LibreELEC - https://libreelec.tv
+#      Copyright (C) 2017-present Team LibreELEC
+#      Copyright (C) 2017 kszaq
 #
 #  LibreELEC is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -18,6 +19,7 @@
 
 PKG_NAME="RTL8188EU-aml"
 PKG_VERSION="2d358c5"
+PKG_SHA256="adf31d56d3a94bca814f1bd0de24af61fae85d25a259124b5d16c1d23cc72c91"
 PKG_REV="1"
 PKG_ARCH="arm aarch64"
 PKG_LICENSE="GPL"
@@ -52,6 +54,6 @@ make_target() {
 }
 
 makeinstall_target() {
-  mkdir -p $INSTALL/$(get_full_module_dir)/$PKG_NAME
-    find $PKG_BUILD -name *.ko -exec cp {} $INSTALL/$(get_full_module_dir)/$PKG_NAME \;
+  mkdir -p $INSTALL/usr/lib/kernel-overlays/base/lib/modules/$(get_module_dir)/$PKG_NAME
+  find $PKG_BUILD -name *.ko -exec cp {} $INSTALL/$(get_full_module_dir)/$PKG_NAME \;
 }

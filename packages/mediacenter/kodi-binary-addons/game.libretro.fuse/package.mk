@@ -17,8 +17,8 @@
 ################################################################################
 
 PKG_NAME="game.libretro.fuse"
-PKG_VERSION="a40dc53"
-PKG_SHA256="485e0d8a5d556235651f801e45f067217b862aeeec9e3319aaa58ec5736211e0"
+PKG_VERSION="085af62"
+PKG_SHA256="c42ebb79f77b18f7f454218a5a2ae49f0e8742bd12dc1882bcc14cd34d8e81f1"
 PKG_REV="104"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"

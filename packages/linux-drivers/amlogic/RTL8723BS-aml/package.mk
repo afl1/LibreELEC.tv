@@ -1,6 +1,7 @@
 ################################################################################
-#      This file is part of LibreELEC - https://LibreELEC.tv
-#      Copyright (C) 2016 Team LibreELEC
+#      This file is part of LibreELEC - https://libreelec.tv
+#      Copyright (C) 2017-present Team LibreELEC
+#      Copyright (C) 2017 kszaq
 #
 #  LibreELEC is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -18,6 +19,7 @@
 
 PKG_NAME="RTL8723BS-aml"
 PKG_VERSION="c3eef6c"
+PKG_SHA256="db86d7237a047cdbb64ecb6919ab18035673b179ac56b253f050bfd0efc29fbc"
 PKG_REV="1"
 PKG_ARCH="arm aarch64"
 PKG_LICENSE="GPL"
@@ -53,5 +55,5 @@ make_target() {
 
 makeinstall_target() {
   mkdir -p $INSTALL/$(get_full_module_dir)/$PKG_NAME
-    cp $PKG_BUILD/rtl8723BS/*.ko $INSTALL/$(get_full_module_dir)/$PKG_NAME
+  cp $PKG_BUILD/rtl8723BS/*.ko $INSTALL/$(get_full_module_dir)/$PKG_NAME
 }

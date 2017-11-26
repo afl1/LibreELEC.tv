@@ -127,5 +127,3 @@ read -p "Type \"yes\" if you know what you are doing or anything else to exit: "
 case "$choice" in
   yes) install_to_nand ;;
 esac
-
-

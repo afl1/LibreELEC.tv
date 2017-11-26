@@ -45,27 +45,27 @@ pre_make_target() {
 }
 
 make_target() {
-  case $PROJECT in
-    RPi)
-      case $DEVICE in
-        RPi)
-          make -C libretro platform=armv6-gles-hardfloat-arm1176jzf-s
-          ;;
-        RPi2)
-          make -C libretro platform=armv7-neon-gles-hardfloat-cortex-a7
-          ;;
-      esac
-      ;;
-    imx6)
-      make -C libretro platform=armv7-neon-gles-hardfloat-cortex-a9
-      ;;
-    WeTek_Play|WeTek_Core|S905)
-      make -C libretro platform=armv7-neon-gles-hardfloat-cortex-a9
-      ;;
-    Generic)
-      make -C libretro
-      ;;
-  esac
+  if [ -z "$DEVICE" ]; then
+    PKG_DEVICE_NAME=$PROJECT
+  else
+    PKG_DEVICE_NAME=$DEVICE
+  fi
+  
+  if [ "$PKG_DEVICE_NAME" = "RPi" ] || [ "$PKG_DEVICE_NAME" = "imx6" ]; then
+    make -C libretro platform=${DEVICE,,}
+  else
+    case $TARGET_CPU in
+      arm1176jzf-s)
+        make -C libretro CC=$CC CXX=$CXX platform=armv6-gles-hardfloat-$TARGET_CPU
+        ;;
+      cortex-a7|cortex-a9)
+        make -C libretro CC=$CC CXX=$CXX platform=armv7-neon-gles-hardfloat-$TARGET_CPU
+        ;;
+      x86-64)
+        make -C libretro CC=$CC CXX=$CXX
+        ;;
+    esac
+  fi
 }
 
 makeinstall_target() {

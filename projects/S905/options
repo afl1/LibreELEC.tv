@@ -5,19 +5,20 @@ get_revision() {
   git describe --tags
 }
 
-    TARGET_CPU="cortex-a53"
 
     case $TARGET_ARCH in
       aarch64)
-        TARGET_FEATURES="64bit neon"
+        TARGET_CPU="cortex-a53"
         TARGET_CPU_FLAGS="+crc+fp+simd"
+        TARGET_FEATURES="64bit neon"
         ;;
       arm)
+        TARGET_FLOAT=hard
+        TARGET_CPU="cortex-a53"
         TARGET_CPU_FLAGS="+crc"
         TARGET_FPU="neon-fp-armv8"
-        TARGET_FLOAT="hard"
         TARGET_FEATURES="32bit neon"
-       ;;
+        ;;
     esac
 
   # Bootloader to use (syslinux / u-boot / atv-bootloader / bcm2835-bootloader)
@@ -123,7 +124,7 @@ get_revision() {
   # Space separated list is supported,
   # e.g. ADDITIONAL_DRIVERS="DRIVER1 DRIVER2"
     ADDITIONAL_DRIVERS="RTL8192CU RTL8192DU RTL8192EU RTL8812AU gpu-aml wetekdvb media_build \
-                        ap6xxx-aml mt7601u-aml mt7603u-aml qca9377-aml RTL8188EU-aml RTL8189ES-aml RTL8189FS-aml RTL8723BS-aml RTL8822BU-aml ssv6xxx-aml"
+                        ap6xxx-aml mt7601u-aml mt7603u-aml qca9377-aml RTL8188EU-aml RTL8189ES-aml RTL8189FS-aml RTL8723BS-aml RTL8723DS-aml RTL8822BU-aml ssv6xxx-aml"
 
   # additional Firmware to use (dvb-firmware, misc-firmware, wlan-firmware)
   # Space separated list is supported,
@@ -159,7 +160,6 @@ get_revision() {
     EXTRA_DEPS_PKG="u-boot-tools"
 
   # set the addon dirs
-#    ADDON_SERVER_URL="http://kszaq.libreelec.tv/addons"
     ADDON_SERVER_URL="http://kodi.adamg.co.uk/libreelec/addons"
     ADDON_URL="$ADDON_SERVER_URL/$ADDON_PATH"
 

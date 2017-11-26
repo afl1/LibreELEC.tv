@@ -1,7 +1,7 @@
 ################################################################################
-#      This file is part of LibreELEC - https://LibreELEC.tv
-#      Copyright (C) 2016 Team LibreELEC
-#      Copyright (C) 2016 kszaq
+#      This file is part of LibreELEC - https://libreelec.tv
+#      Copyright (C) 2017-present Team LibreELEC
+#      Copyright (C) 2017 kszaq
 #
 #  LibreELEC is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -19,6 +19,7 @@
 
 PKG_NAME="qca9377-firmware-aml"
 PKG_VERSION="1.0.0-3"
+PKG_SHA256="ee1cfc55ab146ac729d1787361d5b3ced592ec37b3061120cdad45a0260b62d0"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="Free-to-use"
@@ -35,13 +36,9 @@ unpack() {
   dpkg -x "$SOURCES/$PKG_NAME/$PKG_SOURCE_NAME" "$BUILD/$PKG_NAME-$PKG_VERSION"
 }
 
-make_target() {
-  : # nothing todo
-}
-
 makeinstall_target() {
-  mkdir -p $INSTALL/usr/lib/kernel-overlays/base/lib/firmware
+  mkdir -p $INSTALL/$(get_full_firmware_dir)
 
-  cp -PR lib/firmware $INSTALL/usr/lib/kernel-overlays/base/lib
-  cp -P usr/share/doc/qca-firmware/copyright $INSTALL/usr/lib/kernel-overlays/base/lib/firmware/LICENSE.qca
+  cp -a lib/firmware/* $INSTALL/$(get_full_firmware_dir)
+  cp usr/share/doc/qca-firmware/copyright $INSTALL/$(get_full_firmware_dir)/LICENSE.qca
 }

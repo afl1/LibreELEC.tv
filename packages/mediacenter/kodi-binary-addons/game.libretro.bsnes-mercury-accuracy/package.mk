@@ -17,8 +17,8 @@
 ################################################################################
 
 PKG_NAME="game.libretro.bsnes-mercury-accuracy"
-PKG_VERSION="776bbe6"
-PKG_SHA256="dea73133c3f8c9dc17a4e4d96f89d6e5260b2565374acd18f358d0bd64c62594"
+PKG_VERSION="f128532"
+PKG_SHA256="e9cd9850981f8189aece324d04dc428e58b899930541e7788d9636b7942264be"
 PKG_REV="104"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"

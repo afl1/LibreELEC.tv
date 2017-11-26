@@ -17,8 +17,8 @@
 ################################################################################
 
 PKG_NAME="libretro-mupen64plus"
-PKG_VERSION="4b41ada"
-PKG_SHA256="c9c564f1145806624238829c8147a4c8f57668e670b6ceb41c4c9eb338973c6f"
+PKG_VERSION="6f80cbc"
+PKG_SHA256="1b1dc6d242ae1954dcef75d7dc870edf614fc2788e80a7c7065238a4ae5460b6"
 PKG_ARCH="any"
 PKG_LICENSE="GPLv2"
 PKG_SITE="https://github.com/libretro/mupen64plus-libretro"
@@ -34,29 +34,32 @@ PKG_LIBPATH="$PKG_LIBNAME"
 PKG_LIBVAR="MUPEN64PLUS_LIB"
 
 make_target() {
-  case $PROJECT in
-    RPi)
-      case $DEVICE in
-        RPi)
-          make platform=rpi
-          ;;
-        RPi2)
-          make platform=rpi2
-          ;;
-      esac
-      ;;
-    imx6)
-      make platform=imx6
-      ;;
-    WeTek_Play|WeTek_Core|Odroid_C2|WeTek_Hub|WeTek_Play_2|S905)
-      if [ "$TARGET_ARCH" = "aarch64" ]; then
-        make platform=aarch64
-      else
-        make platform=armv7-neon-gles-cortex-a9
-      fi
+
+  if target_has_feature neon; then
+    export HAVE_NEON=1
+  fi
+
+  if [ -z "$DEVICE" ]; then
+    PKG_DEVICE_NAME=$PROJECT
+  else
+    PKG_DEVICE_NAME=$DEVICE
+  fi
+
+  case $PKG_DEVICE_NAME in
+    RPi|RPi2|imx6)
+      make platform=${PKG_DEVICE_NAME,,}
       ;;
     Generic)
       make WITH_DYNAREC=x86_64
+      ;;
+    *)
+      if [ "$TARGET_CPU" = "cortex-a9" ] || [ "$TARGET_CPU" = "cortex-a53" ] || [ "$TARGET_CPU" = "cortex-a17" ]; then
+        if [ "$TARGET_ARCH" = "aarch64" ]; then
+          make platform=aarch64
+        else
+          make platform=linux-gles FORCE_GLES=1 WITH_DYNAREC=arm
+        fi
+      fi
       ;;
   esac
 }

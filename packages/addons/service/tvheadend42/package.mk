@@ -48,8 +48,7 @@ PKG_CONFIGURE_OPTS_TARGET="--prefix=/usr \
                            --arch=$TARGET_ARCH \
                            --cpu=$TARGET_CPU \
                            --cc=$CC \
-                           $PKG_TVH_TRANSCODING \
-                           --enable-avahi \
+                           --disable-avahi \
                            --enable-bundle \
                            --disable-dbus_1 \
                            --enable-dvbcsa \
@@ -59,9 +58,9 @@ PKG_CONFIGURE_OPTS_TARGET="--prefix=/usr \
                            --enable-epoll \
                            --enable-inotify \
                            --enable-pngquant \
-                           --disable-libmfx_static \
                            --disable-nvenc \
                            --disable-uriparser \
+                           $TVH_TRANSCODING \
                            --enable-tvhcsa \
                            --enable-trace \
                            --nowerror \

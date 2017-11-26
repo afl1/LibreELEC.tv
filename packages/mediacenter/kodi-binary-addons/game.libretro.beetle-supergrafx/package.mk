@@ -17,8 +17,8 @@
 ################################################################################
 
 PKG_NAME="game.libretro.beetle-supergrafx"
-PKG_VERSION="00ae003"
-PKG_SHA256="4d5f47d41644086ae972b9961d0b00822b0404a24293a0e15cf0fc996b1799c3"
+PKG_VERSION="fa92a30"
+PKG_SHA256="e2d9f6681c2c72235d00ea1b886ea3d9e54b33072fd394c789de6354d1489b72"
 PKG_REV="104"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"

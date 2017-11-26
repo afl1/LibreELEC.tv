@@ -1,7 +1,7 @@
 ################################################################################
-#      This file is part of LibreELEC - https://LibreELEC.tv
-#      Copyright (C) 2016 Team LibreELEC
-#      Copyright (C) 2016 kszaq
+#      This file is part of LibreELEC - https://libreelec.tv
+#      Copyright (C) 2017-present Team LibreELEC
+#      Copyright (C) 2017 kszaq
 #
 #  LibreELEC is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -23,6 +23,7 @@ PKG_ARCH="arm aarch64"
 PKG_LICENSE="GPL"
 PKG_SITE="https://boundarydevices.com/new-silex-wifi-802-11ac-bt4-1-module/"
 PKG_VERSION="8e1b647"
+PKG_SHA256="7d9cffcc1694f274151eb2f755603515493c2f4d81fcf6a3fe3d87c587965a98"
 PKG_URL="https://github.com/boundarydevices/qcacld-2.0/archive/$PKG_VERSION.tar.gz"
 PKG_SOURCE_DIR="qcacld-2.0-$PKG_VERSION*"
 PKG_DEPENDS_TARGET="toolchain linux"
@@ -51,5 +52,5 @@ make_target() {
 
 makeinstall_target() {
   mkdir -p $INSTALL/$(get_full_module_dir)/$PKG_NAME
-  cp $PKG_BUILD/wlan.ko $INSTALL/$(get_full_module_dir)/$PKG_NAME/
+  cp $PKG_BUILD/wlan.ko $INSTALL/$(get_full_module_dir)/$PKG_NAME
 }

@@ -21,6 +21,7 @@ PKG_ARCH="arm aarch64"
 PKG_LICENSE="GPL"
 PKG_SITE=""
 PKG_VERSION="99b3459"
+PKG_SHA256="5f2bfc29616d869ad5fb41e0782887d73cafe0bae8a13e7e945bb32b2a2c0877"
 PKG_URL="https://github.com/khadas/android_hardware_wifi_broadcom_drivers_ap6xxx/archive/$PKG_VERSION.tar.gz"
 PKG_SOURCE_DIR="android_hardware_wifi_broadcom_drivers_ap6xxx-$PKG_VERSION*"
 PKG_DEPENDS_TARGET="toolchain linux"
@@ -44,6 +45,6 @@ make_target() {
 }
 
 makeinstall_target() {
-  mkdir -p $INSTALL/$(get_full_module_dir)/ap6xxx-aml
-  cp $PKG_BUILD/bcmdhd.1.363.59.144.x.cn/dhd.ko $INSTALL/$(get_full_module_dir)/ap6xxx-aml
+  mkdir -p $INSTALL/$(get_full_module_dir)/$PKG_NAME
+  cp $PKG_BUILD/bcmdhd.1.363.59.144.x.cn/dhd.ko $INSTALL/$(get_full_module_dir)/$PKG_NAME
 }
