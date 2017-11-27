@@ -23,6 +23,7 @@ PKG_ARCH="arm aarch64"
 PKG_LICENSE="GPL"
 PKG_SITE="http://openlinux.amlogic.com:8000/download/ARM/wifi/"
 PKG_VERSION="0c53dfb"
+PKG_SHA256="9e3eab02f3c3dd7de373c5d631c2069771e6ad783ecda36a484030ab4ec0ccec"
 PKG_URL="https://github.com/khadas/android_hardware_wifi_mtk_drivers_mt7603/archive/$PKG_VERSION.tar.gz"
 PKG_SOURCE_DIR="android_hardware_wifi_mtk_drivers_mt7603-$PKG_VERSION*"
 PKG_DEPENDS_TARGET="toolchain linux"
@@ -48,6 +49,6 @@ makeinstall_target() {
   cp $PKG_BUILD/os/linux/mtprealloc.ko $INSTALL/$(get_full_module_dir)/$PKG_NAME
   cp $PKG_BUILD/os/linux/mt7603usta.ko $INSTALL/$(get_full_module_dir)/$PKG_NAME
 
-  mkdir -p $INSTALL/usr/lib/kernel-overlays/base/lib/firmware
-  cp $PKG_BUILD/conf/MT7603USTA.dat $INSTALL/usr/lib/kernel-overlays/base/lib/firmware
+  mkdir -p $INSTALL/$(get_full_firmware_dir)
+  cp $PKG_BUILD/conf/MT7603USTA.dat $INSTALL/$(get_full_firmware_dir)
 }
