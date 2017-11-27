@@ -4,7 +4,7 @@ Subject: [PATCH] VideoPlayer: AMLCodec control fixies
 
 --- a/xbmc/cores/VideoPlayer/DVDCodecs/Video/AMLCodec.cpp	2017-08-09 14:14:00.726055417 +0200
 +++ b/xbmc/cores/VideoPlayer/DVDCodecs/Video/AMLCodec.cpp	2017-08-09 14:14:07.638597417 +0200
-@@ -254,7 +254,7 @@
+@@ -255,7 +255,7 @@
  #define CODEC_TAG_jpeg  (0x6765706a)
  #define CODEC_TAG_mjpa  (0x61706a6d)
  
@@ -13,7 +13,7 @@ Subject: [PATCH] VideoPlayer: AMLCodec control fixies
  
  #define P_PRE           (0x02000000)
  #define F_PRE           (0x03000000)
-@@ -682,7 +682,7 @@
+@@ -683,7 +683,7 @@
                  pkt->data += len;
                  pkt->data_size -= len;
                  usleep(RW_WAIT_TIME);
@@ -22,15 +22,15 @@ Subject: [PATCH] VideoPlayer: AMLCodec control fixies
                  return PLAYER_SUCCESS;
              }
          } else {
-@@ -1442,6 +1442,7 @@
+@@ -1500,6 +1500,7 @@
    m_state = 0;
    m_frameSizes.clear();
    m_frameSizeSum = 0;
 +  m_hints.pClock = hints.pClock;
-
+ 
    if (!OpenAmlVideo(hints))
    {
-@@ -1709,6 +1710,12 @@
+@@ -1882,12 +1883,20 @@
    if (!m_opened || !pData)
      return false;
  
@@ -43,7 +43,6 @@ Subject: [PATCH] VideoPlayer: AMLCodec control fixies
    m_frameSizes.push_back(iSize);
    m_frameSizeSum += iSize;
  
-@@ -1729,6 +1730,8 @@
    am_private->am_pkt.data = pData;
    am_private->am_pkt.data_size = iSize;
  
@@ -52,12 +51,9 @@ Subject: [PATCH] VideoPlayer: AMLCodec control fixies
    am_private->am_pkt.newflag    = 1;
    am_private->am_pkt.isvalid    = 1;
    am_private->am_pkt.avduration = 0;
-@@ -1769,11 +1769,17 @@
-     Reset();
+@@ -1963,10 +1972,14 @@
      return false;
    }
-+//  else
-+//    usleep(2000);
  
 -  CLog::Log(LOGDEBUG, LOGVIDEO, "CAMLCodec::AddData: sz: %u, dts_in: %0.4lf[%llX], pts_in: %0.4lf[%llX], overflow:%llx",
 +  double diff =  (double)m_cur_pts / PTS_FREQ - (double)m_hints.pClock->GetClock() / DVD_TIME_BASE;
@@ -73,16 +69,36 @@ Subject: [PATCH] VideoPlayer: AMLCodec control fixies
        m_ptsOverflow
      );
    return true;
-@@ -1911,7 +1911,7 @@
+@@ -1974,6 +1987,7 @@
+ 
+ std::atomic_flag CAMLCodec::m_pollSync = ATOMIC_FLAG_INIT;
+ int CAMLCodec::m_pollDevice;
++bool CAMLCodec::m_releaseFrame = false; 
+ 
+ int CAMLCodec::PollFrame()
+ {
+@@ -1985,10 +1999,10 @@
+ 
+   codec_poll_fd[0].fd = m_pollDevice;
+   codec_poll_fd[0].events = POLLOUT;
+-
+   if (poll(codec_poll_fd, 1, 100) > 0)
+   {
+     g_aml_sync_event.Set();
++    m_releaseFrame = true; 
+     return 1;
+   }
+   return 0;
+@@ -2028,7 +2042,7 @@
    //Driver change from 10 to 0ms latency, throttle here
    std::chrono::time_point<std::chrono::system_clock> now(std::chrono::system_clock::now());
  
 -  unsigned int waitTime(10);
-+  unsigned int waitTime(5);
++  unsigned int waitTime(3);
  DRAIN:
    if (m_amlVideoFile->IOControl(VIDIOC_DQBUF, &vbuf) < 0)
    {
-@@ -1921,7 +1921,10 @@
+@@ -2038,13 +2052,17 @@
      std::chrono::milliseconds elapsed(std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now() - now).count());
  
      if (elapsed < std::chrono::milliseconds(waitTime))
@@ -93,7 +109,14 @@ Subject: [PATCH] VideoPlayer: AMLCodec control fixies
  
      if (m_drain && elapsed < std::chrono::milliseconds(100))
      {
-@@ -1949,6 +1952,9 @@
+       waitTime += 10;
+       goto DRAIN;
+     }
++    m_releaseFrame = false;
+ 
+     return -errno;
+   }
+@@ -2066,6 +2084,9 @@
      m_cur_pts = vbuf.timestamp.tv_usec;
    }
    m_bufferIndex = vbuf.index;
@@ -103,7 +126,7 @@ Subject: [PATCH] VideoPlayer: AMLCodec control fixies
    return 0;
  }
  
-@@ -1955,11 +1953,15 @@
+@@ -2074,11 +2095,15 @@
    struct buf_status bs;
    m_dll->codec_get_vbuf_state(&am_private->vcodec, &bs);
  
@@ -120,14 +143,14 @@ Subject: [PATCH] VideoPlayer: AMLCodec control fixies
    }
    if (bs.free_len < (bs.data_len >> 1))
      return 7.0;
-@@ -1984,8 +1984,16 @@
+@@ -2092,8 +2117,16 @@
      return CDVDVideoCodec::VC_ERROR;
  
    float timesize(GetTimeSize());
 -  if(!m_drain && timesize < 1.0)
 +  double ttd =  (double)m_cur_pts / PTS_FREQ - (double)m_hints.pClock->GetClock() / DVD_TIME_BASE;
 +  double x = timesize == 0.0 ? 100.0 : ttd > 2.0 ? 0.3 / timesize : ttd / timesize;
-+  if (!m_drain && ((x > 0.2 && timesize < 1.0) || (!m_try && timesize < 0.3)))
++  if (!m_releaseFrame && !m_drain && ((x > 0.2 && timesize < 1.0) || (!m_try && timesize < 0.3)))
 +  {
 +    m_try = 1;
 +    CLog::Log(LOGDEBUG, "CAMLCodec::GetPicture: VC_BUFFER LEV:%0.2f ttd:%0.0fms x:%0.2f",
@@ -138,7 +161,7 @@ Subject: [PATCH] VideoPlayer: AMLCodec control fixies
  
    if (DequeueBuffer() == 0)
    {
-@@ -2142,7 +2142,8 @@
+@@ -2116,14 +2149,13 @@
      pVideoPicture->dts = DVD_NOPTS_VALUE;
      pVideoPicture->pts = (double)(m_cur_pts + m_ptsOverflow) / PTS_FREQ * DVD_TIME_BASE;
  
@@ -148,6 +171,13 @@ Subject: [PATCH] VideoPlayer: AMLCodec control fixies
  
      return CDVDVideoCodec::VC_PICTURE;
    }
+   else if (m_drain)
+     return CDVDVideoCodec::VC_EOF;
+-  else
+-    usleep(5000);
+ 
+   return CDVDVideoCodec::VC_NONE;
+ }
 --- a/xbmc/cores/VideoPlayer/DVDCodecs/Video/AMLCodec.h	2017-10-22 20:35:20.000000000 +0200
 +++ b/xbmc/cores/VideoPlayer/DVDCodecs/Video/AMLCodec.h	2017-11-05 09:22:02.168482426 +0100
 @@ -82,6 +82,7 @@
@@ -158,6 +188,13 @@ Subject: [PATCH] VideoPlayer: AMLCodec control fixies
    am_private_t    *am_private;
    CDVDStreamInfo   m_hints;
    int              m_speed;
+@@ -117,5 +118,6 @@ private:
+ 
+   static std::atomic_flag  m_pollSync;
+   static int m_pollDevice;
++  static bool m_releaseFrame;
+   CProcessInfo &m_processInfo;
+ };
 --- a/xbmc/cores/VideoPlayer/VideoPlayer.cpp	2017-08-09 15:15:54.203655824 +0200
 +++ b/xbmc/cores/VideoPlayer/VideoPlayer.cpp	2017-08-09 21:44:18.266213954 +0200
 @@ -1734,6 +1735,8 @@
