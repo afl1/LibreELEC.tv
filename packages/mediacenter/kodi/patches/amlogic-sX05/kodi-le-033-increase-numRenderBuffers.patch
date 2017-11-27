@@ -5,7 +5,7 @@
  
  private:
 -  static const int m_numRenderBuffers = 4;
-+  static const int m_numRenderBuffers = 6;
++  static const int m_numRenderBuffers = 8;
  
    struct BUFFER
    {
