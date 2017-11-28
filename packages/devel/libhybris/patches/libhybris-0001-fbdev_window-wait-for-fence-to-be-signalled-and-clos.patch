@@ -27,7 +27,7 @@ index 0b3f835..56e976a 100644
 +    HYBRIS_TRACE_BEGIN("fbdev-platform", "queueBuffer_waiting_for_fence", "-%p", fbnb);
 +    if (fenceFd >= 0)
 +    {
-+        sync_wait(fenceFd, -1);
++//        sync_wait(fenceFd, -1);
 +        close(fenceFd);
 +    }
 +    HYBRIS_TRACE_END("fbdev-platform", "queueBuffer_waiting_for_fence", "-%p", fbnb);
