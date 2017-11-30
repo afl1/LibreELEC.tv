@@ -102,18 +102,5 @@ index 3246a7f..4f11373 100644
 -void aml_set_framebuffer_resolution(const RESOLUTION_INFO &res, std::string framebuffer_name);
 -void aml_set_framebuffer_resolution(int width, int height, std::string framebuffer_name);
  
-diff --git a/xbmc/windowing/amlogic/WinSystemAmlogic.cpp b/xbmc/windowing/amlogic/WinSystemAmlogic.cpp
-index 557e2d9..c26c889 100644
---- a/xbmc/windowing/amlogic/WinSystemAmlogic.cpp
-+++ b/xbmc/windowing/amlogic/WinSystemAmlogic.cpp
-@@ -65,7 +65,7 @@ CWinSystemAmlogic::CWinSystemAmlogic()
-   m_stereo_mode = RENDER_STEREO_MODE_OFF;
-   m_delayDispReset = false;
- 
--  aml_permissions();
-+  //aml_permissions();
-   aml_disable_freeScale();
- }
- 
 -- 
 2.13.3
