@@ -17,12 +17,12 @@
 ################################################################################
 
 PKG_NAME="libmediainfo"
-PKG_VERSION="0.7.83"
-PKG_SHA256="27e2ae08349e0546f46f2af83cc0830c4b2e9a13fa3ff385566bb3b3c15e3df9"
+PKG_VERSION="17.10"
+PKG_SHA256="60b018fcd8acd249c5316670bdf1c85abc166fb9c340e84da834b1332a59a102" 
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://mediaarea.net/en/MediaInfo/Download/Source"
-PKG_URL="http://mediaarea.net/download/source/libmediainfo/$PKG_VERSION/libmediainfo_$PKG_VERSION.tar.bz2"
+PKG_URL="http://mediaarea.net/download/source/${PKG_NAME}/${PKG_VERSION}/${PKG_NAME}_${PKG_VERSION}.tar.xz"
 PKG_SOURCE_DIR="MediaInfoLib"
 PKG_DEPENDS_TARGET="toolchain libzen zlib"
 PKG_SECTION="multimedia"

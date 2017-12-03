@@ -17,8 +17,8 @@
 ################################################################################
 
 PKG_NAME="kodi"
-PKG_VERSION="4a53be5"
-PKG_SHA256="80f5f6325d369ce1e3c0f69abb102f1deddb92c42e6da7f9c66d70612253effb"
+PKG_VERSION="c356fa8"
+PKG_SHA256="a2ee06b44d6d3e6306aef3df15c57e1a14022bb80a0cb25f2c98caa4cdf4fe56"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.kodi.tv"
@@ -230,7 +230,6 @@ PKG_CMAKE_OPTS_TARGET="-DNATIVEPREFIX=$TOOLCHAIN \
                        -DENABLE_EVENTCLIENTS=ON \
                        -DENABLE_LDGOLD=ON \
                        -DENABLE_DEBUGFISSION=OFF \
-                       -DENABLE_APP_AUTONAME=OFF \
                        $KODI_ARCH \
                        $KODI_NEON \
                        $KODI_VDPAU \
@@ -279,7 +278,6 @@ post_makeinstall_target() {
 
   mkdir -p $INSTALL/usr/sbin
     cp $PKG_DIR/scripts/service-addon-wrapper $INSTALL/usr/sbin
-    cp $PKG_DIR/scripts/getlibwidevine.sh $INSTALL/usr/sbin
 
   mkdir -p $INSTALL/usr/bin
     cp $PKG_DIR/scripts/cputemp $INSTALL/usr/bin
@@ -296,7 +294,6 @@ post_makeinstall_target() {
     cp -R $PKG_DIR/config/repository.kodi.game $INSTALL/usr/share/kodi/addons
     cp -R $PKG_DIR/config/repository.retroplayer.libreelec.tv $INSTALL/usr/share/kodi/addons
     $SED "s|@ADDON_URL@|http://lrusak.libreelec.tv/addons/$ADDON_PATH|g" $INSTALL/usr/share/kodi/addons/repository.retroplayer.libreelec.tv/addon.xml
-    cp -R $PKG_DIR/config/repository.netflix $INSTALL/usr/share/kodi/addons
 
   mkdir -p $INSTALL/usr/share/kodi/config
   mkdir -p $INSTALL/usr/share/kodi/system/settings

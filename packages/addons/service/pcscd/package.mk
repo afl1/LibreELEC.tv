@@ -1,6 +1,8 @@
 ################################################################################
-#      This file is part of LibreELEC - https://LibreELEC.tv
-#      Copyright (C) 2016 Team LibreELEC
+#      This file is part of LibreELEC - https://libreelec.tv
+#      Copyright (C) 2017-present Team LibreELEC
+#      Copyright (C) 2009-2012 Stephan Raue (stephan@openelec.tv)
+#      Copyright (C) 2011-2011 Gregor Fuis (gujs@openelec.tv)
 #
 #  LibreELEC is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -15,32 +17,22 @@
 #  You should have received a copy of the GNU General Public License
 #  along with LibreELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
-PKG_NAME="pcscd-addon"
-PKG_VERSION="4.5"
-PKG_REV="1"
+PKG_NAME="pcscd"
+PKG_VERSION="1.0"
+PKG_REV="100"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://libreelec.tv"
 PKG_URL=""
 PKG_DEPENDS_TARGET="toolchain pcsc-lite libusb ccid"
-PKG_PRIORITY="optional"
-PKG_SECTION="service/system"
+PKG_SECTION="service"
 PKG_SHORTDESC="Middleware to access a smart card using SCard API (PC/SC)"
 PKG_LONGDESC="Middleware to access a smart card using SCard API (PC/SC)"
+PKG_TOOLCHAIN="manual"
+
 PKG_IS_ADDON="yes"
+PKG_ADDON_NAME="PC/SC Smart Card Daemon"
 PKG_ADDON_TYPE="xbmc.service"
-PKG_ADDON_PROVIDES=""
-PKG_ADDON_REPOVERSION="9.0"
-
-PKG_MAINTAINER="Stefan Saraev (seo at irc.freenode.net)"
-
-make_target() {
-  : # nop
-}
-
-makeinstall_target() {
-  : # nop
-}
 
 addon() {
   mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/bin/
