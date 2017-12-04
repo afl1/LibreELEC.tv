@@ -57,17 +57,10 @@ if [ "$MEDIACENTER" = "kodi" ]; then
 
   if [ "${_ADDONS_OTHER}" = "yes" ]; then
     _add_binary_addon "inputstream.adaptive"
-    _add_binary_addon "inputstream.smoothstream"
     _add_binary_addon "inputstream.rtmp"
     _add_binary_addon "imagedecoder.raw"
     _add_binary_addon "vfs.rar"
   fi
-
-# streaming media packages
-  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET inputstream.adaptive \
-                                          inputstream.rtmp \
-                                          imagedecoder.raw \
-                                          vfs.rar"
 
   if [ "$JOYSTICK_SUPPORT" = "yes" ]; then
     PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET peripheral.joystick"
