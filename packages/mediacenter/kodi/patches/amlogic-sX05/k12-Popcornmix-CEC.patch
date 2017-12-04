@@ -43,10 +43,10 @@ diff --git a/addons/resource.language.en_gb/resources/strings.po b/addons/resour
 index 5c4b0b8..2f2a14e 100644
 --- a/addons/resource.language.en_gb/resources/strings.po
 +++ b/addons/resource.language.en_gb/resources/strings.po
-@@ -20463,3 +20463,22 @@ msgstr ""
- msgctxt "#39016"
- msgid "Resume audiobook"
- msgstr ""
+@@ -20858,6 +20858,25 @@ msgstr ""
+ 
+ #empty strings from id 38047 to 38059
+ #strings 38047 to 38059 reserved for music library roles
 +
 +msgctxt "#38190"
 +msgid "Extract thumbnails from video files"
@@ -66,6 +66,9 @@ index 5c4b0b8..2f2a14e 100644
 +msgctxt "#38052"
 +msgid "Remote button press release time (ms)"
 +msgstr ""
+ 
+ #. Question when forced rescan of music tags needed after upgrade from previous version of Kodi
+ #: xbmc/music/windows/GUIWindowMusicBase.cpp
 diff --git a/system/peripherals.xml b/system/peripherals.xml
 index d5704b2..02b1a9e 100644
 --- a/system/peripherals.xml
