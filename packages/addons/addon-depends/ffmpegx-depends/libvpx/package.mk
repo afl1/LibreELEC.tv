@@ -30,7 +30,7 @@ PKG_LONGDESC="The WebM Project is dedicated to developing a high-quality, open v
 
 configure_target() {
 
-  case $ARCH in
+  case $TARGET_ARCH in
     aarch64)
       PKG_TARGET_NAME_LIBVPX="arm64-linux-gcc"
       ;;
