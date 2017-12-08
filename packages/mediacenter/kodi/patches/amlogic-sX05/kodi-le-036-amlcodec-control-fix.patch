@@ -58,7 +58,7 @@ Subject: [PATCH] VideoPlayer: AMLCodec control fixies
 +    usleep(2000); // wait 2ms to process larger packets
  
 -  CLog::Log(LOGDEBUG, LOGVIDEO, "CAMLCodec::AddData: sz: %u, dts_in: %0.4lf[%llX], pts_in: %0.4lf[%llX], overflow:%llx",
-+  m_ttd =  static_cast<double>(m_cur_pts) / PTS_FREQ - static_cast<double>(m_hints.pClock->GetClock()) / DVD_TIME_BASE + 0.016;
++  m_ttd =  static_cast<double>(m_cur_pts) / PTS_FREQ - static_cast<double>(m_hints.pClock->GetClock()) / DVD_TIME_BASE + am_private->video_rate / UNIT_FREQ;
 +  m_dll->codec_get_vbuf_state(&am_private->vcodec, &bs);
 +  if (iSize > 0)
 +    CLog::Log(LOGDEBUG, LOGVIDEO, "CAMLCodec::AddData: dl:%d sum:%u sz:%u dts_in:%0.3lf pts_in:%0.3lf ptsOut:%0.3f ttd:%0.0fms overflow:%llx", bs.data_len, m_frameSizeSum,
@@ -154,9 +154,9 @@ Subject: [PATCH] VideoPlayer: AMLCodec control fixies
  
    float timesize(GetTimeSize());
 -  if(!m_drain && timesize < 1.0)
-+  m_ttd =  static_cast<double>(m_cur_pts) / PTS_FREQ - static_cast<double>(m_hints.pClock->GetClock()) / DVD_TIME_BASE + 0.016;
++  m_ttd =  static_cast<double>(m_cur_pts) / PTS_FREQ - static_cast<double>(m_hints.pClock->GetClock()) / DVD_TIME_BASE + am_private->video_rate / UNIT_FREQ;
 +  double x = timesize == 0.0 ? 100.0 : m_ttd > 2.0 ? 0.3 / timesize : m_ttd / timesize;
-+  if (!m_releaseFrame && !m_drain && ((x > 0.004 && timesize < 40.0) || (!m_try && timesize < 20.0)))
++  if (!m_releaseFrame && !m_drain && ((x > 0.004 && timesize < 40.0) || (!m_try && timesize < 12.0)))
 +  {
 +    m_try = 1;
 +    CLog::Log(LOGDEBUG, "CAMLCodec::GetPicture: VC_BUFFER LEV:%0.2f ttd:%0.0fms x:%0.3f",
