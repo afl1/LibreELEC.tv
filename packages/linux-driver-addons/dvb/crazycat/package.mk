@@ -16,8 +16,9 @@
 #  along with LibreELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
-PKG_NAME="media_build"
-PKG_VERSION="2017-04-17-rpi"
+PKG_NAME="crazycat"
+PKG_VERSION="2017-11-13"
+PKG_SHA256="14d951eb8d40cee40d601d7c737bca07171d8b4f201d63d5e70a24c4841f9d73"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/crazycat69/linux_media"
@@ -25,15 +26,13 @@ PKG_URL="$DISTRO_SRC/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain linux"
 PKG_BUILD_DEPENDS_TARGET="toolchain linux"
 PKG_NEED_UNPACK="$LINUX_DEPENDS"
-PKG_SECTION="driver"
-PKG_SHORTDESC="DVB drivers that replace the version shipped with the kernel"
-PKG_LONGDESC="DVB drivers that replace the version shipped with the kernel"
-PKG_TOOLCHAIN="manual"
-PKG_IS_KERNEL_PKG="yes"
+PKG_SECTION="driver.dvb"
+PKG_LONGDESC="DVB driver for TBS cards with CrazyCats additions."
 
-if [ "$PROJECT" = "S905" ] || [ "$PROJECT" = "S912" ]; then
-  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET dvb_tv-aml"
-fi
+PKG_IS_ADDON="yes"
+PKG_ADDON_NAME="DVB drivers for TBS (CrazyCat)"
+PKG_ADDON_TYPE="xbmc.service"
+PKG_ADDON_VERSION="${ADDON_VERSION}.${PKG_REV}"
 
 pre_make_target() {
   export KERNEL_VER=$(get_module_dir)
@@ -86,6 +85,5 @@ make_target() {
 }
 
 makeinstall_target() {
-  mkdir -p $INSTALL/$(get_full_module_dir)/updates
-  find $PKG_BUILD/v4l/ -name \*.ko -exec cp {} $INSTALL/$(get_full_module_dir)/updates \;
+  install_driver_addon_files "$PKG_BUILD/v4l/"
 }
