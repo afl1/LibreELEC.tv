@@ -123,7 +123,7 @@ get_revision() {
   # for a list of additinoal drivers see packages/linux-drivers
   # Space separated list is supported,
   # e.g. ADDITIONAL_DRIVERS="DRIVER1 DRIVER2"
-    ADDITIONAL_DRIVERS="RTL8192CU RTL8192DU RTL8192EU RTL8812AU gpu-aml wetekdvb media_build \
+    ADDITIONAL_DRIVERS="RTL8192CU RTL8192DU RTL8192EU RTL8812AU gpu-aml wetekdvb \
                         ap6xxx-aml mt7601u-aml mt7603u-aml qca9377-aml RTL8188EU-aml RTL8189ES-aml RTL8189FS-aml RTL8723BS-aml RTL8723DS-aml RTL8822BU-aml ssv6xxx-aml"
 
   # additional Firmware to use (dvb-firmware, misc-firmware, wlan-firmware)
@@ -166,3 +166,10 @@ get_revision() {
   # OEM packages for OEM's (yes / no)
     OEM_SUPPORT="yes"
 
+  # build and install driver addons (yes / no)
+    DRIVER_ADDONS_SUPPORT="yes"
+
+  # driver addons to install:
+  # for a list of additinoal drivers see packages/linux-driver-addons
+  # Space separated list is supported,
+    DRIVER_ADDONS="crazycat"
