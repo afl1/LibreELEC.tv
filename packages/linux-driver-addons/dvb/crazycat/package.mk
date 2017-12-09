@@ -34,10 +34,6 @@ PKG_ADDON_NAME="DVB drivers for TBS (CrazyCat)"
 PKG_ADDON_TYPE="xbmc.service"
 PKG_ADDON_VERSION="${ADDON_VERSION}.${PKG_REV}"
 
-if [ "$PROJECT" = "S905" ] || [ "$PROJECT" = "S912" ]; then
-  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET dvb_tv-aml"
-fi
-
 pre_make_target() {
   export KERNEL_VER=$(get_module_dir)
   export LDFLAGS=""

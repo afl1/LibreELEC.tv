@@ -11,4 +11,3 @@
  #	$(MAKE) checkpatch
  
  mismatch:: prepare firmware
-
