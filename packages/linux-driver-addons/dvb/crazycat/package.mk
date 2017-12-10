@@ -81,6 +81,11 @@ make_target() {
     fi
     if [ "$PROJECT" = "S905" ]; then
       echo "obj-y += amlogic/dvb_tv/" >> "linux/drivers/media/Makefile"
+      WETEKDVB_DIR="$(get_build_dir wetekdvb)"
+      if [ -d "$WETEKDVB_DIR" ]; then
+        cp -a "$WETEKDVB_DIR/wetekdvb.ko" "v4l/"
+      fi
+
     fi
   fi
 
