@@ -17,8 +17,8 @@
 ################################################################################
 
 PKG_NAME="libnetwork"
-PKG_VERSION="0f53435"
-PKG_SHA256="170d355ad613cc28245a6d9501bcaba930cb594a632fdd9bd52a4fa90b406932"
+PKG_VERSION="7b2b1fe"
+PKG_SHA256="2eee331b6ded567a36e7db708405b34032b93938682cf049025f48b96d755bf6"
 PKG_ARCH="any"
 PKG_LICENSE="APL"
 PKG_SITE="https://github.com/docker/libnetwork"
@@ -41,9 +41,9 @@ pre_make_target() {
         arm1176jzf-s)
           export GOARM=6
           ;;
-        cortex-a7)
-         export GOARM=7
-         ;;
+        *)
+          export GOARM=7
+          ;;
       esac
       ;;
     aarch64)
