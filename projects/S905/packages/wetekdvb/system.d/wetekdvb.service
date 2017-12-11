@@ -1,6 +1,7 @@
 [Unit]
 Description=WeTek DVB module loader
 ConditionPathExists=/proc/device-tree/dvb/dev_name
+After=kernel-overlays.service
 
 [Service]
 Type=simple
