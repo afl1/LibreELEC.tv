@@ -156,7 +156,6 @@ makeinstall_target() {
     cp $PKG_DIR/scripts/createlog $INSTALL/usr/bin/
     cp $PKG_DIR/scripts/lsb_release $INSTALL/usr/bin/
     cp $PKG_DIR/scripts/apt-get $INSTALL/usr/bin/
-    cp $PKG_DIR/scripts/passwd $INSTALL/usr/bin/
     cp $PKG_DIR/scripts/sudo $INSTALL/usr/bin/
     cp $PKG_DIR/scripts/pastebinit $INSTALL/usr/bin/
     ln -sf pastebinit $INSTALL/usr/bin/paste
@@ -197,7 +196,7 @@ post_install() {
   ROOT_PWD="`$TOOLCHAIN/bin/cryptpw -m sha512 $ROOT_PASSWORD`"
 
   echo "chmod 4755 $INSTALL/usr/bin/busybox" >> $FAKEROOT_SCRIPT
-  echo "chmod 000 $INSTALL/etc/shadow" >> $FAKEROOT_SCRIPT
+  echo "chmod 000 $INSTALL/usr/cache/shadow" >> $FAKEROOT_SCRIPT
 
   add_user root "$ROOT_PWD" 0 0 "Root User" "/storage" "/bin/sh"
   add_group root 0

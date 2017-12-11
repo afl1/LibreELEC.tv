@@ -31,8 +31,8 @@ PKG_IS_KERNEL_PKG="yes"
 
 case "$LINUX" in
   amlogic-3.10)
-    PKG_VERSION="f016bb1"
-    PKG_SHA256="6297c6aa6bbe1ffa794b516b32dd4d6be5cd4d26cd502e4dbd9079b49ad7b403"
+    PKG_VERSION="24a7272"
+    PKG_SHA256="7219a9d0ba7b3ded590f335671671431b15fff64dc05b83565e2867c4f7b2e60"
     PKG_URL="https://github.com/LibreELEC/linux-amlogic/archive/$PKG_VERSION.tar.gz"
     PKG_SOURCE_DIR="$PKG_NAME-amlogic-$PKG_VERSION*"
     PKG_PATCH_DIRS="amlogic-3.10"
@@ -51,8 +51,8 @@ case "$LINUX" in
     PKG_PATCH_DIRS="$KERNEL_PATCH_DIRS"
     ;;
   *)
-    PKG_VERSION="4.14"
-    PKG_SHA256="f81d59477e90a130857ce18dc02f4fbe5725854911db1e7ba770c7cd350f96a7"
+    PKG_VERSION="4.14.4"
+    PKG_SHA256="2a91bff790da9a27e392469f7cc65ae7380e4204fc118be28ec799eb87e6a79e"
     PKG_URL="https://www.kernel.org/pub/linux/kernel/v4.x/$PKG_NAME-$PKG_VERSION.tar.xz"
     PKG_PATCH_DIRS="default"
     ;;
