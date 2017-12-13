@@ -63,11 +63,11 @@ for arg in $(cat /proc/cmdline); do
         case $boot in
           /dev/system)
             dd if=/dev/zero of=/dev/dtb bs=256k count=1 status=none
-            dd if=$UPDATE_DTB_SOURCE of=/dev/dtb bs=256k status=none
+            dd if="$UPDATE_DTB_SOURCE" of=/dev/dtb bs=256k status=none
             ;;
           /dev/mmc*|LABEL=*)
             mount -o rw,remount $BOOT_ROOT
-            cp -f $UPDATE_DTB_SOURCE "$BOOT_ROOT/dtb.img"
+            cp -f "$UPDATE_DTB_SOURCE" "$BOOT_ROOT/dtb.img"
             ;;
         esac
       fi
@@ -77,10 +77,10 @@ for arg in $(cat /proc/cmdline); do
       disk="${arg#*=}"
       case $disk in
         /dev/mmc*)
-          LD_LIBRARY_PATH="$SYSTEM_ROOT/lib" $SYSTEM_ROOT/usr/sbin/e2label $disk "LIBREELEC_DISK"
+          LD_LIBRARY_PATH="$SYSTEM_ROOT/lib" $SYSTEM_ROOT/usr/sbin/e2label $disk "STORAGE"
           ;;
         LABEL=*)
-          LD_LIBRARY_PATH="$SYSTEM_ROOT/lib" $SYSTEM_ROOT/usr/sbin/e2label $($SYSTEM_ROOT/usr/sbin/findfs $disk) "LIBREELEC_DISK"
+          LD_LIBRARY_PATH="$SYSTEM_ROOT/lib" $SYSTEM_ROOT/usr/sbin/e2label $($SYSTEM_ROOT/usr/sbin/findfs $disk) "STORAGE"
           ;;
       esac
       ;;
