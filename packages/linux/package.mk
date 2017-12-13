@@ -76,6 +76,9 @@ fi
 if [ "$BUILD_ANDROID_BOOTIMG" = "yes" ]; then
   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET mkbootimg:host"
 fi
+if [ "$PROJECT" = "S905" ] || [ "$PROJECT" = "S912" ]; then
+  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET dvb_tv-aml"
+fi
 
 post_unpack() {
 
