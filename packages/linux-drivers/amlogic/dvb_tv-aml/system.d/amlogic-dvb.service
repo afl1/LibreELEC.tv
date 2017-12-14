@@ -1,6 +1,7 @@
 [Unit]
 Description=Amlogic DVB module loader
 ConditionPathExists=/proc/device-tree/dvbfe/dtv_demod0
+After=kernel-overlays.service
 
 [Service]
 Type=simple
