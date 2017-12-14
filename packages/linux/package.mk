@@ -80,6 +80,14 @@ if [ "$PROJECT" = "S905" ] || [ "$PROJECT" = "S912" ]; then
   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET dvb_tv-aml"
 fi
 
+pre_unpack() {
+
+  # Amlogic DVB driver
+  if [ "$PROJECT" = "S905" ] || [ "$PROJECT" = "S912" ]; then
+    scripts/build dvb_tv-aml
+  fi
+}
+
 post_unpack() {
 
   # Amlogic DVB driver
@@ -90,7 +98,6 @@ post_unpack() {
       echo "obj-y += dvb_tv/" >> "$PKG_BUILD/drivers/media/Makefile"
     fi
   fi
-
 }
 
 post_patch() {
