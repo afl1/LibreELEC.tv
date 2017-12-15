@@ -2,7 +2,7 @@
 
 ################################################################################
 #      This file is part of LibreELEC - https://libreelec.tv
-#      Copyright (C) 2016 Team LibreELEC
+#      Copyright (C) 2017-present Team LibreELEC
 #
 #  LibreELEC is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -49,7 +49,12 @@ for arg in $(cat /proc/cmdline); do
           ;;
       esac
 
-      LE_DT_ID=$(cat /proc/device-tree/le-dt-id)
+      if [ -f "/proc/device-tree/le-dt-id" ] ; then
+        LE_DT_ID=$(cat /proc/device-tree/le-dt-id)
+      else
+        echo "*** remember to update your device tree! ***"
+      fi
+
       if [ -f "$UPDATE_DTB_IMG" ] ; then
         UPDATE_DTB_SOURCE="$UPDATE_DTB_IMG"
       elif [ -f "$UPDATE_DTB" ] ; then
@@ -86,21 +91,3 @@ for arg in $(cat /proc/cmdline); do
       ;;
   esac
 done
-
-if [ -f $SYSTEM_ROOT/usr/share/bootloader/boot.ini ]; then
-  echo "*** updating Odroid-C2 boot.ini ..."
-  mount -o rw,remount $BOOT_ROOT
-  cp -p $SYSTEM_ROOT/usr/share/bootloader/boot.ini $BOOT_ROOT/boot.ini.update
-fi
-
-if [ -f $SYSTEM_ROOT/usr/share/bootloader/boot-logo.bmp.gz ]; then
-  echo "*** updating Odroid-C2 boot logo ..."
-  mount -o rw,remount $BOOT_ROOT
-  cp -p $SYSTEM_ROOT/usr/share/bootloader/boot-logo.bmp.gz $BOOT_ROOT
-fi
-
-if [ -f $SYSTEM_ROOT/usr/share/bootloader/u-boot -a ! -e /dev/system -a ! -e /dev/boot ]; then
-  echo "*** updating u-boot for Odroid-C2 on: $BOOT_DISK ..."
-  dd if=$SYSTEM_ROOT/usr/share/bootloader/u-boot of=$BOOT_DISK conv=fsync bs=1 count=112 status=none
-  dd if=$SYSTEM_ROOT/usr/share/bootloader/u-boot of=$BOOT_DISK conv=fsync bs=512 skip=1 seek=1 status=none
-fi

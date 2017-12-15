@@ -17,8 +17,8 @@
 ################################################################################
 
 PKG_NAME="hauppauge"
-PKG_VERSION="097aaf3"
-PKG_SHA256="9450aa0efc63b3e456fd36c5e0a9c1ecbcdcafe9e514b4a19bb9976958ee521e"
+PKG_VERSION="f5a5e5e"
+PKG_SHA256="6a3167c9990fa96838f4746861edb4d4e656739ea08d4f993e54becb9f2e9ab2"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://git.linuxtv.org/media_build.git"
@@ -30,6 +30,7 @@ PKG_SECTION="driver.dvb"
 PKG_LONGDESC="DVB drivers for Hauppauge"
 
 PKG_IS_ADDON="yes"
+PKG_ADDON_IS_STANDALONE="yes"
 PKG_ADDON_NAME="DVB drivers for Hauppauge"
 PKG_ADDON_TYPE="xbmc.service"
 PKG_ADDON_VERSION="${ADDON_VERSION}.${PKG_REV}"
@@ -47,35 +48,37 @@ make_target() {
   cp -RP $(get_build_dir media_tree)/* $PKG_BUILD/linux
   make VER=$KERNEL_VER SRCDIR=$(kernel_path) stagingconfig
 
-  # Amlogic AMLVIDEO driver
-  if [ -e "$(kernel_path)/drivers/amlogic/video_dev" ]; then
+  if [ "$PROJECT" = "S805" ] || [ "$PROJECT" = "S905" ] || [ "$PROJECT" = "S912" ]; then
 
-    # Copy, patch and enable amlvideodri module
-    cp -a "$(kernel_path)/drivers/amlogic/video_dev" "linux/drivers/media/"
-    sed -i 's,common/,,g; s,"trace/,",g' $(find linux/drivers/media/video_dev/ -type f)
-    sed -i 's,\$(CONFIG_V4L_AMLOGIC_VIDEO),m,g' "linux/drivers/media/video_dev/Makefile"
-    echo "obj-y += video_dev/" >> "linux/drivers/media/Makefile"
-
-    # Copy and enable videobuf-res module
-    cp -a "$(kernel_path)/drivers/media/v4l2-core/videobuf-res.c" "linux/drivers/media/v4l2-core/"
-    cp -a "$(kernel_path)/include/media/videobuf-res.h" "linux/include/media/"
-    echo "obj-m += videobuf-res.o" >> "linux/drivers/media/v4l2-core/Makefile"
-  fi
-
-  # Amlogic DVB driver
-  if [ "$PROJECT" = "S905" ] || [ "$PROJECT" = "S912" ]; then
-    DVB_TV_AML_DIR="$(get_build_dir dvb_tv-aml)"
-    if [ -d "$DVB_TV_AML_DIR" ]; then
-      cp -a "$DVB_TV_AML_DIR" "linux/drivers/media/dvb_tv"
-      echo "obj-y += dvb_tv/" >> "linux/drivers/media/Makefile"
+    # Amlogic AMLVIDEO driver
+    if [ -e "$(kernel_path)/drivers/amlogic/video_dev" ]; then
+    
+      # Copy, patch and enable amlvideodri module
+      cp -a "$(kernel_path)/drivers/amlogic/video_dev" "linux/drivers/media/"
+      sed -i 's,common/,,g; s,"trace/,",g' $(find linux/drivers/media/video_dev/ -type f)
+      sed -i 's,\$(CONFIG_V4L_AMLOGIC_VIDEO),m,g' "linux/drivers/media/video_dev/Makefile"
+      echo "obj-y += video_dev/" >> "linux/drivers/media/Makefile"
+    
+      # Copy and enable videobuf-res module
+      cp -a "$(kernel_path)/drivers/media/v4l2-core/videobuf-res.c" "linux/drivers/media/v4l2-core/"
+      cp -a "$(kernel_path)/include/media/videobuf-res.h" "linux/include/media/"
+      echo "obj-m += videobuf-res.o" >> "linux/drivers/media/v4l2-core/Makefile"
     fi
-    if [ "$PROJECT" = "S905" ]; then
-      echo "obj-y += amlogic/dvb_tv/" >> "linux/drivers/media/Makefile"
-      WETEKDVB_DIR="$(get_build_dir wetekdvb)"
-      if [ -d "$WETEKDVB_DIR" ]; then
-        cp -a "$WETEKDVB_DIR/wetekdvb.ko" "v4l/"
+    
+    # Amlogic DVB drivers
+    if [ "$PROJECT" = "S905" ] || [ "$PROJECT" = "S912" ]; then
+      DVB_TV_AML_DIR="$(get_build_dir dvb_tv-aml)"
+      if [ -d "$DVB_TV_AML_DIR" ]; then
+        cp -a "$DVB_TV_AML_DIR" "linux/drivers/media/dvb_tv"
+        echo "obj-y += dvb_tv/" >> "linux/drivers/media/Makefile"
       fi
-
+      if [ "$PROJECT" = "S905" ]; then
+        echo "obj-y += amlogic/dvb_tv/" >> "linux/drivers/media/Makefile"
+        WETEKDVB_DIR="$(get_build_dir wetekdvb)"
+        if [ -d "$WETEKDVB_DIR" ]; then
+          cp -a "$WETEKDVB_DIR/wetekdvb.ko" "v4l/"
+        fi
+      fi
     fi
   fi
 

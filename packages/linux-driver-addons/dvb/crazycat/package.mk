@@ -30,6 +30,7 @@ PKG_SECTION="driver.dvb"
 PKG_LONGDESC="DVB driver for TBS cards with CrazyCats additions."
 
 PKG_IS_ADDON="yes"
+PKG_ADDON_IS_STANDALONE="yes"
 PKG_ADDON_NAME="DVB drivers for TBS (CrazyCat)"
 PKG_ADDON_TYPE="xbmc.service"
 PKG_ADDON_VERSION="${ADDON_VERSION}.${PKG_REV}"
@@ -55,37 +56,37 @@ make_target() {
     if [ -f $PKG_DIR/config/usb.config ]; then
       cp $PKG_DIR/config/usb.config v4l/.config
     fi
-  fi
+  elif
 
-  # Amlogic AMLVIDEO driver
-  if [ -e "$(kernel_path)/drivers/amlogic/video_dev" ]; then
-
-    # Copy, patch and enable amlvideodri module
-    cp -a "$(kernel_path)/drivers/amlogic/video_dev" "linux/drivers/media/"
-    sed -i 's,common/,,g; s,"trace/,",g' $(find linux/drivers/media/video_dev/ -type f)
-    sed -i 's,\$(CONFIG_V4L_AMLOGIC_VIDEO),m,g' "linux/drivers/media/video_dev/Makefile"
-    echo "obj-y += video_dev/" >> "linux/drivers/media/Makefile"
-
-    # Copy and enable videobuf-res module
-    cp -a "$(kernel_path)/drivers/media/v4l2-core/videobuf-res.c" "linux/drivers/media/v4l2-core/"
-    cp -a "$(kernel_path)/include/media/videobuf-res.h" "linux/include/media/"
-    echo "obj-m += videobuf-res.o" >> "linux/drivers/media/v4l2-core/Makefile"
-  fi
-
-  # Amlogic DVB driver
-  if [ "$PROJECT" = "S905" ] || [ "$PROJECT" = "S912" ]; then
-    DVB_TV_AML_DIR="$(get_build_dir dvb_tv-aml)"
-    if [ -d "$DVB_TV_AML_DIR" ]; then
-      cp -a "$DVB_TV_AML_DIR" "linux/drivers/media/dvb_tv"
-      echo "obj-y += dvb_tv/" >> "linux/drivers/media/Makefile"
+    # Amlogic AMLVIDEO driver
+    if [ -e "$(kernel_path)/drivers/amlogic/video_dev" ]; then
+    
+      # Copy, patch and enable amlvideodri module
+      cp -a "$(kernel_path)/drivers/amlogic/video_dev" "linux/drivers/media/"
+      sed -i 's,common/,,g; s,"trace/,",g' $(find linux/drivers/media/video_dev/ -type f)
+      sed -i 's,\$(CONFIG_V4L_AMLOGIC_VIDEO),m,g' "linux/drivers/media/video_dev/Makefile"
+      echo "obj-y += video_dev/" >> "linux/drivers/media/Makefile"
+    
+      # Copy and enable videobuf-res module
+      cp -a "$(kernel_path)/drivers/media/v4l2-core/videobuf-res.c" "linux/drivers/media/v4l2-core/"
+      cp -a "$(kernel_path)/include/media/videobuf-res.h" "linux/include/media/"
+      echo "obj-m += videobuf-res.o" >> "linux/drivers/media/v4l2-core/Makefile"
     fi
-    if [ "$PROJECT" = "S905" ]; then
-      echo "obj-y += amlogic/dvb_tv/" >> "linux/drivers/media/Makefile"
-      WETEKDVB_DIR="$(get_build_dir wetekdvb)"
-      if [ -d "$WETEKDVB_DIR" ]; then
-        cp -a "$WETEKDVB_DIR/wetekdvb.ko" "v4l/"
+    
+    # Amlogic DVB drivers
+    if [ "$PROJECT" = "S905" ] || [ "$PROJECT" = "S912" ]; then
+      DVB_TV_AML_DIR="$(get_build_dir dvb_tv-aml)"
+      if [ -d "$DVB_TV_AML_DIR" ]; then
+        cp -a "$DVB_TV_AML_DIR" "linux/drivers/media/dvb_tv"
+        echo "obj-y += dvb_tv/" >> "linux/drivers/media/Makefile"
       fi
-
+      if [ "$PROJECT" = "S905" ]; then
+        echo "obj-y += amlogic/dvb_tv/" >> "linux/drivers/media/Makefile"
+        WETEKDVB_DIR="$(get_build_dir wetekdvb)"
+        if [ -d "$WETEKDVB_DIR" ]; then
+          cp -a "$WETEKDVB_DIR/wetekdvb.ko" "v4l/"
+        fi
+      fi
     fi
   fi
 
