@@ -272,8 +272,9 @@ post_install() {
   # WeTek DVB driver
   if [ "$PROJECT" = "S905" ]; then
     WETEKDVB_DIR="$(get_build_dir wetekdvb)"
-    if [ -d "$WETEKDVB_DIR" ]; then
-      cp -a "$WETEKDVB_DIR/wetekdvb.ko" "$INSTALL$(get_full_module_dir)/kernel/drivers/amlogic/dvb_tv/"
+    if [ -d "$WETEKDVB_DIR" -a -f "$INSTALL$(get_full_module_dir)/kernel/drivers/amlogic/dvb_tv/wetekplay.ko" ]; then
+      cp -a "$WETEKDVB_DIR/wetekdvb.ko" "$INSTALL$(get_full_module_dir)/kernel/drivers/media/dvb-core/"
+      mv -f "$INSTALL$(get_full_module_dir)/kernel/drivers/amlogic/dvb_tv/wetekplay.ko" "$INSTALL$(get_full_module_dir)/kernel/drivers/media/dvb-core/wetekplay.ko"
     fi
   fi
 
