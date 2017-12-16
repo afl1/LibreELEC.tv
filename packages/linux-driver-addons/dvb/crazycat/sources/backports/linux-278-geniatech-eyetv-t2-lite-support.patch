@@ -1,0 +1,53 @@
+From af020ce55b878709d6e2ab72a0776449e998f52c Mon Sep 17 00:00:00 2001
+From: CrazyCat <crazycat69@narod.ru>
+Date: Wed, 6 Dec 2017 23:27:34 +0200
+Subject: [PATCH] dvb-usb-cxusb: Geniatech eyeTv T2 lite support.
+
+---
+ drivers/media/usb/dvb-usb/cxusb.c | 11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
+
+diff --git a/drivers/media/usb/dvb-usb/cxusb.c b/drivers/media/usb/dvb-usb/cxusb.c
+index 15a3a6ea3e75..9deeef1613f0 100644
+--- a/drivers/media/usb/dvb-usb/cxusb.c
++++ b/drivers/media/usb/dvb-usb/cxusb.c
+@@ -1492,6 +1492,7 @@ enum cxusb_table_index {
+ 	MYGICA_X9330_1,
+ 	MYGICA_X9330_2,
+ 	MYGICA_X9330_3,
++	EYETV_T2_LITE,
+ 	NR__cxusb_table_index
+ };
+ 
+@@ -1577,6 +1578,9 @@ static struct usb_device_id cxusb_table[NR__cxusb_table_index + 1] = {
+ 	[MYGICA_X9330_3] = {
+ 		USB_DEVICE(USB_VID_GTEK, 0xd233)
+ 	},
++	[EYETV_T2_LITE] = {
++		USB_DEVICE(USB_VID_CONEXANT, 0xc699)
++	},
+ 	{}		/* Terminating entry */
+ };
+ MODULE_DEVICE_TABLE (usb, cxusb_table);
+@@ -2351,7 +2355,7 @@ static struct dvb_usb_device_properties cxusb_mygica_t230c_properties = {
+ 		.allowed_protos = RC_PROTO_BIT_UNKNOWN,
+ 	},
+ 
+-	.num_device_descs = 2,
++	.num_device_descs = 3,
+ 	.devices = {
+ 		{
+ 			"Mygica T230C DVB-T/T2/C",
+@@ -2363,6 +2367,11 @@ static struct dvb_usb_device_properties cxusb_mygica_t230c_properties = {
+ 			{ NULL },
+ 			{ &cxusb_table[MYGICA_T230C2], NULL },
+ 		},
++		{
++			"EyeTV T2 lite",
++			{ NULL },
++			{ &cxusb_table[EYETV_T2_LITE], NULL },
++		},
+ 	}
+ };
+ 
+
