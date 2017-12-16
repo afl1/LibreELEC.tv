@@ -38,7 +38,7 @@ get_revision() {
     BOOTLOADER="u-boot"
 
   # u-boot version to use (default)
-    UBOOT_VERSION="vendor"
+    UBOOT_VERSION=""
 
   # Kernel target
     KERNEL_TARGET="Image.lzo"
