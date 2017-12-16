@@ -5,19 +5,33 @@ get_revision() {
   git describe --tags
 }
 
-    TARGET_CPU="cortex-a53"
-
+  # The TARGET_CPU variable controls which processor should be targeted for
+  # generated code.
     case $TARGET_ARCH in
       aarch64)
+        # TARGET_CPU:
+        # arm2 arm250 arm3 arm6 arm60 arm600 arm610 arm620 arm7 arm7m arm7d
+        # arm7dm arm7di arm7dmi arm70 arm700 arm700i arm710 arm710c
+        # arm7100 arm720 arm7500 arm7500fe arm7tdmi arm7tdmi-s arm710t
+        # arm720t arm740t strongarm strongarm110 strongarm1100
+        # strongarm1110 arm8 arm810 arm9 arm9e arm920 arm920t arm922t
+        # arm946e-s arm966e-s arm968e-s arm926ej-s arm940t arm9tdmi
+        # arm10tdmi arm1020t arm1026ej-s arm10e arm1020e arm1022e
+        # arm1136j-s arm1136jf-s mpcore mpcorenovfp arm1156t2-s
+        # arm1176jz-s arm1176jzf-s cortex-a8 cortex-a9 cortex-r4
+        # cortex-r4f cortex-m3 cortex-m1 xscale iwmmxt iwmmxt2 ep9312.
+        #
+        TARGET_CPU="cortex-a53"
         TARGET_CPU_FLAGS="+crc+fp+simd"
         TARGET_FEATURES="64bit neon"
-       ;;
+        ;;
       arm)
+        TARGET_FLOAT=hard
+        TARGET_CPU="cortex-a53"
         TARGET_CPU_FLAGS="+crc"
         TARGET_FPU="neon-fp-armv8"
-        TARGET_FLOAT="hard"
         TARGET_FEATURES="32bit neon"
-       ;;
+        ;;
     esac
 
   # Bootloader to use (syslinux / u-boot / atv-bootloader / bcm2835-bootloader)
@@ -26,17 +40,10 @@ get_revision() {
   # u-boot version to use (default)
     UBOOT_VERSION="vendor"
 
-  # Configuration for u-boot
-    UBOOT_CONFIG=""
-
-  # Target Configfile for u-boot
-    UBOOT_CONFIGFILE=""
-
   # Kernel target
     KERNEL_TARGET="Image.lzo"
 
   # Kernel extra targets to build
-    KERNEL_UBOOT_EXTRA_TARGET="gxm_q200_2g.dtb gxm_q201_1g.dtb gxm_q201_2g.dtb"
     KERNEL_UBOOT_EXTRA_TARGET="gxm_q200_2g.dtb"
 
   # Build Android kernel image using mkbootimg
@@ -48,9 +55,6 @@ get_revision() {
   # Additional kernel make parameters (for example to specify the u-boot loadaddress)
     KERNEL_MAKE_EXTRACMD=""
 
-  # kernel image name
-    KERNEL_NAME="kernel.img"
-
   # Kernel to use. values can be:
   # default:  default mainline kernel
     LINUX="custom"
@@ -58,10 +62,12 @@ get_revision() {
     KERNEL_URL="https://github.com/kszaq/linux-amlogic-le/archive/$KERNEL_VERSION.tar.gz"
     KERNEL_SOURCE_DIR="linux-amlogic-le-$KERNEL_VERSION*"
     KERNEL_PATCH_DIRS="amlogic-3.14"
-    BUILD_DATE=`date +%Y%m%d%H%M`
-    CUSTOM_VERSION="9.0-devel-$BUILD_DATE-g$KERNEL_VERSION-K"
     CUSTOM_VERSION="$(get_revision)-K"
-    CUSTOM_IMAGE_NAME="$DISTRONAME-$PROJECT.$TARGET_ARCH-$CUSTOM_VERSION"
+    CUSTOM_IMAGE_NAME="LibreELEC-S905.arm-$CUSTOM_VERSION"
+
+  # kernel image name
+    KERNEL_NAME="kernel.img"
+
 
 ################################################################################
 # setup build defaults
@@ -84,7 +90,10 @@ get_revision() {
     OPENGL="no"
 
   # OpenGL-ES implementation to use (no / bcm2835-driver / gpu-viv-bin-mx6q / opengl-meson)
-    OPENGLES="opengl-meson-t82x"
+    OPENGLES="opengl-meson"
+
+  # Amlogic Meson SOC family (8 / 6 / gxbb)
+    MESON_FAMILY="gxbb"
 
   # include uvesafb support (yes / no)
     UVESAFB_SUPPORT="no"
@@ -111,7 +120,7 @@ get_revision() {
   # Space separated list is supported,
   # e.g. ADDITIONAL_DRIVERS="DRIVER1 DRIVER2"
     ADDITIONAL_DRIVERS="RTL8192CU RTL8192DU RTL8192EU RTL8812AU gpu-aml-t8xx \
-                        ap6xxx-aml mt7601u-aml mt7603u-aml qca9377-aml RTL8188EU-aml RTL8189ES-aml RTL8189FS-aml RTL8723BS-aml RTL8822BU-aml ssv6xxx-aml"
+                        ap6xxx-aml mt7601u-aml mt7603u-aml qca9377-aml RTL8188EU-aml RTL8189ES-aml RTL8189FS-aml RTL8723BS-aml RTL8723DS-aml RTL8822BU-aml ssv6xxx-aml"
 
   # additional Firmware to use (dvb-firmware, misc-firmware, wlan-firmware)
   # Space separated list is supported,
@@ -121,23 +130,11 @@ get_revision() {
   # build and install ATV IR remote support (yes / no)
     ATVCLIENT_SUPPORT="no"
 
-  # "none" for disable LCD support
-    LCD_DRIVER="none"
-
   # Amlogic IR remote support (yes / no)
     AMREMOTE_SUPPORT="yes"
 
   # build and install iSCSI support - iscsistart (yes / no)
     ISCSI_SUPPORT="no"
-
-  # build with swap support (yes / no)
-    SWAP_SUPPORT="yes"
-
-  # swap support enabled per default (yes / no)
-    SWAP_ENABLED_DEFAULT="no"
-
-  # swapfile size if SWAP_SUPPORT=yes in MB
-    SWAPFILESIZE="128"
 
   # build with installer (yes / no)
     INSTALLER_SUPPORT="no"
@@ -147,7 +144,6 @@ get_revision() {
     EXTRA_DEPS_PKG="u-boot-tools"
 
   # set the addon dirs
-#    ADDON_SERVER_URL="http://kszaq.libreelec.tv/addons"
     ADDON_SERVER_URL="http://kodi.adamg.co.uk/libreelec/addons"
     ADDON_URL="$ADDON_SERVER_URL/$ADDON_VERSION/S905/$TARGET_ARCH"
 

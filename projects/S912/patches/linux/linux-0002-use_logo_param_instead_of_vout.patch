@@ -6,7 +6,7 @@ index 9266be3..e3e9685 100644
  static int refresh_mode_and_logo(bool first)
  {
  	enum vmode_e cur_mode = VMODE_MAX;
--	int hdp_state = 1;//get_hpd_state();
+-	int hdp_state = get_hpd_state();
  
  	if (!first && osd_get_logo_index() != logo_info.index)
  		return -1;
@@ -62,4 +62,3 @@ index 2e4922a..659da93 100644
  
  extern int vout2_suspend(void);
  extern int vout2_resume(void);
-

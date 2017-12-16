@@ -56,7 +56,7 @@ make_target() {
     if [ -f $PKG_DIR/config/usb.config ]; then
       cp $PKG_DIR/config/usb.config v4l/.config
     fi
-  elif
+  else
 
     # Amlogic AMLVIDEO driver
     if [ -e "$(kernel_path)/drivers/amlogic/video_dev" ]; then

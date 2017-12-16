@@ -1,9 +1,0 @@
---- a/amcodec/Makefile	2017-11-25 14:35:29.000000000 +0100
-+++ b/amcodec/Makefile	2017-12-04 23:37:24.424487221 +0100
-@@ -64,5 +64,5 @@
- 	install  $(INSTALL_FLAGS)	$(TARGET)$(LIB_VERSION)$(LIB_SUB_VERSION)  $(LIB_DIR)
- 	mkdir -p $(HEADERS_DIR)
- 	cp	-rf $(SRC)/include/*  $(HEADERS_DIR)/
--	-rm  $(LIB_DIR)/$(TARGET)
-+	-rm -f $(LIB_DIR)/$(TARGET)
- 	-ln -s $(TARGET)$(LIB_VERSION)$(LIB_SUB_VERSION)  $(LIB_DIR)/$(TARGET)$(LIB_VERSION)
