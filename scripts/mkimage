@@ -273,36 +273,10 @@ EOF
       mcopy $TARGET_IMG/$IMAGE_NAME.dtb ::/dtb.img
     fi
 
-    if [ -n "$UBOOT_SYSTEM" -a -f "$RELEASE_DIR/3rdparty/bootloader/u-boot-$UBOOT_SYSTEM.img" ]; then
-      mcopy "$RELEASE_DIR/3rdparty/bootloader/u-boot-$UBOOT_SYSTEM.img" ::/u-boot.img
-    elif [ -f $RELEASE_DIR/3rdparty/bootloader/u-boot.img ]; then
-      mcopy $RELEASE_DIR/3rdparty/bootloader/u-boot.img ::
-    fi
-
-    if [ -f $RELEASE_DIR/3rdparty/bootloader/boot-logo.bmp.gz ]; then
-      mcopy $RELEASE_DIR/3rdparty/bootloader/boot-logo.bmp.gz ::
-    fi
-
-    for dtb in $RELEASE_DIR/3rdparty/bootloader/*.dtb ; do
-      if [ -f $dtb ] ; then
-        mcopy "$dtb" ::/$(basename "$dtb")
-      fi
-    done
-
-    # copy Amlogic device tree image
-    if [ -f "$RELEASE_DIR/3rdparty/bootloader/dtb.img" ]; then
-      mcopy $RELEASE_DIR/3rdparty/bootloader/dtb.img ::
-    fi
+elif [ "$BOOTLOADER" = "u-boot" ]; then
+  echo "to make an image using u-boot UBOOT_SYSTEM must be set"
+  cleanup
 fi # bootloader
-
-if [ "$UBOOT_VERSION" != "hardkernel" ]; then
-  for src in $INSTALL_SRC_DIR/*autoscript.src ; do
-    if [ -e "$src" ] ; then
-      $MKIMAGE_TOOL_CMD "$src" "$LE_TMP/$(basename $src .src)" > /dev/null
-      mcopy "$LE_TMP/$(basename $src .src)" ::
-    fi
-  done
-fi
 
 # extract part2 from image to format and copy files
   echo "image: extracting part2 from image..."
