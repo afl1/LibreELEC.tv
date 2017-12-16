@@ -38,8 +38,8 @@ get_revision() {
     BOOTLOADER="u-boot"
 
   # u-boot version to use (default)
-    UBOOT_VERSION=""
-
+    UBOOT_VERSION="vendor"
+  
   # Kernel target
     KERNEL_TARGET="Image.lzo"
 
@@ -63,7 +63,7 @@ get_revision() {
     KERNEL_SOURCE_DIR="linux-amlogic-le-$KERNEL_VERSION*"
     KERNEL_PATCH_DIRS="amlogic-3.14"
     CUSTOM_VERSION="$(get_revision)-K"
-    CUSTOM_IMAGE_NAME="LibreELEC-S905.arm-$CUSTOM_VERSION"
+    CUSTOM_IMAGE_NAME="LibreELEC-S912.arm-$CUSTOM_VERSION"
 
   # kernel image name
     KERNEL_NAME="kernel.img"
