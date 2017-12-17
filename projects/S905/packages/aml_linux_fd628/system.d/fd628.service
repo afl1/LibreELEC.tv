@@ -1,0 +1,11 @@
+[Unit]
+Description=Amlogic FD628 service
+ConditionPathExists=/dev/fd628_dev
+
+[Service]
+Type=oneshot
+ExecStart=/usr/sbin/fd628
+RemainAfterExit=yes
+
+[Install]
+WantedBy=basic.target
