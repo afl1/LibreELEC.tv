@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<advancedsettings>
+  <showexitbutton>false</showexitbutton>
+
+  <samba>
+    <clienttimeout>30</clienttimeout>
+  </samba>
+
+  <cache>
+    <buffermode>1</buffermode>
+    <memorysize>52488000</memorysize>
+    <readfactor>5.0</readfactor>
+  </cache>
+</advancedsettings>
