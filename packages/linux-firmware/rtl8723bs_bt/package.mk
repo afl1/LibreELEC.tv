@@ -1,7 +1,6 @@
 ################################################################################
 #      This file is part of LibreELEC - https://libreelec.tv
 #      Copyright (C) 2017-present Team LibreELEC
-#      Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
 #
 #  LibreELEC is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -18,16 +17,13 @@
 ################################################################################
 
 PKG_NAME="rtl8723bs_bt"
-PKG_VERSION="07cda47"
-PKG_SHA256="db2c711a80322f93ac0c9000396028b19490878a5d01edc7373614e36da5b441"
-PKG_REV="1"
+PKG_VERSION="09eb91f"
+PKG_SHA256="4bb8483c4a14a9e0dfc4a6ddca18486caab5f361be2441b91e9e2a399ca9f33e"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/lwfinger/rtl8723bs_bt"
 PKG_URL="https://github.com/lwfinger/rtl8723bs_bt/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain"
-PKG_PRIORITY="optional"
 PKG_SECTION="firmware"
-PKG_SHORTDESC="rtl8723bs_bt"
-PKG_LONGDESC="rtl8723bs_bt"
-PKG_TOOLCHAIN="manual"
+PKG_SHORTDESC="rtl8723bs_bt Linux firmware"
+PKG_LONGDESC="rtl8723bs_bt Linux firmware"

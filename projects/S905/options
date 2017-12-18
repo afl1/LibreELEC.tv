@@ -152,3 +152,22 @@ get_revision() {
 
   # build with installer (yes / no)
     INSTALLER_SUPPORT="no"
+
+  # extra build dependeices
+    EXTRA_DEPS="mkimage"
+    EXTRA_DEPS_PKG="u-boot-tools"
+
+  # set the addon dirs
+    ADDON_SERVER_URL="http://kodi.adamg.co.uk/libreelec/addons"
+    ADDON_URL="$ADDON_SERVER_URL/$ADDON_PATH"
+
+  # OEM packages for OEM's (yes / no)
+    OEM_SUPPORT="yes"
+
+  # build and install driver addons (yes / no)
+    DRIVER_ADDONS_SUPPORT="yes"
+
+  # driver addons to install:
+  # for a list of additinoal drivers see packages/linux-driver-addons
+  # Space separated list is supported,
+    DRIVER_ADDONS="crazycat hauppauge"
