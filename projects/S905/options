@@ -134,3 +134,7 @@
 
   # build with installer (yes / no)
     INSTALLER_SUPPORT="no"
+
+  # set the addon dirs
+    ADDON_SERVER_URL="http://raybuntu.libreelec.tv/addons"
+    ADDON_URL="$ADDON_SERVER_URL/$ADDON_PATH"
