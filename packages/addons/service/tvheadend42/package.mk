@@ -17,11 +17,11 @@
 ################################################################################
 
 PKG_NAME="tvheadend42"
-PKG_VERSION="186248a"
-PKG_REVISION="750"
-PKG_SHA256="a04efff96a7e93de7ad2f5e4cb50fff5b7862abb8e65ebae5ae3ef8c106dcf1b"
+PKG_VERSION="c1a5e434b"
+PKG_REVISION="792"
+#PKG_SHA256="a04efff96a7e93de7ad2f5e4cb50fff5b7862abb8e65ebae5ae3ef8c106dcf1b"
 PKG_VERSION_NUMBER="4.3-$PKG_REVISION"
-PKG_REV="43-$PKG_REVISION"
+PKG_REV="4.3-$PKG_REVISION"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.tvheadend.org"
@@ -97,10 +97,6 @@ fi
 
 post_make_target() {
   $CC -O -fbuiltin -fomit-frame-pointer -fPIC -shared -o capmt_ca.so src/extra/capmt_ca.c -ldl
-}
-
-makeinstall_target() {
-  : # nothing to do here
 }
 
 addon() {
