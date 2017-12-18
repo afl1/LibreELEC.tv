@@ -35,7 +35,7 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-arch=$TARGET_ARCH \
                            --with-default-hybris-ld-library-path=/system/lib \
                            --enable-mali-quirks"
 
-post_make_target() {
+post_unpack() {
   OPENGL_DIR="$(get_build_dir opengl-meson-t82x)"
   if [ -d "OPENGL_DIR/usr/include" ]; then
     mkdir -p $SYSROOT_PREFIX/usr/include
