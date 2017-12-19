@@ -17,8 +17,8 @@
 ################################################################################
 
 PKG_NAME="kodi"
-PKG_VERSION="c356fa8"
-PKG_SHA256="a2ee06b44d6d3e6306aef3df15c57e1a14022bb80a0cb25f2c98caa4cdf4fe56"
+PKG_VERSION="9bc8607"
+PKG_SHA256="06a3f6552e40b821b92f8de057fb03dd0e96e1f10b24e213f03f75faa2cab133"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.kodi.tv"
@@ -84,12 +84,6 @@ if [ "$KODI_OPTICAL_SUPPORT" = yes ]; then
   KODI_OPTICAL="-DENABLE_OPTICAL=ON"
 else
   KODI_OPTICAL="-DENABLE_OPTICAL=OFF"
-fi
-
-if [ "$KODI_NONFREE_SUPPORT" = yes ]; then
-  KODI_NONFREE="-DENABLE_NONFREE=ON"
-else
-  KODI_NONFREE="-DENABLE_NONFREE=OFF"
 fi
 
 if [ "$KODI_DVDCSS_SUPPORT" = yes ]; then
@@ -209,6 +203,9 @@ KODI_LIBDVD="$KODI_DVDCSS \
              -DLIBDVDNAV_URL=$ROOT/$SOURCES/libdvdnav/libdvdnav-$(get_pkg_version libdvdnav).tar.gz \
              -DLIBDVDREAD_URL=$ROOT/$SOURCES/libdvdread/libdvdread-$(get_pkg_version libdvdread).tar.gz"
 
+# Build Kodi using parallel LTO
+[ "$LTO_SUPPORT" = "yes" ] && PKG_KODI_USE_LTO="-DUSE_LTO=$CONCURRENCY_MAKE_LEVEL"
+
 PKG_CMAKE_OPTS_TARGET="-DNATIVEPREFIX=$TOOLCHAIN \
                        -DWITH_TEXTUREPACKER=$TOOLCHAIN/bin/TexturePacker \
                        -DDEPENDS_PATH=$PKG_BUILD/depends \
@@ -219,7 +216,6 @@ PKG_CMAKE_OPTS_TARGET="-DNATIVEPREFIX=$TOOLCHAIN \
                        -DENABLE_INTERNAL_FFMPEG=OFF \
                        -DFFMPEG_INCLUDE_DIRS=$SYSROOT_PREFIX/usr \
                        -DENABLE_INTERNAL_CROSSGUID=OFF \
-                       -DENABLE_SDL=OFF \
                        -DENABLE_OPENSSL=ON \
                        -DENABLE_UDEV=ON \
                        -DENABLE_DBUS=ON \
@@ -230,6 +226,7 @@ PKG_CMAKE_OPTS_TARGET="-DNATIVEPREFIX=$TOOLCHAIN \
                        -DENABLE_LDGOLD=ON \
                        -DENABLE_DEBUGFISSION=OFF \
                        -DENABLE_APP_AUTONAME=OFF \
+                       $PKG_KODI_USE_LTO \
                        $KODI_ARCH \
                        $KODI_NEON \
                        $KODI_VDPAU \
@@ -245,13 +242,12 @@ PKG_CMAKE_OPTS_TARGET="-DNATIVEPREFIX=$TOOLCHAIN \
                        $KODI_SSH \
                        $KODI_AIRPLAY \
                        $KODI_AIRTUNES \
-                       $KODI_NONFREE \
                        $KODI_OPTICAL \
                        $KODI_BLURAY \
                        $KODI_PLAYER"
 
 pre_configure_target() {
-# kodi should never be built with lto
+  # Single threaded LTO is very slow so rely on Kodi for LTO support
   strip_lto
 
   export LIBS="$LIBS -lncurses"

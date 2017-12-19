@@ -1,7 +1,7 @@
 diff --git a/xbmc/input/linux/LinuxInputDevices.cpp b/xbmc/input/linux/LinuxInputDevices.cpp
 index ef0d494..e3bd7b1 100644
---- a/xbmc/input/linux/LinuxInputDevices.cpp
-+++ b/xbmc/input/linux/LinuxInputDevices.cpp
+--- a/xbmc/platform/linux/input/LinuxInputDevices.cpp
++++ b/xbmc/platform/linux/input/LinuxInputDevices.cpp
 @@ -229,6 +229,7 @@ KeyMap keyMap[] = {
    { KEY_VOLUMEUP      , XBMCK_VOLUME_UP   },
    { KEY_POWER         , XBMCK_POWER       },
