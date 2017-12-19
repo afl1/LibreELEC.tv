@@ -86,5 +86,8 @@ make_target() {
 }
 
 makeinstall_target() {
+  if [ "$TARGET_KERNEL_ARCH" = "arm64" ]; then
+    STRIP=$TOOLCHAIN/lib/gcc-linaro-aarch64-linux-gnu/bin/aarch64-linux-gnu-strip
+  fi
   install_driver_addon_files "$PKG_BUILD/v4l/"
 }
