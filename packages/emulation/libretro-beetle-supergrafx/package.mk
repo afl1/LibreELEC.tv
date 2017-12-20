@@ -17,8 +17,8 @@
 ################################################################################
 
 PKG_NAME="libretro-beetle-supergrafx"
-PKG_VERSION="67b70b4"
-PKG_SHA256="4e58bb4efa4a0b28a0099ada47e5806d3896e2281ca11cad96b35e14d7bb987f"
+PKG_VERSION="70c5a9b"
+PKG_SHA256="36a6718dacd209318f596a8cae2760b72a106b49bc298e834236350307d1bb59"
 PKG_ARCH="any"
 PKG_LICENSE="GPLv2"
 PKG_SITE="https://github.com/libretro/beetle-supergrafx-libretro"
