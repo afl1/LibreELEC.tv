@@ -1,11 +1,12 @@
 --- a/backports/backports.txt
 +++ b/backports/backports.txt
-@@ -25,6 +25,10 @@ add api_version.patch
+@@ -25,6 +25,11 @@ add api_version.patch
  add pr_fmt.patch
  add debug.patch
  add drx39xxj.patch
 +add temp_revert.patch
 +add hauppauge.patch
++add linux-250-meson-ir.patch
 +add linux-253-wetek-dvb.patch
 +add linux-277-dmx_h.patch
  
