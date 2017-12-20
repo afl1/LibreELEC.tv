@@ -34,22 +34,22 @@ index ee50f37..28034c8 100644
 +    SetExitCode(EXITCODE_POWERDOWN);
      g_powerManager.Powerdown();
      break;
- 
+
    case TMSG_QUIT:
 -    Stop(EXITCODE_QUIT);
 +    SetExitCode(EXITCODE_QUIT);
      break;
- 
+
    case TMSG_SHUTDOWN:
 @@ -2381,12 +2381,13 @@ void CApplication::OnApplicationMessage(ThreadMessage* pMsg)
- 
+
    case TMSG_RESTART:
    case TMSG_RESET:
 -    Stop(EXITCODE_REBOOT);
 +    SetExitCode(EXITCODE_REBOOT);
      g_powerManager.Reboot();
      break;
- 
+
    case TMSG_RESTARTAPP:
  #if defined(TARGET_WINDOWS) || defined(TARGET_LINUX)
 +    SetExitCode(EXITCODE_RESTARTAPP);

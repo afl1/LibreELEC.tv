@@ -17,8 +17,8 @@
 ################################################################################
 
 PKG_NAME="pvr.argustv"
-PKG_VERSION="1a48789"
-PKG_SHA256="236a55371cae180ec755be055238d7edb145aab9e9e918bd8b797344aa74709a"
+PKG_VERSION="1aa4ddc"
+PKG_SHA256="fa049c49840bfb7995571b344b83a8bbfe429ee54310aab5a88ef16bd3e29154"
 PKG_REV="2"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
