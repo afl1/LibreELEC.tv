@@ -26,13 +26,13 @@ diff --git a/xbmc/Application.cpp b/xbmc/Application.cpp
 index ee50f37..28034c8 100644
 --- a/xbmc/Application.cpp
 +++ b/xbmc/Application.cpp
-@@ -2355,12 +2355,12 @@ void CApplication::OnApplicationMessage(ThreadMessage* pMsg)
+@@ -2373,12 +2373,12 @@ void CApplication::OnApplicationMessage(ThreadMessage* pMsg)
    switch (pMsg->dwMessage)
    {
    case TMSG_POWERDOWN:
 -    Stop(EXITCODE_POWERDOWN);
 +    SetExitCode(EXITCODE_POWERDOWN);
-     g_powerManager.Powerdown();
+     CServiceBroker::GetPowerManager().Powerdown();
      break;
 
    case TMSG_QUIT:
@@ -41,13 +41,13 @@ index ee50f37..28034c8 100644
      break;
 
    case TMSG_SHUTDOWN:
-@@ -2381,12 +2381,13 @@ void CApplication::OnApplicationMessage(ThreadMessage* pMsg)
+@@ -2399,12 +2399,13 @@ void CApplication::OnApplicationMessage(ThreadMessage* pMsg)
 
    case TMSG_RESTART:
    case TMSG_RESET:
 -    Stop(EXITCODE_REBOOT);
 +    SetExitCode(EXITCODE_REBOOT);
-     g_powerManager.Reboot();
+     CServiceBroker::GetPowerManager().Reboot();
      break;
 
    case TMSG_RESTARTAPP:

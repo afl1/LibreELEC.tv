@@ -45,10 +45,10 @@ diff -Naurp kodi-17.0-beta5-e92818a/xbmc/GUIInfoManager.cpp kodi-17.0-beta5-e928
  
 @@ -6815,9 +6815,6 @@ bool CGUIInfoManager::GetInt(int &value,
      case PVR_TIMESHIFT_PROGRESS:
-       value = g_PVRManager.TranslateIntInfo(info);
+       value = CServiceBroker::GetPVRManager().TranslateIntInfo(info);
        return true;
 -    case SYSTEM_BATTERY_LEVEL:
--      value = g_powerManager.BatteryLevel();
+-      value = CServiceBroker::GetPowerManager().BatteryLevel();
 -      return true;
    }
    return false;
@@ -74,7 +74,7 @@ diff -Naurp kodi-17.0-beta5-e92818a/xbmc/utils/SystemInfo.cpp kodi-17.0-beta5-e9
  
 -std::string CSysInfoJob::GetBatteryLevel()
 -{
--  return StringUtils::Format("%d%%", g_powerManager.BatteryLevel());
+-  return StringUtils::Format("%d%%", CServiceBroker::GetPowerManager().BatteryLevel());
 -}
 -
  double CSysInfoJob::GetCPUFrequency()
