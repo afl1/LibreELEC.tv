@@ -136,7 +136,7 @@
     INSTALLER_SUPPORT="no"
 
   # set the addon dirs
-    ADDON_SERVER_URL="http://raybuntu.libreelec.tv/addons"
+    ADDON_SERVER_URL="http://libreelec.adamg.co.uk/addons"
     ADDON_URL="$ADDON_SERVER_URL/$ADDON_PATH"
 
   # build and install driver addons (yes / no)
