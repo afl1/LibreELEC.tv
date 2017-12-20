@@ -30,7 +30,7 @@ index d66993a..b3a32ad 100644
 -#if defined(HAS_LIBAMCODEC)
 -  if (aml_present())
 +
-+  if (device.find("M8AUDIO") != std::string::npos)
++  if (device.find("AML-M8AUDIO") != std::string::npos)
    {
 +    int aml_digital_codec = 0;
 +
@@ -78,7 +78,7 @@ index d66993a..b3a32ad 100644
        info.m_dataFormats.push_back(i);
    }
  
-+  if (info.m_displayName.find("M8AUDIO") != std::string::npos && info.m_deviceType != AE_DEVTYPE_HDMI)
++  if (info.m_displayName.find("AML-M8AUDIO") != std::string::npos && info.m_deviceType != AE_DEVTYPE_HDMI)
 +  {
 +    info.m_displayNameExtra = "PCM";
 +  }
