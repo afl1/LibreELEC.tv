@@ -1,0 +1,111 @@
+From 8c194455d51355705a5d3447ecb39cb64a648001 Mon Sep 17 00:00:00 2001
+From: RealJohnGalt <johngalt@fake.mail>
+Date: Sun, 23 Jul 2017 16:48:42 -0700
+Subject: [PATCH] S912 dont allow any other than 1920 res
+
+---
+diff --git a/xbmc/utils/AMLUtils.cpp b/xbmc/utils/AMLUtils.cpp
+index f5d5e33..c298b41 100644
+--- a/xbmc/utils/AMLUtils.cpp
++++ b/xbmc/utils/AMLUtils.cpp
+@@ -647,22 +647,24 @@
+   {
+     if (((StringUtils::StartsWith(i->c_str(), "4k2k")) && (aml_support_h264_4k2k() > AML_NO_H264_4K2K)) || !(StringUtils::StartsWith(i->c_str(), "4k2k")))
+     {
+-      if (aml_mode_to_resolution(i->c_str(), &res))
++      if (aml_mode_to_resolution(i->c_str(), &res) && res.iWidth == 1920 && res.iHeight == 1080)
++      {
+         resolutions.push_back(res);
+ 
+-      if (aml_has_frac_rate_policy())
+-      {
+-        // Add fractional frame rates: 23.976, 29.97 and 59.94 Hz
+-        switch ((int)res.fRefreshRate)
++        if (aml_has_frac_rate_policy())
+         {
+-          case 24:
+-          case 30:
+-          case 60:
+-            res.fRefreshRate /= 1.001;
+-            res.strMode       = StringUtils::Format("%dx%d @ %.2f%s - Full Screen", res.iScreenWidth, res.iScreenHeight, res.fRefreshRate,
+-              res.dwFlags & D3DPRESENTFLAG_INTERLACED ? "i" : "");
+-            resolutions.push_back(res);
+-            break;
++          // Add fractional frame rates: 23.976, 29.97 and 59.94 Hz
++          switch ((int)res.fRefreshRate)
++          {
++            case 24:
++            case 30:
++            case 60:
++              res.fRefreshRate /= 1.001;
++              res.strMode       = StringUtils::Format("%dx%d @ %.2f%s - Full Screen", res.iScreenWidth, res.iScreenHeight, res.fRefreshRate,
++                res.dwFlags & D3DPRESENTFLAG_INTERLACED ? "i" : "");
++              resolutions.push_back(res);
++              break;
++          }
+         }
+       }
+     }
+@@ -675,8 +677,8 @@ bool aml_get_preferred_resolution(RESOLUTION_INFO *res)
+   // check display/mode, it gets defaulted at boot
+   if (!aml_get_native_resolution(res))
+   {
+-    // punt to 720p if we get nothing
+-    aml_mode_to_resolution("720p", res);
++    // punt to 1080p if we get nothing
++    aml_mode_to_resolution("1080p60hz", res);
+   }
+ 
+   return true;
+@@ -705,8 +707,6 @@ bool aml_set_display_resolution(const RESOLUTION_INFO &res, std::string framebuf
+ 
+   SysfsUtils::SetString("/sys/class/display/mode", mode.c_str());
+ 
+-  aml_set_framebuffer_resolution(res, framebuffer_name);
+-
+   return true;
+ }
+ 
+@@ -803,29 +803,3 @@ void aml_disable_freeScale()
+   SysfsUtils::SetInt("/sys/class/graphics/fb1/free_scale", 0);
+ }
+ 
+-void aml_set_framebuffer_resolution(const RESOLUTION_INFO &res, std::string framebuffer_name)
+-{
+-  aml_set_framebuffer_resolution(res.iScreenWidth, res.iScreenHeight, framebuffer_name);
+-}
+-
+-void aml_set_framebuffer_resolution(int width, int height, std::string framebuffer_name)
+-{
+-  int fd0;
+-  std::string framebuffer = "/dev/" + framebuffer_name;
+-
+-  if ((fd0 = open(framebuffer.c_str(), O_RDWR)) >= 0)
+-  {
+-    struct fb_var_screeninfo vinfo;
+-    if (ioctl(fd0, FBIOGET_VSCREENINFO, &vinfo) == 0)
+-    {
+-      vinfo.xres = width;
+-      vinfo.yres = height;
+-      vinfo.xres_virtual = 1920;
+-      vinfo.yres_virtual = 2160;
+-      vinfo.bits_per_pixel = 32;
+-      vinfo.activate = FB_ACTIVATE_ALL;
+-      ioctl(fd0, FBIOPUT_VSCREENINFO, &vinfo);
+-    }
+-    close(fd0);
+-  }
+-}
+diff --git a/xbmc/utils/AMLUtils.h b/xbmc/utils/AMLUtils.h
+index 3246a7f..4f11373 100644
+--- a/xbmc/utils/AMLUtils.h
++++ b/xbmc/utils/AMLUtils.h
+@@ -74,6 +74,4 @@ void aml_handle_scale(const RESOLUTION_INFO &res);
+ void aml_handle_display_stereo_mode(const int stereo_mode);
+ void aml_enable_freeScale(const RESOLUTION_INFO &res);
+ void aml_disable_freeScale();
+-void aml_set_framebuffer_resolution(const RESOLUTION_INFO &res, std::string framebuffer_name);
+-void aml_set_framebuffer_resolution(int width, int height, std::string framebuffer_name);
+ 
+-- 
+2.13.3
