@@ -1293,28 +1293,6 @@ index 11aaf820..f5518636 100644
      file = calloc(1, sizeof(BD_FILE_H));
      if (!file) {
          BD_DEBUG(DBG_FILE | DBG_CRIT, "Error opening file %s (out of memory)\n", filename);
-diff --git a/src/libbluray/bdnav/clpi_parse.c b/src/libbluray/bdnav/clpi_parse.c
-index 839e10c3..5fa490dc 100644
---- a/src/libbluray/bdnav/clpi_parse.c
-+++ b/src/libbluray/bdnav/clpi_parse.c
-@@ -39,6 +39,7 @@
- #define CLPI_SIG1  ('H' << 24 | 'D' << 16 | 'M' << 8 | 'V')
- #define CLPI_SIG2A ('0' << 24 | '2' << 16 | '0' << 8 | '0')
- #define CLPI_SIG2B ('0' << 24 | '1' << 16 | '0' << 8 | '0')
-+#define CLPI_SIG2C ('0' << 24 | '2' << 16 | '4' << 8 | '0')
- 
- static void
- _human_readable_sig(char *sig, uint32_t s1, uint32_t s2)
-@@ -134,7 +135,8 @@ _parse_header(BITSTREAM *bits, CLPI_CL *cl)
-     cl->type_indicator2 = bs_read(bits, 32);
-     if (cl->type_indicator != CLPI_SIG1 || 
-         (cl->type_indicator2 != CLPI_SIG2A &&
--         cl->type_indicator2 != CLPI_SIG2B)) {
-+         cl->type_indicator2 != CLPI_SIG2B &&
-+         cl->type_indicator2 != CLPI_SIG2C)) {
- 
-         char sig[9];
-         char expect[9];
 diff --git a/src/libbluray/bdnav/index_parse.c b/src/libbluray/bdnav/index_parse.c
 index 6a0f5a01..56b3d949 100644
 --- a/src/libbluray/bdnav/index_parse.c
@@ -1358,14 +1336,6 @@ diff --git a/src/libbluray/bdnav/mpls_parse.c b/src/libbluray/bdnav/mpls_parse.c
 index 82b61854..92ea99a7 100644
 --- a/src/libbluray/bdnav/mpls_parse.c
 +++ b/src/libbluray/bdnav/mpls_parse.c
-@@ -40,6 +40,7 @@
- #define MPLS_SIG1  ('M' << 24 | 'P' << 16 | 'L' << 8 | 'S')
- #define MPLS_SIG2A ('0' << 24 | '2' << 16 | '0' << 8 | '0')
- #define MPLS_SIG2B ('0' << 24 | '1' << 16 | '0' << 8 | '0')
-+#define MPLS_SIG2C ('0' << 24 | '2' << 16 | '4' << 8 | '0')
- 
- static void
- _human_readable_sig(char *sig, uint32_t s1, uint32_t s2)
 @@ -92,9 +93,10 @@ _parse_appinfo(BITSTREAM *bits, MPLS_AI *ai)
      ai->random_access_flag = bs_read(bits, 1);
      ai->audio_mix_flag = bs_read(bits, 1);
@@ -1378,16 +1348,6 @@ index 82b61854..92ea99a7 100644
      bs_seek_byte(bits, pos + len);
  #endif
      return 1;
-@@ -112,7 +114,8 @@ _parse_header(BITSTREAM *bits, MPLS_PL *pl)
-     pl->type_indicator2 = bs_read(bits, 32);
-     if (pl->type_indicator != MPLS_SIG1 || 
-         (pl->type_indicator2 != MPLS_SIG2A && 
--         pl->type_indicator2 != MPLS_SIG2B)) {
-+         pl->type_indicator2 != MPLS_SIG2B &&
-+         pl->type_indicator2 != MPLS_SIG2C)) {
- 
-         char sig[9];
-         char expect[9];
 @@ -218,6 +221,7 @@ _parse_stream(BITSTREAM *bits, MPLS_STREAM *s)
              break;
      };
