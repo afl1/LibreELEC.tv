@@ -17,8 +17,8 @@
 ################################################################################
 
 PKG_NAME="brcmfmac_sdio-firmware-all-aml"
-PKG_VERSION="f9d6101"
-PKG_SHA256="4676dfb1053795fd4c3c3ba59430da251d273202f016a9fdc13f22e12ac34947"
+PKG_VERSION="06094e2"
+PKG_SHA256="cf5cd79155e7469128b5fa2a8dbaf3807104519d6d641970198d143d2442ae3c"
 PKG_ARCH="arm aarch64"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/kszaq/brcmfmac_sdio-firmware-aml"
