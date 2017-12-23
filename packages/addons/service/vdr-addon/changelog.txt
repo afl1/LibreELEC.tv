@@ -1,3 +1,7 @@
+107
+- added robotv
+- added DDCI2
+
 106
 - update Sat>IP plugin to 28cc3ca
 - update VNSI to 63d8151
