@@ -17,8 +17,8 @@
 ################################################################################
 
 PKG_NAME="qca9377-aml"
-PKG_VERSION="0cc65f9"
-PKG_SHA256="336f6e95fc16874a81daf5289c656688a90c5df566ffeaea708f7ac2f5198b9e"
+PKG_VERSION="8e1b647"
+PKG_SHA256="7d9cffcc1694f274151eb2f755603515493c2f4d81fcf6a3fe3d87c587965a98"
 PKG_ARCH="arm aarch64"
 PKG_LICENSE="GPL"
 PKG_SITE="https://boundarydevices.com/new-silex-wifi-802-11ac-bt4-1-module/"
