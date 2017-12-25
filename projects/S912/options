@@ -1,6 +1,9 @@
 ################################################################################
 # setup system defaults
 ################################################################################
+get_revision() {
+  git describe --tags
+}
 
   # The TARGET_CPU variable controls which processor should be targeted for
   # generated code.
@@ -57,6 +60,8 @@
   # Kernel to use. values can be:
   # default:  default mainline kernel
     LINUX="amlogic-3.14"
+    CUSTOM_VERSION="$(get_revision)"
+    CUSTOM_IMAGE_NAME="LibreELEC-S912.arm-$CUSTOM_VERSION"
 
   # kernel image name
     KERNEL_NAME="kernel.img"
