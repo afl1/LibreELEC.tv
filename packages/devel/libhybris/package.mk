@@ -34,3 +34,6 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-arch=$TARGET_ARCH \
                            --with-android-headers=$BUILD/android-headers-25 \
                            --with-default-hybris-ld-library-path=/system/lib \
                            --enable-mali-quirks"
+post_makeinstall_target(){
+  cp -PR "$(get_build_dir $PKG_NAME)/include/EGL" $SYSROOT_PREFIX/usr/include/
+}
