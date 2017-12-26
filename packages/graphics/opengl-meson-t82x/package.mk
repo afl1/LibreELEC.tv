@@ -17,8 +17,8 @@
 ################################################################################
 
 PKG_NAME="opengl-meson-t82x"
-PKG_VERSION="076f89d"
-PKG_SHA256="a90e0af3921eade81847c96c45e1ed4855007f70763442bd18f2872a38c3174a"
+PKG_VERSION="915cb48"
+PKG_SHA256="9b5f65afa21250b67578c250da030a5829e69131ce91b2f167b01b1ed30be781"
 PKG_ARCH="arm"
 PKG_LICENSE="nonfree"
 PKG_SITE="https://github.com/kszaq/opengl-meson-t82x"
@@ -31,9 +31,6 @@ PKG_LONGDESC="opengl-meson: OpenGL ES pre-compiled libraries for Mali GPUs found
 PKG_TOOLCHAIN="manual"
 
 makeinstall_target() {
-  mkdir -p $SYSROOT_PREFIX/usr/include
-    cp -PR usr/include/* $SYSROOT_PREFIX/usr/include
-
   mkdir -p $INSTALL/system
     cp -a system/* $INSTALL/system
 }
