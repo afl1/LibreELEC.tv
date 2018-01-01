@@ -278,7 +278,7 @@ post_install() {
     ln -sf /storage/.config/firmware/ $INSTALL/$(get_full_firmware_dir)/updates
 
   # WeTek DVB driver
-  if [ "$DEVICE" = "S905" ]; then
+  if [ listcontains "$ADDITIONAL_DRIVERS" "wetekdvb" ]; then
     WETEKDVB_DIR="$(get_build_dir wetekdvb)"
     if [ -d "$WETEKDVB_DIR" -a -f "$INSTALL$(get_full_module_dir)/kernel/drivers/amlogic/dvb_tv/wetekplay.ko" ]; then
       cp -a "$WETEKDVB_DIR/wetekdvb.ko" "$INSTALL$(get_full_module_dir)/kernel/drivers/media/dvb-core/"

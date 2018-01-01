@@ -37,9 +37,10 @@ PKG_ADDON_NAME="DVB drivers for Hauppauge"
 PKG_ADDON_TYPE="xbmc.service"
 PKG_ADDON_VERSION="${ADDON_VERSION}.${PKG_REV}"
 
-if [ "$PROJECT" = "S905" ] || [ "$PROJECT" = "S912" ]; then
+if [ "$PROJECT" = "Amlogic" ]; then
   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET dvb_tv-aml"
 fi
+listcontains "$ADDITIONAL_DRIVERS" "wetekdvb" && PKG_DEPENDS_TARGET+=" wetekdvb" || true
 
 pre_make_target() {
   export KERNEL_VER=$(get_module_dir)
@@ -50,7 +51,7 @@ make_target() {
   cp -RP $(get_build_dir media_tree)/* $PKG_BUILD/linux
   make VER=$KERNEL_VER SRCDIR=$(kernel_path) stagingconfig
 
-  if [ "$PROJECT" = "S905" ] || [ "$PROJECT" = "S912" ]; then
+  if [ "$PROJECT" = "Amlogic" ]; then
 
     # Amlogic AMLVIDEO driver
     if [ -e "$(kernel_path)/drivers/amlogic/video_dev" ]; then
@@ -68,16 +69,16 @@ make_target() {
     fi
     
     # Amlogic DVB drivers
-    if [ "$PROJECT" = "S905" ] || [ "$PROJECT" = "S912" ]; then
+    if [ "$PROJECT" = "Amlogic" ]; then
       DVB_TV_AML_DIR="$(get_build_dir dvb_tv-aml)"
       if [ -d "$DVB_TV_AML_DIR" ]; then
         cp -a "$DVB_TV_AML_DIR" "linux/drivers/media/dvb_tv"
         echo "obj-y += dvb_tv/" >> "linux/drivers/media/Makefile"
       fi
-      if [ "$PROJECT" = "S905" ]; then
-        echo "obj-y += amlogic/dvb_tv/" >> "linux/drivers/media/Makefile"
+      if [ listcontains "$ADDITIONAL_DRIVERS" "wetekdvb" ]; then
         WETEKDVB_DIR="$(get_build_dir wetekdvb)"
         if [ -d "$WETEKDVB_DIR" ]; then
+          echo "obj-y += amlogic/dvb_tv/" >> "linux/driversmedia/Makefile"
           cp -a "$WETEKDVB_DIR/wetekdvb.ko" "v4l/"
         fi
       fi

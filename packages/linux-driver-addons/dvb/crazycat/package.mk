@@ -17,8 +17,8 @@
 ################################################################################
 
 PKG_NAME="crazycat"
-PKG_VERSION="2017-11-13"
-PKG_SHA256="14d951eb8d40cee40d601d7c737bca07171d8b4f201d63d5e70a24c4841f9d73"
+PKG_VERSION="2017-12-06"
+PKG_SHA256="779c7d42e5fd4dfac8f53654ce8af467d22a81b6c0b21e24f14aaaed033c6eb1"
 PKG_REV="100"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
@@ -40,6 +40,7 @@ PKG_ADDON_VERSION="${ADDON_VERSION}.${PKG_REV}"
 if [ "$PROJECT" = "Amlogic" ]; then
   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET dvb_tv-aml"
 fi
+listcontains "$ADDITIONAL_DRIVERS" "wetekdvb" && PKG_DEPENDS_TARGET+=" wetekdvb" || true
 
 pre_make_target() {
   export KERNEL_VER=$(get_module_dir)
@@ -82,10 +83,10 @@ make_target() {
         cp -a "$DVB_TV_AML_DIR" "linux/drivers/media/dvb_tv"
         echo "obj-y += dvb_tv/" >> "linux/drivers/media/Makefile"
       fi
-      if [ "$DEVICE" = "S905" ]; then
-        echo "obj-y += amlogic/dvb_tv/" >> "linux/drivers/media/Makefile"
+      if [ listcontains "$ADDITIONAL_DRIVERS" "wetekdvb" ]; then
         WETEKDVB_DIR="$(get_build_dir wetekdvb)"
         if [ -d "$WETEKDVB_DIR" ]; then
+          echo "obj-y += amlogic/dvb_tv/" >> "linux/driversmedia/Makefile"
           cp -a "$WETEKDVB_DIR/wetekdvb.ko" "v4l/"
         fi
       fi

@@ -1,6 +1,6 @@
 --- a/backports/backports.txt
 +++ b/backports/backports.txt
-@@ -25,6 +25,17 @@
+@@ -25,6 +25,16 @@
  add pr_fmt.patch
  add debug.patch
  add drx39xxj.patch
@@ -14,7 +14,6 @@
 +add linux-250-meson-ir.patch
 +add linux-253-wetek-dvb.patch
 +add linux-277-dmx_h.patch
-+add linux-278-geniatech-eyetv-t2-lite-support.patch
  
  [4.12.255]
  add v4.12_revert_solo6x10_copykerneluser.patch
