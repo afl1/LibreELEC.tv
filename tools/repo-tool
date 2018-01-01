@@ -213,6 +213,9 @@ if [ "$1" = "-b" -o "$1" = "-ru" ]; then
     elif [ "$3" == "RPi2" ]; then
       project="RPi"
       device="RPi2"
+    elif [ "$3" == "S905" ]; then
+      project="Amlogic"
+      device="S905"
     fi
   fi
 fi
@@ -239,4 +242,3 @@ case $1 in
     exit 0
     ;;
 esac
-
