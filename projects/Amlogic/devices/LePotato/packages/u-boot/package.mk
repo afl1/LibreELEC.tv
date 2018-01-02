@@ -58,4 +58,8 @@ makeinstall_target() {
     fi
 
     cp $PKG_BUILD/fip/u-boot.bin.sd.bin $INSTALL/usr/share/bootloader/u-boot
+
+    if [ -f $PROJECT_DIR/$PROJECT/devices/$DEVICE/bootloader/boot.ini ]; then
+      cp -av $PROJECT_DIR/$PROJECT/devices/$DEVICE/bootloader/boot.ini $INSTALL/usr/share/bootloader
+    fi
 }
