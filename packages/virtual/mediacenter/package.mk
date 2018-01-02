@@ -47,6 +47,13 @@ if [ "$MEDIACENTER" = "kodi" ]; then
                                           xmlstarlet"
 
   _ADDONS_OTHER=yes
+  _ADDONS_PVR=yes
+
+  # various PVR clients
+  if [ "${_ADDONS_PVR}" = "yes" ]; then
+    _add_binary_addon "pvr.hts"
+    _add_binary_addon "pvr.iptvsimple"
+  fi
 
   if [ "${_ADDONS_OTHER}" = "yes" ]; then
     _add_binary_addon "imagedecoder.raw"
