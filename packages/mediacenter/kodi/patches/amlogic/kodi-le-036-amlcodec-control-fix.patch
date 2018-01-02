@@ -156,7 +156,7 @@ Subject: [PATCH] VideoPlayer: AMLCodec control fixies
 -  if(!m_drain && timesize < 1.0)
 +  m_ttd =  static_cast<double>(m_cur_pts) / PTS_FREQ - static_cast<double>(m_hints.pClock->GetClock()) / DVD_TIME_BASE + am_private->video_rate / UNIT_FREQ;
 +  double x = timesize == 0.0 ? 100.0 : m_ttd > 2.0 ? 0.3 / timesize : m_ttd / timesize;
-+  if (!m_releaseFrame && !m_drain && ((x > 0.004 && timesize < 40.0) || (!m_try && timesize < 12.0)))
++  if (!m_releaseFrame && !m_drain && ((x > 0.003 && timesize < 40.0) || (!m_try && timesize < 30.0)))
 +  {
 +    m_try = 1;
 +    CLog::Log(LOGDEBUG, "CAMLCodec::GetPicture: VC_BUFFER LEV:%0.2f ttd:%0.0fms x:%0.3f",
