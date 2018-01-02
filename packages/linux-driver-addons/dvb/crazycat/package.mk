@@ -83,7 +83,7 @@ make_target() {
         cp -a "$DVB_TV_AML_DIR" "linux/drivers/media/dvb_tv"
         echo "obj-y += dvb_tv/" >> "linux/drivers/media/Makefile"
       fi
-      if [ listcontains "$ADDITIONAL_DRIVERS" "wetekdvb" ]; then
+      if listcontains "$ADDITIONAL_DRIVERS" "wetekdvb"; then
         WETEKDVB_DIR="$(get_build_dir wetekdvb)"
         if [ -d "$WETEKDVB_DIR" ]; then
           echo "obj-y += amlogic/dvb_tv/" >> "linux/driversmedia/Makefile"
