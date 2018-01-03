@@ -116,6 +116,9 @@ update_pkg() {
 
     new_sha256="$(wget -q ${pkg_url} -O- | sha256sum | awk '{print $1}')" || exit 1
     sed -e "s|PKG_SHA256=.*|PKG_SHA256=\"${new_sha256}\"|g" -i ${pkg_path}
+
+    pkg_rev=$(get_pkg_var "${pkg_name}" PKG_REV)
+    sed -e "s|PKG_REV=.*|PKG_REV=\"$((pkg_rev+1))\"|" -i ${pkg_path}
   fi
 }
 
