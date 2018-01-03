@@ -27,8 +27,8 @@ case $TARGET_KERNEL_ARCH in
     PKG_URL="https://github.com/codesnake/libamcodec/archive/$PKG_VERSION.tar.gz"
     ;;
   arm64)
-    PKG_VERSION="bb19db7"
-    PKG_SHA256="81f78b37f2c14313b68cad5c43237dc3a217afaaad4f41e07a840e26673309c4"
+    PKG_VERSION="2fba80c"
+    PKG_SHA256="ace58aeed528d1096d7dd4812d044dbf67ac89eb476b93e019916e44feea06dc"
     PKG_URL="https://github.com/surkovalex/libamcodec/archive/$PKG_VERSION.tar.gz"
     ;;
 esac
