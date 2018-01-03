@@ -1,0 +1,24 @@
+diff --git a/arch/arm64/boot/dts/amlogic/gxl_p212_1g.dts b/arch/arm64/boot/dts/amlogic/gxl_p212_1g.dts
+index 74a682b..4e56cf9 100644
+--- a/arch/arm64/boot/dts/amlogic/gxl_p212_1g.dts
++++ b/arch/arm64/boot/dts/amlogic/gxl_p212_1g.dts
+@@ -28,6 +28,7 @@
+ / {
+ 	model = "Amlogic";
+ 	compatible = "amlogic, Gxbb";
++	le-dt-id="gxl_p212_1g_lepotato";
+ 	amlogic-dt-id = "gxl_p212_1g";
+ 	interrupt-parent = <&gic>;
+ 	#address-cells = <2>;
+diff --git a/arch/arm64/boot/dts/amlogic/gxl_p212_2g.dts b/arch/arm64/boot/dts/amlogic/gxl_p212_2g.dts
+index 87fd2ee..3890eba 100644
+--- a/arch/arm64/boot/dts/amlogic/gxl_p212_2g.dts
++++ b/arch/arm64/boot/dts/amlogic/gxl_p212_2g.dts
+@@ -27,6 +27,7 @@
+ #include "mesongxl.dtsi"
+ / {
+ 	model = "Amlogic";
++	le-dt-id="gxl_p212_2g_lepotato";
+ 	amlogic-dt-id = "gxl_p212_2g";
+ 	compatible = "amlogic, Gxbb";
+ 	interrupt-parent = <&gic>;
