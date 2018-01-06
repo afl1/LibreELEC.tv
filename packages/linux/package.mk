@@ -73,6 +73,23 @@ if [ "$BUILD_ANDROID_BOOTIMG" = "yes" ]; then
   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET mkbootimg:host"
 fi
 
+if [ "$PROJECT" = "Amlogic" ]; then
+  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET dvb_tv-aml"
+fi
+
+post_unpack() {
+
+  # Amlogic DVB driver
+  if [ "$PROJECT" = "Amlogic" ]; then
+    scripts/unpack dvb_tv-aml
+    DVB_TV_AML_DIR="$(get_build_dir dvb_tv-aml)"
+    if [ -d "$DVB_TV_AML_DIR" ]; then
+      cp -a "$DVB_TV_AML_DIR" "$PKG_BUILD/drivers/media/dvb_tv"
+      echo "obj-y += dvb_tv/" >> "$PKG_BUILD/drivers/media/Makefile"
+    fi
+  fi
+}
+
 post_patch() {
   CFG_FILE="$PKG_NAME.${TARGET_PATCH_ARCH:-$TARGET_ARCH}.conf"
   if [ -n "$DEVICE" -a -f $PROJECT_DIR/$PROJECT/devices/$DEVICE/$PKG_NAME/$PKG_VERSION/$CFG_FILE ]; then
@@ -259,6 +276,15 @@ makeinstall_init() {
 post_install() {
   mkdir -p $INSTALL/$(get_full_firmware_dir)/
     ln -sf /storage/.config/firmware/ $INSTALL/$(get_full_firmware_dir)/updates
+
+  # WeTek DVB driver
+  if listcontains "$ADDITIONAL_DRIVERS" "wetekdvb"; then
+    WETEKDVB_DIR="$(get_build_dir wetekdvb)"
+    if [ -d "$WETEKDVB_DIR" -a -f "$INSTALL$(get_full_module_dir)/kernel/drivers/amlogic/dvb_tv/wetekplay.ko" ]; then
+      cp -a "$WETEKDVB_DIR/wetekdvb.ko" "$INSTALL$(get_full_module_dir)/kernel/drivers/media/dvb-core/"
+      mv -f "$INSTALL$(get_full_module_dir)/kernel/drivers/amlogic/dvb_tv/wetekplay.ko" "$INSTALL$(get_full_module_dir)/kernel/drivers/media/dvb-core/wetekplay.ko"
+    fi
+  fi
 
   # bluez looks in /etc/firmware/
     ln -sf /$(get_full_firmware_dir)/ $INSTALL/etc/firmware
