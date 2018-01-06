@@ -17,9 +17,9 @@
 ################################################################################
 
 PKG_NAME="game.libretro.o2em"
-PKG_VERSION="b923978"
-PKG_SHA256="43a3e476919dad13626a0e50ae3f9bb35af7be041d04479cf518a78247afb142"
-PKG_REV="103"
+PKG_VERSION="6dc3c3c"
+PKG_SHA256="f3c15faa8234c822ff2942ed2db43811aaaaef471781cd03c0bb1d53f042eccb"
+PKG_REV="105"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/kodi-game/game.libretro.o2em"
