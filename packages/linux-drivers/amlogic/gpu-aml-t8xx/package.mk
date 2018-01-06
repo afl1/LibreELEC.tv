@@ -17,8 +17,8 @@
 ################################################################################
 
 PKG_NAME="gpu-aml-t8xx"
-PKG_VERSION="2f5e174"
-PKG_SHA256="1279a01609913e2a0ef8e5b1b4208391b5dd0509a31add844ea8373bfabdade5"
+PKG_VERSION="fe7a4d8"
+PKG_SHA256="518f855a2b191e50d09c2d0b3e671b5ed4b5e4db06aa3a718e29ef30cc0d9a57"
 PKG_ARCH="arm aarch64"
 PKG_LICENSE="GPL"
 PKG_SITE="http://openlinux.amlogic.com:8000/download/ARM/gpu/"
