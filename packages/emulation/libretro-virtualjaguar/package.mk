@@ -17,8 +17,8 @@
 ################################################################################
 
 PKG_NAME="libretro-virtualjaguar"
-PKG_VERSION="cd9a3b0"
-PKG_SHA256="49d9047d1385c1931b2c6df0cb0751e387cae121cadac8f8118a7f6e00d6a56b"
+PKG_VERSION="0b7e665"
+PKG_SHA256="7f8080117e2b09570c6a6364977a4eac38548f7c756200691821730a06044e7f"
 PKG_ARCH="any"
 PKG_LICENSE="GPLv3"
 PKG_SITE="https://github.com/libretro/virtualjaguar-libretro"
