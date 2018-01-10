@@ -1,0 +1,21 @@
+diff --git a/drivers/media/Makefile b/drivers/media/Makefile
+index d87ccb8..e30c645 100644
+--- a/drivers/media/Makefile
++++ b/drivers/media/Makefile
+@@ -36,3 +37,4 @@ obj-y += rc/
+ 
+ obj-y += amlogic/
+ obj-y += dvb_tv/
++obj-y += wetek/
+--- a/drivers/media/wetek/Makefile	2018-01-04 20:59:40.649797000 +0100
++++ b/drivers/media/wetek/Makefile	2018-01-10 22:18:06.979540597 +0100
+@@ -2,7 +2,7 @@
+ # Makefile for the WetekPlay driver.
+ #
+ 
+-obj-$(CONFIG_AM_DVB) += wetekplay.o
++obj-m += wetekplay.o
+ 
+ wetekplay-objs = nimdetect.o mxl603.o avl6211.o mn88436.o cxd2841er_wetek.o ascot3.o
+ 
+--

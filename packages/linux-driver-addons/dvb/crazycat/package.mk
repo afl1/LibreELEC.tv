@@ -47,7 +47,7 @@ pre_make_target() {
 }
 
 make_target() {
-  make SRCDIR=$(kernel_path) untar
+  make SRCDIR=$(kernel_path) WETEKSRCDIR=$(get_build_dir wetekdvb) untar
 
   # copy config file
   if [ "$PROJECT" = Generic ]; then
@@ -59,22 +59,6 @@ make_target() {
       cp $PKG_DIR/config/usb.config v4l/.config
     fi
   fi
-
-    # Amlogic DVB drivers
-    if [ "$PROJECT" = "Amlogic" ]; then
-      DVB_TV_AML_DIR="$(get_build_dir dvb_tv-aml)"
-      if [ -d "$DVB_TV_AML_DIR" ]; then
-        cp -a "$DVB_TV_AML_DIR" "linux/drivers/media/dvb_tv"
-        echo "obj-y += dvb_tv/" >> "linux/drivers/media/Makefile"
-      fi
-      if listcontains "$ADDITIONAL_DRIVERS" "wetekdvb"; then
-        WETEKDVB_DIR="$(get_build_dir wetekdvb)"
-        if [ -d "$WETEKDVB_DIR" ]; then
-          echo "obj-y += amlogic/dvb_tv/" >> "linux/drivers/media/Makefile"
-          cp -a "$WETEKDVB_DIR/wetekdvb.ko" "v4l/"
-        fi
-      fi
-    fi
 
   # add menuconfig to edit .config
   make VER=$KERNEL_VER SRCDIR=$(kernel_path)

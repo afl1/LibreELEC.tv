@@ -1,0 +1,21 @@
+diff -Naur crazycat-2017-11-13.orig/linux/Makefile crazycat-2017-11-13/linux/Makefile
+--- crazycat-2017-11-13.orig/linux/Makefile	2017-12-03 20:47:44.000000000 +0100
++++ crazycat-2017-11-13/linux/Makefile	2017-12-20 09:48:15.516826488 +0100
+@@ -120,6 +120,16 @@
+ 	mkdir -p  drivers/media/dvb_tv/
+ 	# Copy dvb_tv driver
+ 	cp -a $(SRCDIR)/drivers/media/dvb_tv "drivers/media/"
++	mkdir -p  drivers/media/wetek/
++	# Copy wetek dvb driver
++	cp -a $(SRCDIR)/drivers/amlogic/dvb_tv/nimdetect.* "drivers/media/wetek/"
++	cp -a $(SRCDIR)/drivers/amlogic/dvb_tv/mxl603.* "drivers/media/wetek/"
++	cp -a $(SRCDIR)/drivers/amlogic/dvb_tv/avl6211.* "drivers/media/wetek/"
++	cp -a $(SRCDIR)/drivers/amlogic/dvb_tv/mn88436.* "drivers/media/wetek/"
++	cp -a $(SRCDIR)/drivers/amlogic/dvb_tv/cxd2841er_wetek* "drivers/media/wetek/"
++	cp -a $(SRCDIR)/drivers/amlogic/dvb_tv/ascot3.* "drivers/media/wetek/"
++	cp -a $(SRCDIR)/drivers/amlogic/dvb_tv/Makefile "drivers/media/wetek/"
++	cp -a $(WETEKSRCDIR)/wetekdvb.ko "../v4l/"
+	-rm -f .patches_applied .linked_dir .git_log.md5
+ 
+ clean:
+

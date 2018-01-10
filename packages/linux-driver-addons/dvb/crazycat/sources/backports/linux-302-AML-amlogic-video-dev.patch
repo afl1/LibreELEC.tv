@@ -13,10 +13,10 @@ diff --git a/drivers/media/Makefile b/drivers/media/Makefile
 index d87ccb8..e30c645 100644
 --- a/drivers/media/Makefile
 +++ b/drivers/media/Makefile
-@@ -35,3 +35,4 @@ obj-y += rc/
+@@ -34,3 +34,4 @@ obj-y += rc/
+ obj-y += common/ platform/ pci/ usb/ mmc/ firewire/ spi/
  obj-$(CONFIG_VIDEO_DEV) += radio/
  
- obj-y += dvb_tv/
 +obj-y += amlogic/
 diff --git a/drivers/media/amlogic/Kconfig b/drivers/media/amlogic/Kconfig
 new file mode 100644
