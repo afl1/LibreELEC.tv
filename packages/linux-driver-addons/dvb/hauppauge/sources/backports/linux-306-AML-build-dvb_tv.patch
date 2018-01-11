@@ -1,0 +1,49 @@
+diff --git a/drivers/media/Makefile b/drivers/media/Makefile
+index d87ccb8..e30c645 100644
+--- a/drivers/media/Makefile
++++ b/drivers/media/Makefile
+@@ -35,3 +35,4 @@ obj-y += rc/
+ obj-$(CONFIG_VIDEO_DEV) += radio/
+ 
+ obj-y += amlogic/
++obj-y += dvb_tv/
+--- a/drivers/media/dvb_tv/aml_dmx.c	2018-01-10 21:25:40.903288597 +0100
++++ b/drivers/media/dvb_tv/aml_dmx.c	2018-01-10 21:19:17.143504597 +0100
+@@ -547,7 +547,7 @@
+ 	struct dvb_demux_feed *feed = dmx->channel[f->chan_id].feed;
+ 
+ 	if (feed && feed->cb.sec)
+-		feed->cb.sec(p, sec_len, NULL, 0, f->filter, DMX_OK);
++		feed->cb.sec(p, sec_len, NULL, 0, f->filter);
+ }
+ 
+ static void hardware_match_section(struct aml_dmx *dmx,
+@@ -968,8 +968,7 @@
+ 		if (dmx->channel[2].feed && dmx->channel[2].feed->cb.ts) {
+ 			dmx->channel[2].feed->cb.ts(buffer1_virt, len1,
+ 						buffer2_virt, len2,
+-						&dmx->channel[2].feed->feed.ts,
+-						DMX_OK);
++						&dmx->channel[2].feed->feed.ts);
+ 		}
+ 	}
+ 	WRITE_MPEG_REG(PARSER_SUB_RP, rd_ptr);
+@@ -1168,7 +1167,7 @@
+ 			channel->dvr_feed->cb.ts(
+ 					(u8 *)afifo->pages+afifo->buf_read*size,
+ 					cnt*size, NULL, 0,
+-					&channel->dvr_feed->feed.ts, DMX_OK);
++					&channel->dvr_feed->feed.ts);
+ 		afifo->buf_read = 0;
+ 	}
+ 
+@@ -1187,7 +1186,7 @@
+ 			channel->dvr_feed->cb.ts(
+ 					(u8 *)afifo->pages+afifo->buf_read*size,
+ 					cnt*size, NULL, 0,
+-					&channel->dvr_feed->feed.ts, DMX_OK);
++					&channel->dvr_feed->feed.ts);
+ 		afifo->buf_read = afifo->buf_toggle;
+ 	}
+ 
+--

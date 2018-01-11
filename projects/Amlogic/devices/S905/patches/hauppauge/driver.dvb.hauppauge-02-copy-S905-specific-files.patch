@@ -1,0 +1,20 @@
+--- a/v4l/Makefile	2017-12-03 20:47:44.000000000 +0100
++++ b/v4l/Makefile	2017-12-20 09:48:15.516826488 +0100
+@@ -374,6 +374,16 @@
+ 	mkdir -p  ../linux/drivers/media/dvb_tv/
+ 	# Copy dvb_tv driver
+ 	cp -a $(SRCDIR)/drivers/media/dvb_tv "../linux/drivers/media/"
++	mkdir -p  ../linux/drivers/media/wetek/
++	# Copy wetek dvb driver
++	cp -a $(SRCDIR)/drivers/amlogic/dvb_tv/nimdetect.* "../linux/drivers/media/wetek/"
++	cp -a $(SRCDIR)/drivers/amlogic/dvb_tv/mxl603.* "../linux/drivers/media/wetek/"
++	cp -a $(SRCDIR)/drivers/amlogic/dvb_tv/avl6211.* "../linux/drivers/media/wetek/"
++	cp -a $(SRCDIR)/drivers/amlogic/dvb_tv/mn88436.* "../linux/drivers/media/wetek/"
++	cp -a $(SRCDIR)/drivers/amlogic/dvb_tv/cxd2841er_wetek* "../linux/drivers/media/wetek/"
++	cp -a $(SRCDIR)/drivers/amlogic/dvb_tv/ascot3.* "../linux/drivers/media/wetek/"
++	cp -a $(SRCDIR)/drivers/amlogic/dvb_tv/Makefile "../linux/drivers/media/wetek/"
++	cp -a $(WETEKSRCDIR)/wetekdvb.ko .
+ 	@$(MAKE) -C ../linux apply_patches
+ 	./scripts/make_kconfig.pl $(OUTDIR) $(SRCDIR) 1 1
+ 	./scripts/fix_kconfig.pl
+--

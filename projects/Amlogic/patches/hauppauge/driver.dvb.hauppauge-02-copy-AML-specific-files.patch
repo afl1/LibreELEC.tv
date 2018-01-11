@@ -1,0 +1,13 @@
+--- a/v4l/Makefile	2017-12-03 20:47:44.000000000 +0100
++++ b/v4l/Makefile	2017-12-20 09:48:15.516826488 +0100
+@@ -371,6 +371,9 @@
+ 	sed -i 's,common/,,g; s,"trace/,",g' `find "../linux/drivers/media/amlogic/video_dev/" -type f`
+ 	# Copy videobuf-res module
+ 	cp -a "$(SRCDIR)/drivers/media/v4l2-core/videobuf-res.c" "../linux/drivers/media/v4l2-core/"
++	mkdir -p  ../linux/drivers/media/dvb_tv/
++	# Copy dvb_tv driver
++	cp -a $(SRCDIR)/drivers/media/dvb_tv "../linux/drivers/media/"
+ 	@$(MAKE) -C ../linux apply_patches
+ 	./scripts/make_kconfig.pl $(OUTDIR) $(SRCDIR) 1 1
+ 	./scripts/fix_kconfig.pl
+--

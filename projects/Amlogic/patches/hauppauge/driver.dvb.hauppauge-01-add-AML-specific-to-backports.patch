@@ -1,0 +1,11 @@
+diff -Naur crazycat-2017-11-13.orig/backports/backports.txt crazycat-2017-11-13/backports/backports.txt
+--- crazycat-2017-11-13.orig/backports/backports.txt	2017-12-18 15:22:34.665142045 +0100
++++ crazycat-2017-11-13/backports/backports.txt	2017-12-18 15:22:59.232389044 +0100
+@@ -37,6 +37,7 @@
+ add linux-303-AML-meson-ir.patch
+ add linux-304-AML-wetek-dvb.patch
+ add linux-305-AML-dmx_h.patch
++add linux-306-AML-build-dvb_tv.patch
+ 
+ [4.10.255]
+ add v4.10_sched_signal.patch
