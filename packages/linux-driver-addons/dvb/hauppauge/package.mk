@@ -19,6 +19,7 @@
 PKG_NAME="hauppauge"
 PKG_VERSION="f5a5e5e"
 PKG_SHA256="6a3167c9990fa96838f4746861edb4d4e656739ea08d4f993e54becb9f2e9ab2"
+PKG_REV="100"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://git.linuxtv.org/media_build.git"
@@ -30,10 +31,15 @@ PKG_SECTION="driver.dvb"
 PKG_LONGDESC="DVB drivers for Hauppauge"
 
 PKG_IS_ADDON="yes"
+PKG_IS_KERNEL_PKG="yes"
 PKG_ADDON_IS_STANDALONE="yes"
 PKG_ADDON_NAME="DVB drivers for Hauppauge"
 PKG_ADDON_TYPE="xbmc.service"
 PKG_ADDON_VERSION="${ADDON_VERSION}.${PKG_REV}"
+
+if [ $LINUX = "amlogic-3.14" -o $LINUX = "amlogic-3.10" ]; then
+  PKG_PATCH_DIRS="amlogic"
+fi
 
 pre_make_target() {
   export KERNEL_VER=$(get_module_dir)
