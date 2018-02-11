@@ -17,17 +17,17 @@
 ################################################################################
 
 PKG_NAME="tvheadend44"
-PKG_VERSION="84047da"
-PKG_REVISION="936"
-PKG_SHA256="3c0d7585f9501f886e9bf785855475e8916c2123b5c8309ac9ebfe053b842d05"
+PKG_VERSION="088be1a"
+PKG_REVISION="1049"
+#PKG_SHA256="3c0d7585f9501f886e9bf785855475e8916c2123b5c8309ac9ebfe053b842d05"
 PKG_VERSION_NUMBER="4.3-$PKG_REVISION"
-PKG_REV="118"
+PKG_REV="119"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.tvheadend.org"
 PKG_URL="https://github.com/tvheadend/tvheadend/archive/$PKG_VERSION.tar.gz"
 PKG_SOURCE_DIR="tvheadend-${PKG_VERSION}*"
-PKG_DEPENDS_TARGET="toolchain avahi curl dvb-apps ffmpegx libdvbcsa libiconv openssl pngquant:host Python2:host"
+PKG_DEPENDS_TARGET="toolchain avahi curl dvb-apps ffmpegx libdvbcsa libiconv openssl pngquant:host Python2:host tvh-dtv-scan-tables"
 PKG_SECTION="service"
 PKG_SHORTDESC="Tvheadend: a TV streaming server for Linux"
 PKG_LONGDESC="Tvheadend ($PKG_VERSION_NUMBER): is a TV streaming server for Linux supporting DVB-S/S2, DVB-C, DVB-T/T2, IPTV, SAT>IP, ATSC and ISDB-T"
@@ -72,8 +72,9 @@ PKG_CONFIGURE_OPTS_TARGET="--prefix=/usr \
                            --disable-dbus_1 \
                            --enable-dvbcsa \
                            --enable-dvben50221 \
-                           --enable-hdhomerun_client \
-                           --enable-hdhomerun_static \
+                           --disable-dvbscan \
+                           --disable-hdhomerun_client \
+                           --disable-hdhomerun_static \
                            --enable-epoll \
                            --enable-inotify \
                            --enable-pngquant \
@@ -115,6 +116,20 @@ makeinstall_target() {
 
 addon() {
   mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/bin
+
+  cp $PKG_DIR/addon.xml $ADDON_BUILD/$PKG_ADDON_ID
+
+  # set only version (revision will be added by buildsystem)
+  $SED -e "s|@ADDON_VERSION@|$ADDON_VERSION|g" \
+       -i $ADDON_BUILD/$PKG_ADDON_ID/addon.xml
+
   cp -P $PKG_BUILD/build.linux/tvheadend $ADDON_BUILD/$PKG_ADDON_ID/bin
   cp -P $PKG_BUILD/capmt_ca.so $ADDON_BUILD/$PKG_ADDON_ID/bin
+
+  #dvb-scan files
+  mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/dvb-scan
+  cp -r $(get_build_dir tvh-dtv-scan-tables)/atsc \
+        $(get_build_dir tvh-dtv-scan-tables)/dvb-* \
+        $(get_build_dir tvh-dtv-scan-tables)/isdb-t \
+        $ADDON_BUILD/$PKG_ADDON_ID/dvb-scan
 }
