@@ -7,7 +7,7 @@ PKG_SHA256="524a5cdbbb653b0db46d20b56249953e473302bd20e8097bf06e3918e5c0a35f"
 PKG_LICENSE="GPL"
 PKG_SITE="https://bitbucket.org/CrazyCat/media_build"
 PKG_URL="https://bitbucket.org/CrazyCat/media_build/get/$PKG_VERSION.tar.gz"
-PKG_DEPENDS_TARGET="toolchain linux media_tree_cc"
+PKG_DEPENDS_TARGET="toolchain linux media_tree_cc media_tree_aml"
 PKG_NEED_UNPACK="$LINUX_DEPENDS media_tree_cc"
 PKG_SECTION="driver.dvb"
 PKG_LONGDESC="DVB driver for TBS cards with CrazyCats additions"
@@ -26,6 +26,12 @@ pre_make_target() {
 
 make_target() {
   cp -RP $(get_build_dir media_tree_cc)/* $PKG_BUILD/linux
+  if [ "$PROJECT" = "Amlogic" ]; then
+    cp -Lr $(get_build_dir linux)/drivers/media/platform/vdec $PKG_BUILD/linux/drivers/media/platform/
+    cp -rL $(get_build_dir media_tree_aml)/drivers/media/platform/meson/dvb $PKG_BUILD/linux/drivers/media/platform/meson/
+    echo "obj-y += vdev/" >> "$PKG_BUILD/linux/drivers/media/platform/meson/Makefile"
+    echo "obj-y += dvb/" >> "$PKG_BUILD/linux/drivers/media/platform/meson/Makefile"
+  fi 
 
   # make config all
   kernel_make VER=$KERNEL_VER SRCDIR=$(kernel_path) allyesconfig
