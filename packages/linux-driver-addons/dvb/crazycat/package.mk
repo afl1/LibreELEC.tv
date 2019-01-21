@@ -26,12 +26,6 @@ pre_make_target() {
 
 make_target() {
   cp -RP $(get_build_dir media_tree_cc)/* $PKG_BUILD/linux
-  if [ "$PROJECT" = "Amlogic" ]; then
-    cp -Lr $(get_build_dir linux)/drivers/media/platform/vdec $PKG_BUILD/linux/drivers/media/platform/
-    cp -rL $(get_build_dir media_tree_aml)/drivers/media/platform/meson/dvb $PKG_BUILD/linux/drivers/media/platform/meson/
-    echo "obj-y += vdev/" >> "$PKG_BUILD/linux/drivers/media/platform/meson/Makefile"
-    echo "obj-y += dvb/" >> "$PKG_BUILD/linux/drivers/media/platform/meson/Makefile"
-  fi 
 
   # make config all
   kernel_make VER=$KERNEL_VER SRCDIR=$(kernel_path) allyesconfig
