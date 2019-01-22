@@ -2,8 +2,8 @@
 # Copyright (C) 2017-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="media_tree"
-PKG_VERSION="2018-10-19-3b796aa60af0"
-#PKG_SHA256="8df4e76878239881cf69bddab2f1c69be698c25682d114b706d75123972c95b7"
+PKG_VERSION="2018-12-19-4bd46aa0353e"
+PKG_SHA256="fec37cb4bb5143600168be3b8599b4d2a2faf019d92a8947f9979ac8b0712adf"
 PKG_LICENSE="GPL"
 PKG_SITE="https://git.linuxtv.org/media_tree.git"
 PKG_URL="http://linuxtv.org/downloads/drivers/linux-media-${PKG_VERSION}.tar.bz2"
@@ -31,5 +31,4 @@ unpack() {
     echo "obj-y += dvb/" >> "$PKG_BUILD/drivers/media/platform/meson/Makefile"
     echo "obj-y += vdec/" >> "$PKG_BUILD/drivers/media/platform/meson/Makefile"
   fi
-
 }
