@@ -50,6 +50,7 @@ case "$LINUX" in
     PKG_SHA256="b12f4a52ae6e5c16c544a008cc417630fd261b3981d9b683e8a211eda9da39ec"
     PKG_URL="https://github.com/torvalds/linux/archive/$PKG_VERSION.tar.gz"
     PKG_SOURCE_DIR="$PKG_NAME-$PKG_VERSION*"
+    PKG_DEPENDS_HOST="$PKG_DEPENDS_HOST media_tree_aml:host"
     PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET u-boot-tools-aml:host"
     PKG_PATCH_DIRS="default"
     ;;
@@ -190,6 +191,12 @@ pre_make_target() {
 }
 
 make_target() {
+
+  if [ "$PROJECT" = "Amlogic" ]; then
+    cp -rL $(get_build_dir media_tree_aml)/drivers/media/platform/meson/dvb $PKG_BUILD/drivers/media/platform/meson/
+    echo "obj-y += dvb/" >> "$PKG_BUILD/drivers/media/platform/meson/Makefile"
+  fi 
+
   kernel_make modules
   kernel_make INSTALL_MOD_PATH=$INSTALL/$(get_kernel_overlay_dir) modules_install
   rm -f $INSTALL/$(get_kernel_overlay_dir)/lib/modules/*/build
