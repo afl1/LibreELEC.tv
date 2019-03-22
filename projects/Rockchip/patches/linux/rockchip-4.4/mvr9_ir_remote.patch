@@ -1,23 +1,23 @@
  drivers/media/rc/keymaps/Makefile  |  1 +
- drivers/media/rc/keymaps/rc-24k.c | 64 ++++++++++++++++++++++++++++++++++++++
+ drivers/media/rc/keymaps/rc-k24.c | 64 ++++++++++++++++++++++++++++++++++++++
  include/media/rc-map.h             |  1 +
  3 files changed, 54 insertions(+)
- create mode 100644 drivers/media/rc/keymaps/rc-24.c
+ create mode 100644 drivers/media/rc/keymaps/rc-k24.c
  
  --- a/drivers/media/rc/keymaps/Makefile b/drivers/media/rc/keymaps/Makefile
 +++ b/drivers/media/rc/keymaps/Makefile b/drivers/media/rc/keymaps/Makefile
 @@ -1,4 +1,5 @@
 -obj-$(CONFIG_RC_MAP) += rc-adstech-dvb-t-pci.o \
-+obj-$(CONFIG_RC_MAP) += rc-24k.o \
++obj-$(CONFIG_RC_MAP) += rc-k24.o \
 +			rc-adstech-dvb-t-pci.o \
  			rc-alink-dtu-m.o \
  			rc-anysee.o \
  			rc-apac-viewcomp.o \
 
---- a/drivers/media/rc/keymaps/rc-24k.c
-+++ b/drivers/media/rc/keymaps/rc-24k.c
+--- a/drivers/media/rc/keymaps/rc-k24.c
++++ b/drivers/media/rc/keymaps/rc-k24.c
 @@ -0,0 +1,64 @@
-+/* Keytable for RC-24K IR Remote Controller
++/* Keytable for RC-k24 IR Remote Controller
 + *
 + * Copyright (c) 2017 Nagrace
 + *
@@ -30,7 +30,7 @@
 +#include <media/rc-map.h>
 +#include <linux/module.h>
 +
-+static struct rc_map_table 24k[] = {
++static struct rc_map_table k24[] = {
 +	{ 0x404000, KEY_NUMERIC_0 },
 +	{ 0x404001, KEY_NUMERIC_1 },
 +	{ 0x404002, KEY_NUMERIC_2 },
@@ -57,27 +57,27 @@
 +	{ 0x40404d, KEY_POWER },
 +};
 +
-+static struct rc_map_list 24k_map = {
++static struct rc_map_list k24_map = {
 +	.map = {
-+		.scan    = 24k,
-+		.size    = ARRAY_SIZE(24k),
++		.scan    = k24,
++		.size    = ARRAY_SIZE(k24),
 +		.rc_type = RC_TYPE_NEC,
-+		.name    = RC_MAP_24K,
++		.name    = RC_MAP_k24,
 +	}
 +};
 +
-+static int __init init_rc_map_24k(void)
++static int __init init_rc_map_k24(void)
 +{
-+	return rc_map_register(&24k_map);
++	return rc_map_register(&k24_map);
 +}
 +
-+static void __exit exit_rc_map_24k(void)
++static void __exit exit_rc_map_k24(void)
 +{
-+	rc_map_unregister(&24k_map);
++	rc_map_unregister(&k24_map);
 +}
 +
-+module_init(init_rc_map_24k)
-+module_exit(exit_rc_map_24k)
++module_init(init_rc_map_k24)
++module_exit(exit_rc_map_k24)
 +
 +MODULE_LICENSE("GPL");
 +MODULE_AUTHOR("Nagrace");
@@ -88,7 +88,7 @@
  
  /* Names of the several keytables defined in-kernel */
  
-+#define RC_MAP_24K			  "rc-24k"
++#define RC_MAP_k24			  "rc-k24"
  #define RC_MAP_ADSTECH_DVB_T_PCI         "rc-adstech-dvb-t-pci"
  #define RC_MAP_ALINK_DTU_M               "rc-alink-dtu-m"
  #define RC_MAP_ANYSEE                    "rc-anysee"

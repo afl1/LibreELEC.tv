@@ -22,6 +22,7 @@
   mount -o remount,rw $BOOT_ROOT
 
 # update device tree
+[ -d "$BOOT_ROOT/dtb_old" ] && rm -r $BOOT_ROOT/dtb_old
 mv $BOOT_ROOT/dtb $BOOT_ROOT/dtb_old
 cp -R $UPDATE_DIR/.tmp/*/3rdparty/instboot/dtb $BOOT_ROOT
 
