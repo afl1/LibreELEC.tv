@@ -1,0 +1,25 @@
+From da21022fe0d4303b55d6dbbe31dfc536b1dd0a3f Mon Sep 17 00:00:00 2001
+From: Neil Armstrong <narmstrong@baylibre.com>
+Date: Tue, 19 Mar 2019 21:47:23 +0100
+Subject: [PATCH] mali_kbase_mem_linux: fix for 5.1-rc1
+
+Signed-off-by: Neil Armstrong <narmstrong@baylibre.com>
+---
+ .../kernel/drivers/gpu/arm/midgard/mali_kbase_mem_linux.c     | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/driver/product/kernel/drivers/gpu/arm/midgard/mali_kbase_mem_linux.c b/driver/product/kernel/drivers/gpu/arm/midgard/mali_kbase_mem_linux.c
+index 98f5395..6c891a6 100644
+--- a/driver/product/kernel/drivers/gpu/arm/midgard/mali_kbase_mem_linux.c
++++ b/driver/product/kernel/drivers/gpu/arm/midgard/mali_kbase_mem_linux.c
+@@ -1719,6 +1719,10 @@ KBASE_EXPORT_TEST_API(kbase_cpu_vm_close);
+ #if (LINUX_VERSION_CODE < KERNEL_VERSION(4, 11, 0))
+ static int kbase_cpu_vm_fault(struct vm_area_struct *vma, struct vm_fault *vmf)
+ {
++#elif (LINUX_VERSION_CODE >= KERNEL_VERSION(5, 1, 0))
++static vm_fault_t kbase_cpu_vm_fault(struct vm_fault *vmf)
++{
++	struct vm_area_struct *vma = vmf->vma;
+ #else
+ static int kbase_cpu_vm_fault(struct vm_fault *vmf)
+ {

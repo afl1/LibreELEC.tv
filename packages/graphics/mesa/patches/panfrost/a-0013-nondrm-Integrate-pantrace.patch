@@ -1,7 +1,7 @@
 From 4edc95fbd09be29425133ee7a815776c1a72baea Mon Sep 17 00:00:00 2001
 From: Alyssa Rosenzweig <alyssa@rosenzweig.io>
 Date: Wed, 20 Feb 2019 05:15:03 +0000
-Subject: [PATCH 13/19] nondrm: Integrate pantrace
+Subject: [PATCH 13/20] nondrm: Integrate pantrace
 
 Signed-off-by: Alyssa Rosenzweig <alyssa@rosenzweig.io>
 ---

@@ -1,7 +1,7 @@
 From 58e099a35711e2d6e1cf5427fb33ed213764270d Mon Sep 17 00:00:00 2001
 From: Alyssa Rosenzweig <alyssa@rosenzweig.io>
 Date: Tue, 5 Feb 2019 03:01:03 +0000
-Subject: [PATCH 01/19] Check in non-DRM files
+Subject: [PATCH 01/20] Check in non-DRM files
 
 Signed-off-by: Alyssa Rosenzweig <alyssa@rosenzweig.io>
 ---

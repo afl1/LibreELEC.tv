@@ -1,7 +1,7 @@
 From 819cdcc334545b3d8438e89e7228c50f6a9cf815 Mon Sep 17 00:00:00 2001
 From: Alyssa Rosenzweig <alyssa@rosenzweig.io>
 Date: Wed, 27 Feb 2019 00:30:06 +0000
-Subject: [PATCH 12/19] Don't needlessly set extres
+Subject: [PATCH 12/20] Don't needlessly set extres
 
 ---
  pan_nondrm.c | 7 +++++--

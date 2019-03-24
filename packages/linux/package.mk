@@ -38,9 +38,9 @@ case "$LINUX" in
     PKG_BUILD_PERF="no"
     ;;
   amlogic-mainline)
-    PKG_VERSION="9e6fdea016e45c5feab60589241e0d3607d39945" # 5.0.2
-    PKG_SHA256="ed84ec0dd48dfb01596f179639baf85099ea8fcba0dfc8bad67e1fca81ce0b2d"
-    PKG_URL="https://github.com/torvalds/linux/archive/$PKG_VERSION.tar.gz"
+    PKG_VERSION="2555c49b01efa39c475b97c7c40cefb9e7268cbb" # 5.1-rc1
+    PKG_SHA256="bbe58c9077b69c3caf0c3b69efcad49497a1a7974aab1be6dcd79b36c94fdda4"
+    PKG_URL="https://github.com/superna9999/linux/archive/$PKG_VERSION.tar.gz"
     PKG_SOURCE_DIR="$PKG_NAME-$PKG_VERSION*"
     PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET u-boot-tools-aml:host"
 #    PKG_PATCH_DIRS="default"
@@ -64,15 +64,15 @@ case "$LINUX" in
     PKG_SOURCE_NAME="linux-$LINUX-$PKG_VERSION.tar.gz"
     ;;
   raspberrypi)
-    PKG_VERSION="0a7f6900636f7c5a027124fe3388c928f1769c52" # 4.19.23
-    PKG_SHA256="937cbaa16d33260148c405f984a9c44bac0e62c5028249a00b2a3ca01605ba91"
+    PKG_VERSION="709198a03e40bbf035f75772e9162464dc7fc665" # 5.0.2
+    PKG_SHA256="07133de2bf4be2a2926a484ad94bf9ebc72845d0869eae99d266edeb3e83b2c3"
     PKG_URL="https://github.com/raspberrypi/linux/archive/$PKG_VERSION.tar.gz"
     PKG_SOURCE_NAME="linux-$LINUX-$PKG_VERSION.tar.gz"
     ;;
   *)
-    PKG_VERSION="4.19.23"
-    PKG_SHA256="2d9b25678aac7f3f109c52e6266fb6ee89cc424b597518a2875874bacb8f130a"
-    PKG_URL="https://www.kernel.org/pub/linux/kernel/v4.x/$PKG_NAME-$PKG_VERSION.tar.xz"
+    PKG_VERSION="5.0.2"
+    PKG_SHA256="43bfea3a6b24b4e5f63190409a199bee8cb93dbea01c52ad7f017078ebdf7c9b"
+    PKG_URL="https://www.kernel.org/pub/linux/kernel/v5.x/$PKG_NAME-$PKG_VERSION.tar.xz"
     PKG_PATCH_DIRS="default"
     ;;
 esac
@@ -135,6 +135,11 @@ post_patch() {
   # disable lima support if 'meson' not enabled
   if [ ! "$GRAPHIC_DRIVERS" = meson ]; then
     sed -i -e "s|^CONFIG_DRM_LIMA=.*$|# CONFIG_DRM_LIMA is not set|" $PKG_BUILD/.config
+  fi
+
+  # disable panfrost support if 'panfrost' not enabled
+  if [ ! "$GRAPHIC_DRIVERS" = panfrost ]; then
+    sed -i -e "s|^CONFIG_DRM_PANFROST=.*$|# CONFIG_DRM_PANFROST is not set|" $PKG_BUILD/.config
   fi
 
   # install extra dts files

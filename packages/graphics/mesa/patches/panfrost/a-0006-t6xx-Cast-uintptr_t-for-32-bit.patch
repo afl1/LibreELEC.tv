@@ -1,7 +1,7 @@
 From 3a0c7149ee9aa5128f56a47ba0a978f3e79dd9c0 Mon Sep 17 00:00:00 2001
 From: Alyssa Rosenzweig <alyssa@rosenzweig.io>
 Date: Sun, 10 Feb 2019 20:10:53 +0000
-Subject: [PATCH 06/19] t6xx: Cast uintptr_t for 32-bit
+Subject: [PATCH 06/20] t6xx: Cast uintptr_t for 32-bit
 
 Signed-off-by: Alyssa Rosenzweig <alyssa@rosenzweig.io>
 ---

@@ -1,7 +1,7 @@
 From e46704b28d7c928680de03419f63ce6917bc902d Mon Sep 17 00:00:00 2001
 From: Alyssa Rosenzweig <alyssa@rosenzweig.io>
 Date: Sun, 10 Mar 2019 19:15:33 +0000
-Subject: [PATCH 17/19] Fix pointer size casting warning
+Subject: [PATCH 17/20] Fix pointer size casting warning
 
 Signed-off-by: Alyssa Rosenzweig <alyssa@rosenzweig.io>
 ---

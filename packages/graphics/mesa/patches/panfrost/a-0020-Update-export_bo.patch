@@ -1,0 +1,25 @@
+From d3b1e62987e0592a4e95de456f239896c2d46048 Mon Sep 17 00:00:00 2001
+From: Alyssa Rosenzweig <alyssa@rosenzweig.io>
+Date: Thu, 21 Mar 2019 01:02:01 +0000
+Subject: [PATCH 20/20] Update export_bo
+
+---
+ pan_nondrm.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/gallium/drivers/panfrost/nondrm/pan_nondrm.c b/src/gallium/drivers/panfrost/nondrm/pan_nondrm.c
+index f347c4e..00a5855 100644
+--- a/src/gallium/drivers/panfrost/nondrm/pan_nondrm.c
++++ b/src/gallium/drivers/panfrost/nondrm/pan_nondrm.c
+@@ -135,7 +135,7 @@ panfrost_nondrm_import_bo(struct panfrost_screen *screen, struct winsys_handle *
+ }
+ 
+ static int
+-panfrost_nondrm_export_bo(struct panfrost_screen *screen, int gem_handle, struct winsys_handle *whandle)
++panfrost_nondrm_export_bo(struct panfrost_screen *screen, int gem_handle, unsigned int stride, struct winsys_handle *whandle)
+ {
+         //fprintf(stderr, "Unimplemented: %s\n", __func__);
+         return FALSE;
+-- 
+2.17.1
+

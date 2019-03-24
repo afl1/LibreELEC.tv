@@ -1,7 +1,7 @@
 From 3c156c9eae066afa1412fe7b0a9e1d33ae5d2dac Mon Sep 17 00:00:00 2001
 From: Alyssa Rosenzweig <alyssa@rosenzweig.io>
 Date: Tue, 5 Feb 2019 05:31:59 +0000
-Subject: [PATCH 02/19] Ingest code
+Subject: [PATCH 02/20] Ingest code
 
 ---
  pan_nondrm.c | 76 ++++++++++++++++++++++++++++++++++++++++++++++++----

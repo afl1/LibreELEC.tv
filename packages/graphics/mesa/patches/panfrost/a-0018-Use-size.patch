@@ -1,7 +1,7 @@
 From 9f3b80d4c470f2272af1e7a6c30534e5d200fa17 Mon Sep 17 00:00:00 2001
 From: Alyssa Rosenzweig <alyssa@rosenzweig.io>
 Date: Tue, 12 Mar 2019 04:16:17 +0000
-Subject: [PATCH 18/19] Use size
+Subject: [PATCH 18/20] Use size
 
 ---
  pan_nondrm.c | 6 +++---

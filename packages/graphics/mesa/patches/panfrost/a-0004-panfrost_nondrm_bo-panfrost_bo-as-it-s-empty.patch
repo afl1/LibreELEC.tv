@@ -1,7 +1,7 @@
 From 2363a3be0a8d999b4fcccfde4fc4808a8fca758e Mon Sep 17 00:00:00 2001
 From: Alyssa Rosenzweig <alyssa@rosenzweig.io>
 Date: Thu, 7 Feb 2019 05:45:47 +0000
-Subject: [PATCH 04/19] panfrost_nondrm_bo -> panfrost_bo as it's empty
+Subject: [PATCH 04/20] panfrost_nondrm_bo -> panfrost_bo as it's empty
 
 ---
  pan_nondrm.c | 82 +++++++++++++++++++++++++---------------------------

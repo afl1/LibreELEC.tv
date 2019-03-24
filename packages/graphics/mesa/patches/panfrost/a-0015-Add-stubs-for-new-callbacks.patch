@@ -1,7 +1,7 @@
 From a56287cba106df29a31df6a5bb246437f2604cd6 Mon Sep 17 00:00:00 2001
 From: Tomeu Vizoso <tomeu.vizoso@collabora.com>
 Date: Mon, 4 Mar 2019 15:23:12 +0100
-Subject: [PATCH 15/19] Add stubs for new callbacks
+Subject: [PATCH 15/20] Add stubs for new callbacks
 
 Signed-off-by: Tomeu Vizoso <tomeu.vizoso@collabora.com>
 ---

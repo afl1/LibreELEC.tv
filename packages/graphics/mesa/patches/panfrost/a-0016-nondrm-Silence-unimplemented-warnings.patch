@@ -1,7 +1,7 @@
 From d213a10ba337f4757bce51e4b2e45f1746c5af69 Mon Sep 17 00:00:00 2001
 From: Alyssa Rosenzweig <alyssa@rosenzweig.io>
 Date: Sun, 10 Mar 2019 19:14:36 +0000
-Subject: [PATCH 16/19] nondrm: Silence unimplemented warnings
+Subject: [PATCH 16/20] nondrm: Silence unimplemented warnings
 
 Signed-off-by: Alyssa Rosenzweig <alyssa@rosenzweig.io>
 ---

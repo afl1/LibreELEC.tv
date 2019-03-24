@@ -1,7 +1,7 @@
 From 20c92bc45c76513e60efe6fffcf698316fbe4c33 Mon Sep 17 00:00:00 2001
 From: Tomeu Vizoso <tomeu.vizoso@collabora.com>
 Date: Mon, 4 Mar 2019 15:22:50 +0100
-Subject: [PATCH 14/19] Implement query_version callback
+Subject: [PATCH 14/20] Implement query_version callback
 
 Signed-off-by: Tomeu Vizoso <tomeu.vizoso@collabora.com>
 Reviewed-by: Alyssa Rosenzweig <alyssa@rosenzweig.io>

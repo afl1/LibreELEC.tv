@@ -1,7 +1,7 @@
 From 59f0a2d48c85370a34a9c8ca6be49061344909e4 Mon Sep 17 00:00:00 2001
 From: Alyssa Rosenzweig <alyssa@rosenzweig.io>
 Date: Fri, 22 Feb 2019 23:43:50 +0000
-Subject: [PATCH 10/19] Hardcode page
+Subject: [PATCH 10/20] Hardcode page
 
 ---
  include/mali_base_kernel.h | 25 ++++++++-----------------

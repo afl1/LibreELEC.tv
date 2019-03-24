@@ -1,7 +1,7 @@
 From 671e82bc3ab4ca55a3fd52e36ce2e0aaecfcdd53 Mon Sep 17 00:00:00 2001
 From: Alyssa Rosenzweig <alyssa@rosenzweig.io>
 Date: Thu, 14 Feb 2019 06:42:34 +0000
-Subject: [PATCH 07/19] Implement free_slab
+Subject: [PATCH 07/20] Implement free_slab
 
 ---
  pan_nondrm.c | 14 ++++++++++++++

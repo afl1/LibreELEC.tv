@@ -1,7 +1,7 @@
 From 20f2f63affd0936c81c368e58e463cd15d26c479 Mon Sep 17 00:00:00 2001
 From: Alyssa Rosenzweig <alyssa@rosenzweig.io>
 Date: Thu, 7 Feb 2019 06:02:29 +0000
-Subject: [PATCH 05/19] Move resource-management out
+Subject: [PATCH 05/20] Move resource-management out
 
 ---
  pan_nondrm.c | 171 ---------------------------------------------------

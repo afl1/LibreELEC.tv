@@ -1,7 +1,7 @@
 From b6b210a3ec74de04288a425624c357d4599d2d04 Mon Sep 17 00:00:00 2001
 From: Alyssa Rosenzweig <alyssa@rosenzweig.io>
 Date: Thu, 7 Feb 2019 05:49:10 +0000
-Subject: [PATCH 03/19] Remove pandev_standard_allocate
+Subject: [PATCH 03/20] Remove pandev_standard_allocate
 
 ---
  pan_nondrm.c | 18 +++---------------

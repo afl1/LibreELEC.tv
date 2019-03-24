@@ -1,7 +1,7 @@
 From d0166876d097833fe73e360eb5cb45f6cfb30bf7 Mon Sep 17 00:00:00 2001
 From: Alyssa Rosenzweig <alyssa@rosenzweig.io>
 Date: Tue, 12 Mar 2019 04:16:47 +0000
-Subject: [PATCH 19/19] For compat with 32-bit, always set SAME_VA
+Subject: [PATCH 19/20] For compat with 32-bit, always set SAME_VA
 
 Signed-off-by: Alyssa Rosenzweig <alyssa@rosenzweig.io>
 ---

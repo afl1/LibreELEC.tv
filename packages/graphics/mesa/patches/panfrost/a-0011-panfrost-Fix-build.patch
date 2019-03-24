@@ -1,7 +1,7 @@
 From 51b8e1565420db574932127b4450ff5ef1b7453e Mon Sep 17 00:00:00 2001
 From: Alyssa Rosenzweig <alyssa@rosenzweig.io>
 Date: Tue, 26 Feb 2019 05:06:08 +0000
-Subject: [PATCH 11/19] panfrost: Fix build
+Subject: [PATCH 11/20] panfrost: Fix build
 
 Signed-off-by: Alyssa Rosenzweig <alyssa@rosenzweig.io>
 ---

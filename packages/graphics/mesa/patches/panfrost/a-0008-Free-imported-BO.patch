@@ -1,7 +1,7 @@
 From cd7f4a44e1b7a4734b0b13fe27a6def7e1ff7685 Mon Sep 17 00:00:00 2001
 From: Alyssa Rosenzweig <alyssa@rosenzweig.io>
 Date: Fri, 15 Feb 2019 00:16:25 +0000
-Subject: [PATCH 08/19] Free imported BO
+Subject: [PATCH 08/20] Free imported BO
 
 ---
  pan_nondrm.c | 35 ++++++++++++++++++++++++++++++++++-
