@@ -9,7 +9,7 @@ devices = {
     },
   },
   'Amlogic' : {
-    'GX' : {
+    'AMLGX' : {
       'Khadas_VIM' : { 'dtb' : 'meson-gxl-s905x-khadas-vim.dtb', 'config' : 'khadas-vim_defconfig' },
       'Khadas_VIM2' : { 'dtb' : 'meson-gxm-khadas-vim2.dtb', 'config' : 'khadas-vim_defconfig' },
       'LaFrite' : { 'dtb' : 'meson-gxl-s805x-p241.dtb', 'config' : 'libretech-cc_defconfig' },
@@ -17,6 +17,7 @@ devices = {
       'NanoPi_K2' : { 'dtb' : 'meson-gxbb-nanopi-k2.dtb', 'config' : 'nanopi-k2_defconfig' },
       'Odroid_C2' : { 'dtb' : 'meson-gxbb-odroidc2.dtb', 'config' : 'odroid-c2_defconfig' },
     },
+    'AMLGX' : { 'AMLGX' : { 'dtb' : 'meson-gxl-s905x-khadas-vim.dtb', 'config' : 'khadas-vim_defconfig' }, },
     'S905' : { 'S905' : { 'dtb' : 'meson-gxl-s905x-khadas-vim.dtb', 'config' : 'khadas-vim_defconfig' }, },
     'S912' : { 'S912' : { 'dtb' : 'meson-gxm-khadas-vim2.dtb', 'config' : 'khadas-vim_defconfig' }, },
     'Khadas_VIM' : { 'Khadas_VIM' : { 'dtb' : 'meson-gxl-s905x-khadas-vim.dtb', 'config' : 'khadas-vim_defconfig' }, },

@@ -42,8 +42,24 @@ case "$LINUX" in
     PKG_SHA256="bbe58c9077b69c3caf0c3b69efcad49497a1a7974aab1be6dcd79b36c94fdda4"
     PKG_URL="https://github.com/superna9999/linux/archive/$PKG_VERSION.tar.gz"
     PKG_SOURCE_DIR="$PKG_NAME-$PKG_VERSION*"
-    PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET u-boot-tools-aml:host"
-#    PKG_PATCH_DIRS="default"
+    PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET u-boot:host"
+    PKG_PATCH_DIRS="default amlogic-mainline"
+    ;;
+  amlogic-g12a)
+    PKG_VERSION="d3338bb0398475378b9faaeb81c0e0cc57d9571b" # v5.1-rc1
+    PKG_SHA256="071cc613a818dc3dc3d6b879f9dcd45fa1f06e4a8efc8575711a27ad899c4865"
+    PKG_URL="https://gitlab.com/superna9999/linux/-/archive/$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.gz"
+    PKG_SOURCE_DIR="$PKG_NAME-$PKG_VERSION*"
+    PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET u-boot:host"
+    PKG_PATCH_DIRS="default amlogic-g12a"
+    ;;
+  amlogic-g12b)
+    PKG_VERSION="f59f787348e160a26222176aecb5f391f2f27400" # v5.1-rc1
+    PKG_SHA256="6570565454d381343e1bf44480749d81e3973d8657969622c804396b0150a070"
+    PKG_URL="https://gitlab.com/superna9999/linux/-/archive/$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.gz"
+    PKG_SOURCE_DIR="$PKG_NAME-$PKG_VERSION*"
+    PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET u-boot:host"
+    PKG_PATCH_DIRS="default amlogic-g12b"
     ;;
   rockchip-4.4)
     PKG_VERSION="aa8bacf821e5c8ae6dd8cae8d64011c741659945"
@@ -211,9 +227,6 @@ make_target() {
       case "$TARGET_ARCH" in
         x86_64)
           PERF_BUILD_ARGS="ARCH=x86"
-          ;;
-        aarch64)
-          PERF_BUILD_ARGS="ARCH=arm64"
           ;;
         *)
           PERF_BUILD_ARGS="ARCH=$TARGET_ARCH"

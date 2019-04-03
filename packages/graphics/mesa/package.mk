@@ -12,14 +12,13 @@ PKG_BUILD_FLAGS="+lto"
 
 case $PROJECT in
   Amlogic)
-    case $DEVICE in
-      Khadas_VIM2|Nexbox_A1|S912)
-        PKG_VERSION="d258b787faaf9b089acd740df26bddbb64c2c630" # master-19.1
-        PKG_SHA256="d0189c204029225b5a269b6dcea25c937397c3539531edcb947f19fae4f4da3a"
+    case $MALI_FAMILY in
+      t820) # panfrost
+        PKG_VERSION="e4e6a3deaff4f84f0fb99b4dec950dc498d507ed" # master-19.1
+        PKG_SHA256="8d51ec696f0c115061d688e895142fe43ddac4f5f0a9966d3a00225ee44639c5"
         PKG_URL="https://gitlab.freedesktop.org/mesa/mesa/-/archive/$PKG_VERSION/mesa-$PKG_VERSION.tar.gz"
-        PKG_PATCH_DIRS="panfrost"
         ;;
-      *)
+      *) # lima
         PKG_VERSION="00d67e27d9548eefb9d5e89b896d4b719adeed3b" # lima-18.3
         PKG_SHA256="51afd8fcc31dac0e18b749eef3a9307b9f7ce43994cb9e0e7565ecf00db798d0"
 	PKG_URL="https://gitlab.freedesktop.org/lima/mesa/-/archive/$PKG_VERSION/mesa-$PKG_VERSION.tar.gz"
@@ -27,8 +26,8 @@ case $PROJECT in
     esac
     ;;
   *)
-    PKG_VERSION="19.0.0"
-    PKG_SHA256="9e513e10d865fa3546588ec68b6428da5177bcab30a6a1a93d6c1dc25bd21c29"
+    PKG_VERSION="19.0.1"
+    PKG_SHA256="58576fd0126f57d6aeacce384b0a5570d442950e8ed15d35bf84e8eb901d65b0"
     PKG_URL="https://github.com/mesa3d/mesa/archive/mesa-$PKG_VERSION.tar.gz"
     ;;
 esac

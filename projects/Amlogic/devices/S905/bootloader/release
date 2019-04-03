@@ -1,11 +1,8 @@
 #!/bin/bash
 
-# SPDX-License-Identifier: GPL-2.0-or-later
-# Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv)
+# SPDX-License-Identifier: GPL-2.0
+# Copyright (C) 2017-present Team LibreELEC (https://libreelec.tv)
 
-INSTBOOT_DIR=$RELEASE_DIR/3rdparty/instboot
-mkdir -p $INSTBOOT_DIR
-cp -a $INSTALL/instboot/* $INSTBOOT_DIR
-
-mkdir -p $INSTBOOT_DIR/dtb
-mv $INSTALL/usr/share/bootloader/*.dtb $INSTBOOT_DIR/dtb
+mkdir -p "$RELEASE_DIR/3rdparty/bootloader/dtb"
+  cp -a $(get_build_dir linux)/arch/$TARGET_KERNEL_ARCH/boot/dts/amlogic/*.dtb $RELEASE_DIR/3rdparty/bootloader/dtb
+  cp -a $(get_build_dir aml_autoscript)/* $RELEASE_DIR/3rdparty/bootloader

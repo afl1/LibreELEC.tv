@@ -1,13 +1,13 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 # Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
+# Copyright (C) 2019-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="connman"
-PKG_VERSION="b7ddedc4ac09cc034a4a59b20ccc7c0830b80433"
-PKG_SHA256="65de21d0c2d252da4df9e92041f761fb7a5dce269e844335582bebda7c2b64aa"
+PKG_VERSION="1.37"
+PKG_SHA256="6ce29b3eb0bb16a7387bc609c39455fd13064bdcde5a4d185fab3a0c71946e16"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.connman.net"
-#PKG_URL="https://www.kernel.org/pub/linux/network/connman/$PKG_NAME-$PKG_VERSION.tar.xz"
-PKG_URL="https://git.kernel.org/pub/scm/network/connman/connman.git/snapshot/connman-$PKG_VERSION.tar.gz"
+PKG_URL="https://www.kernel.org/pub/linux/network/connman/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain glib readline dbus iptables wpa_supplicant"
 PKG_LONGDESC="A modular network connection manager."
 PKG_TOOLCHAIN="autotools"
@@ -73,7 +73,7 @@ post_makeinstall_target() {
         -e "s|^# FallbackNameservers.*|FallbackNameservers = 8.8.8.8,8.8.4.4|g" \
         -e "s|^# FallbackTimeservers.*|FallbackTimeservers = 0.pool.ntp.org,1.pool.ntp.org,2.pool.ntp.org,3.pool.ntp.org|g" \
         -e "s|^# PreferredTechnologies.*|PreferredTechnologies = ethernet,wifi,cellular|g" \
-        -e "s|^# TetheringTechnologies.*|TetheringTechnologies = ethernet,wifi|g" \
+        -e "s|^# TetheringTechnologies.*|TetheringTechnologies = wifi|g" \
         -e "s|^# AllowHostnameUpdates.*|AllowHostnameUpdates = false|g" \
         -e "s|^# PersistentTetheringMode.*|PersistentTetheringMode = true|g" \
         -e "s|^# NetworkInterfaceBlacklist = vmnet,vboxnet,virbr,ifb|NetworkInterfaceBlacklist = vmnet,vboxnet,virbr,ifb,docker,veth,zt|g"

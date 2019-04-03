@@ -18,6 +18,9 @@
   # e.g. GRAPHIC_DRIVERS="i915 i965 r300 r600 radeonsi nvidia nouveau"
     GRAPHIC_DRIVERS="panfrost"
 
+  # Mali GPU family
+    MALI_FAMILY="t820"
+
   # additional drivers to install:
   # for a list of additinoal drivers see packages/linux-drivers
   # Space separated list is supported,

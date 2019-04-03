@@ -1,7 +1,7 @@
-From d8a1d453a37ba8476eb036748ed69f058e550d7f Mon Sep 17 00:00:00 2001
+From d0995398731fc93e47e68c30c2f0e96e33dafba7 Mon Sep 17 00:00:00 2001
 From: edit4ever <edit4ever@hotmail.com>
 Date: Mon, 18 Mar 2019 08:11:56 -0700
-Subject: [PATCH] fix missing hardware flags
+Subject: [PATCH 1/2] fix missing hardware flags
 
 ---
  src/resources/lib/modules/system.py  | 76 ----------------------------
@@ -12,7 +12,7 @@ diff --git a/src/resources/lib/modules/system.py b/src/resources/lib/modules/sys
 index c7714c5..86e21c1 100644
 --- a/src/resources/lib/modules/system.py
 +++ b/src/resources/lib/modules/system.py
-@@ -215,86 +215,10 @@ class system:
+@@ -215,86 +215,10 @@ def exit(self):
          self.oe.dbg_log('system::exit', 'exit_function', 0)
          pass
  
@@ -100,10 +100,10 @@ index c7714c5..86e21c1 100644
              (
                  arrLayouts,
 diff --git a/src/resources/lib/modules/updates.py b/src/resources/lib/modules/updates.py
-index 53abc7a..64b70a4 100644
+index 53abc7a..6718583 100644
 --- a/src/resources/lib/modules/updates.py
 +++ b/src/resources/lib/modules/updates.py
-@@ -234,13 +234,25 @@ class updates:
+@@ -234,13 +234,25 @@ def get_hardware_flags_rpi(self):
  
          return '{:08x}'.format(int(revision, 16))
  
@@ -132,5 +132,50 @@ index 53abc7a..64b70a4 100644
              return ""
  
      def load_values(self):
--- 
-2.19.1.windows.1
+
+From 01f4dfd905ceb7f2a05607b048b194a45d74e582 Mon Sep 17 00:00:00 2001
+From: chewitt <github@chrishewitt.net>
+Date: Mon, 25 Mar 2019 04:22:39 +0000
+Subject: [PATCH 2/2] convert amlogic flags to arm flags
+
+---
+ src/resources/lib/modules/updates.py | 18 +++++++++---------
+ 1 file changed, 9 insertions(+), 9 deletions(-)
+
+diff --git a/src/resources/lib/modules/updates.py b/src/resources/lib/modules/updates.py
+index 6718583..3dc7422 100644
+--- a/src/resources/lib/modules/updates.py
++++ b/src/resources/lib/modules/updates.py
+@@ -234,23 +234,23 @@ def get_hardware_flags_rpi(self):
+ 
+         return '{:08x}'.format(int(revision, 16))
+ 
+-    def get_hardware_flags_amlogic(self):
++    def get_hardware_flags_dtname(self):
+         if os.path.exists('/usr/bin/dtname'):
+-            aml_board = self.oe.execute('/usr/bin/dtname', get_result=1).rstrip('\x00')
++            dtname = self.oe.execute('/usr/bin/dtname', get_result=1).rstrip('\x00')
+         else:
+-            aml_board = "unknown"
++            dtname = "unknown"
+ 
+-        self.oe.dbg_log('system::get_hardware_flags_amlogic', 'Amlogic board: %s' % aml_board, 0)
++        self.oe.dbg_log('system::get_hardware_flags_dtname', 'ARM board: %s' % dtname, 0)
+ 
+-        return aml_board
++        return dtname
+ 
+     def get_hardware_flags(self):
+-        if self.oe.PROJECT.startswith('Generic'):
++        if self.oe.PROJECT == "Generic":
+             return self.get_hardware_flags_x86_64()
+-        elif self.oe.PROJECT.startswith('RPi'):
++        elif self.oe.PROJECT == "RPi":
+             return self.get_hardware_flags_rpi()
+-        elif self.oe.PROJECT.startswith('Amlogic'):
+-            return self.get_hardware_flags_amlogic()
++        elif self.oe.PROJECT in ['Allwinner', 'Amlogic', 'Rockchip']:
++            return self.get_hardware_flags_dtname()
+         else:
+             self.oe.dbg_log('updates::get_hardware_flags', 'Project is %s, no hardware flag available' % self.oe.PROJECT, 0)
+             return ""

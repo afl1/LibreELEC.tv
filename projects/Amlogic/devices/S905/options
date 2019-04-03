@@ -5,12 +5,15 @@
     UBOOT_SYSTEM="S905"
 
   # Kernel extra targets to build
-    DEFAULT_DTB_NAME=meson-gxl-s905x-khadas-vim.dtb
+#    DEFAULT_DTB_NAME=meson-gxl-s905x-khadas-vim.dtb
 
   # Additional kernel make parameters (for example to specify the u-boot loadaddress)
     KERNEL_MAKE_EXTRACMD=" dtbs"
 
+  # Mali GPU family
+    MALI_FAMILY="450"
+
   # additional packages to install:
   # Space separated list is supported,
   # e.g. ADDITIONAL_PACKAGES="PACKAGE1 PACKAGE2"
-    ADDITIONAL_PACKAGES+=" aml_autoscript"
+    ADDITIONAL_PACKAGES+=" aml-autoscript amlogic-boot-fip"

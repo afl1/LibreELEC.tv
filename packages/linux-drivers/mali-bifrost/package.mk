@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: GPL-2.0-or-later
+# SPDX-License-Identifier: GPL-2.0
 # Copyright (C) 2019-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="mali-bifrost"
@@ -13,10 +13,16 @@ PKG_AUTORECONF="no"
 PKG_TOOLCHAIN="manual"
 PKG_IS_KERNEL_PKG="yes"
 
-case $PROJECT in
-  Amlogic|ACME)
-    PKG_VERSION="9a38390caba51827d47a3bac1304a55033e4b6d4" #r16p0
-    PKG_SHA256="67a1195762f86ac8f0eba52e648a20bbdb7d4ba0784f767bcf96bf38e4d97872"
+case $MALI_FAMILY in
+  g31)
+    PKG_VERSION="330cdb1ad362f563ce47f7efee56206b2650169a" #r16p0
+    PKG_SHA256="548cee15cba1e0e2034c678861f9d960a7391fada30b9dbeb04283cd51c6dbe8"
+    PKG_URL="https://github.com/chewitt/mali-bifrost/archive/$PKG_VERSION.tar.gz"
+    PKG_MALI_PLATFORM_CONFIG="config.meson-g12a"
+    ;;
+  g52)
+    PKG_VERSION="064b0df037b19d47064880fdceed046680b9a63b" #r16p0
+    PKG_SHA256="96c0bf96e0c5f6a5cf6ef37e600078f130200a5b0fcc84f00c437a155a3cf4e9"
     PKG_URL="https://github.com/chewitt/mali-bifrost/archive/$PKG_VERSION.tar.gz"
     PKG_MALI_PLATFORM_CONFIG="config.meson-g12a"
     ;;

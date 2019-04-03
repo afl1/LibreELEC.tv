@@ -13,13 +13,10 @@
   # Graphic drivers to use
     GRAPHIC_DRIVERS="panfrost"
 
-  # additional drivers to install:
-  # for a list of additinoal drivers see packages/linux-drivers
-  # Space separated list is supported,
-  # e.g. ADDITIONAL_DRIVERS="DRIVER1 DRIVER2"
-    ADDITIONAL_DRIVERS+=" mali-midgard"
+  # Mali GPU family
+    MALI_FAMILY="t820"
 
   # additional packages to install:
   # Space separated list is supported,
   # e.g. ADDITIONAL_PACKAGES="PACKAGE1 PACKAGE2"
-    ADDITIONAL_PACKAGES+=" aml_autoscript"
+    ADDITIONAL_PACKAGES+=" aml-autoscript"

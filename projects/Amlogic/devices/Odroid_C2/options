@@ -11,6 +11,9 @@
   # Additional kernel make parameters (for example to specify the u-boot loadaddress)
     KERNEL_MAKE_EXTRACMD=" dtbs"
 
+  # Mali GPU family
+    MALI_FAMILY="450"
+
   # additional packages to install:
   # e.g. ADDITIONAL_PACKAGES="PACKAGE1 PACKAGE2"
     ADDITIONAL_PACKAGES+=" aml_autoscript amlogic-boot-fip"

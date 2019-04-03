@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# SPDX-License-Identifier: GPL-2.0-or-later
+# SPDX-License-Identifier: GPL-2.0
 # Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv)
 
 COMPATIBLE=$(cat /proc/device-tree/compatible | tr -d '\000' | sed -n -e 's/.*\(amlogic\|rockchip\).*/\1/p')

@@ -18,7 +18,7 @@
         # arm1176jz-s arm1176jzf-s cortex-a8 cortex-a9 cortex-r4
         # cortex-r4f cortex-m3 cortex-m1 xscale iwmmxt iwmmxt2 ep9312.
         #
-        TARGET_CPU="cortex-a9"
+        TARGET_CPU="cortex-a7"
 
         # TARGET_FLOAT:
         # Specifies which floating-point ABI to use. Permissible values are:
@@ -78,9 +78,10 @@
   # Kernel to use. values can be:
   # default:  default mainline kernel
 #    LINUX="amlogic-3.10"
-    LINUX="amlogic-s8xx"
+#    LINUX="amlogic-s8xx"
 #    LINUX="amlogic-s805"
-    LINUX="amlogic-mainline"
+#    LINUX="amlogic-mainline"
+    LINUX="${LINUX:-amlogic-3.10}"
 
   # kernel image name
     KERNEL_NAME="kernel.img"
@@ -129,7 +130,7 @@
     KODIPLAYER_DRIVER="libamcodec"
 
   # Modules to install in initramfs for early boot
-    INITRAMFS_MODULES="softcursor bitblit font fbcon dwc_otg"
+    INITRAMFS_MODULES="font softcursor bitblit fbcon dwc_otg"
 
   # additional drivers to install:
   # for a list of additinoal drivers see packages/linux-drivers
@@ -157,7 +158,7 @@
   # additional packages to install:
   # Space separated list is supported,
   # e.g. ADDITIONAL_PACKAGES="PACKAGE1 PACKAGE2"
-    ADDITIONAL_PACKAGES+=" u-boot-tools-aml dtc autoscript-amlogic-8xx"
+    ADDITIONAL_PACKAGES+=" autoscript-amlogic-8xx"
 
   # build and install driver addons (yes / no)
     DRIVER_ADDONS_SUPPORT="yes"
