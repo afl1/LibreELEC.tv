@@ -2,13 +2,13 @@
     UBOOT_VERSION="vendor"
 
   # Configuration for u-boot
-    UBOOT_SYSTEM="S905"
+    UBOOT_SYSTEM="AMLG12"
 
   # Additional kernel make parameters (for example to specify the u-boot loadaddress)
     KERNEL_MAKE_EXTRACMD=" dtbs"
 
   # Mali GPU family
-    MALI_FAMILY="450"
+    MALI_FAMILY="g12"
 
   # additional packages to install:
-    ADDITIONAL_PACKAGES+=" aml_autoscript amlogic-boot-fip"
+    ADDITIONAL_PACKAGES+=" aml_autoscript amlogic-boot-fip cpumac"

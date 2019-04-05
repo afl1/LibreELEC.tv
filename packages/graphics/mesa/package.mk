@@ -19,9 +19,9 @@ case $PROJECT in
         PKG_URL="https://gitlab.freedesktop.org/mesa/mesa/-/archive/$PKG_VERSION/mesa-$PKG_VERSION.tar.gz"
         ;;
       *) # lima
-        PKG_VERSION="00d67e27d9548eefb9d5e89b896d4b719adeed3b" # lima-18.3
-        PKG_SHA256="51afd8fcc31dac0e18b749eef3a9307b9f7ce43994cb9e0e7565ecf00db798d0"
-	PKG_URL="https://gitlab.freedesktop.org/lima/mesa/-/archive/$PKG_VERSION/mesa-$PKG_VERSION.tar.gz"
+        PKG_VERSION="9194f141c407da21291b7b3f3a1a20943172c01c" # lima-master-upstream-v2 (19.1)
+        PKG_SHA256="f8b1659592b8d657c0dc2374af7cf9c22d8037c2cb3e2d009d9c1695a43199d9"
+	PKG_URL="https://gitlab.freedesktop.org/yuq825/mesa/-/archive/$PKG_VERSION/mesa-$PKG_VERSION.tar.gz"
 	;;
     esac
     ;;

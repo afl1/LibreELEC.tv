@@ -148,16 +148,6 @@ post_patch() {
     sed -i -e "s|^CONFIG_ISCSI_IBFT=.*$|# CONFIG_ISCSI_IBFT is not set|" $PKG_BUILD/.config
   fi
 
-  # disable lima support if 'meson' not enabled
-  if [ ! "$GRAPHIC_DRIVERS" = meson ]; then
-    sed -i -e "s|^CONFIG_DRM_LIMA=.*$|# CONFIG_DRM_LIMA is not set|" $PKG_BUILD/.config
-  fi
-
-  # disable panfrost support if 'panfrost' not enabled
-  if [ ! "$GRAPHIC_DRIVERS" = panfrost ]; then
-    sed -i -e "s|^CONFIG_DRM_PANFROST=.*$|# CONFIG_DRM_PANFROST is not set|" $PKG_BUILD/.config
-  fi
-
   # install extra dts files
   for f in $PROJECT_DIR/$PROJECT/config/*-overlay.dts; do
     [ -f "$f" ] && cp -v $f $PKG_BUILD/arch/$TARGET_KERNEL_ARCH/boot/dts/overlays || true
