@@ -16,7 +16,7 @@
 
   # additional packages to install:
   # e.g. ADDITIONAL_PACKAGES="PACKAGE1 PACKAGE2"
-    ADDITIONAL_PACKAGES+=" aml_autoscript amlogic-boot-fip"
+    ADDITIONAL_PACKAGES+=" aml-autoscript amlogic-boot-fip"
 
   # OOTB support for IR remote
     IR_REMOTE_KEYMAPS+=" odroid"

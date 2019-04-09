@@ -32,4 +32,4 @@
     MALI_FAMILY="g52"
 
   # additional packages to install:
-    ADDITIONAL_PACKAGES+=" aml_autoscript amlogic-boot-fip cpumac"
+    ADDITIONAL_PACKAGES+=" aml_autoscript amlogic-boot-fip"
