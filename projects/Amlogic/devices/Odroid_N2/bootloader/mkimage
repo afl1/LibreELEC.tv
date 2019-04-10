@@ -32,14 +32,8 @@
 #dd if="$FUSEDIR/bl1.bin.hardkernel" of="$DISK" conv=fsync,notrunc bs=512 skip=1 seek=1 >"$SAVE_ERROR" 2>&1 || show_error
 #dd if="$DESTDIR/u-boot.gxbb" of="$DISK" conv=fsync,notrunc bs=512 seek=97 >"$SAVE_ERROR" 2>&1 || show_error
 
-mcopy "$RELEASE_DIR/3rdparty/bootloader/aml_autoscript" :: 2>&1 > /dev/null || true
-mcopy "$RELEASE_DIR/3rdparty/bootloader/emmc_autoscript" :: 2>&1 > /dev/null || true
-mcopy "$RELEASE_DIR/3rdparty/bootloader/s905_autoscript" :: 2>&1 > /dev/null || true
-mcopy "$RELEASE_DIR/3rdparty/bootloader/aml_autoscript.zip" :: 2>&1 > /dev/null || true
 mcopy "$RELEASE_DIR/3rdparty/bootloader/dtb" :: 2>&1 > /dev/null || true
-mcopy "$RELEASE_DIR/3rdparty/bootloader/install2emmc.sh" :: 2>&1 > /dev/null || true
-mcopy "$RELEASE_DIR/3rdparty/bootloader/ddbr-backup.sh" :: 2>&1 > /dev/null || true
-mcopy "$RELEASE_DIR/3rdparty/bootloader/ddbr-restore.sh" :: 2>&1 > /dev/null || true
+mcopy "$RELEASE_DIR/3rdparty/bootloader/boot.ini" :: 2>&1 > /dev/null || true
 
 if [ -f "$RELEASE_DIR/3rdparty/bootloader/u-boot-n2/u-boot.bin.sd.bin" ]; then
   echo "Writing u-boot to $(basename $DISK)"
@@ -60,8 +54,3 @@ EOF
 
 mcopy -s "${LE_TMP}/extlinux" ::
 
-cat << EOF > "${LE_TMP}/uEnv.ini"
-dtb_name=/dtb/${DTB}
-bootargs=boot=LABEL=LIBREELEC disk=LABEL=STORAGE quiet ${EXTRA_CMDLINE}
-EOF
-mcopy -s "${LE_TMP}/uEnv.ini" ::
