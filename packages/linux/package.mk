@@ -46,8 +46,8 @@ case "$LINUX" in
     PKG_PATCH_DIRS="default amlogic-mainline"
     ;;
   amlogic-g12a)
-    PKG_VERSION="d3338bb0398475378b9faaeb81c0e0cc57d9571b" # v5.1-rc1
-    PKG_SHA256="071cc613a818dc3dc3d6b879f9dcd45fa1f06e4a8efc8575711a27ad899c4865"
+    PKG_VERSION="0d588e6fe359db23fdfb82bada55102295cdd663" # v5.1-rc1
+    PKG_SHA256="25e55b9b9c3f80beab4dca06e2ecbafcccf0c8988fa50a43c191b9669e66c74e"
     PKG_URL="https://gitlab.com/superna9999/linux/-/archive/$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.gz"
     PKG_SOURCE_DIR="$PKG_NAME-$PKG_VERSION*"
     PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET u-boot:host"
@@ -95,9 +95,9 @@ esac
 
 PKG_KERNEL_CFG_FILE=$(kernel_config_path)
 
-if [ -n "$KERNEL_LINARO_TOOLCHAIN" ]; then
-  PKG_DEPENDS_HOST="$PKG_DEPENDS_HOST gcc-linaro-$KERNEL_LINARO_TOOLCHAIN:host"
-  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET gcc-linaro-$KERNEL_LINARO_TOOLCHAIN:host"
+if [ -n "$KERNEL_TOOLCHAIN" ]; then
+  PKG_DEPENDS_HOST="$PKG_DEPENDS_HOST gcc-arm-$KERNEL_TOOLCHAIN:host"
+  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET gcc-arm-$KERNEL_TOOLCHAIN:host"
   HEADERS_ARCH=$TARGET_ARCH
 fi
 

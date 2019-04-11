@@ -12,18 +12,9 @@ PKG_BUILD_FLAGS="+lto"
 
 case $PROJECT in
   Amlogic)
-    case $MALI_FAMILY in
-      t820) # panfrost
-        PKG_VERSION="e4e6a3deaff4f84f0fb99b4dec950dc498d507ed" # master-19.1
-        PKG_SHA256="8d51ec696f0c115061d688e895142fe43ddac4f5f0a9966d3a00225ee44639c5"
-        PKG_URL="https://gitlab.freedesktop.org/mesa/mesa/-/archive/$PKG_VERSION/mesa-$PKG_VERSION.tar.gz"
-        ;;
-      *) # lima
-        PKG_VERSION="9194f141c407da21291b7b3f3a1a20943172c01c" # lima-master-upstream-v2 (19.1)
-        PKG_SHA256="f8b1659592b8d657c0dc2374af7cf9c22d8037c2cb3e2d009d9c1695a43199d9"
-	PKG_URL="https://gitlab.freedesktop.org/yuq825/mesa/-/archive/$PKG_VERSION/mesa-$PKG_VERSION.tar.gz"
-	;;
-    esac
+    PKG_VERSION="6ec9733b9f16e94dc3b3a0e6f9e88bced6955e86" # master-19.1
+    PKG_SHA256="93f68c388331e4f90a501a1473991a4abac9d3a60af001bfb0dff7b803416826"
+    PKG_URL="https://gitlab.freedesktop.org/mesa/mesa/-/archive/$PKG_VERSION/mesa-$PKG_VERSION.tar.gz"
     ;;
   *)
     PKG_VERSION="19.0.1"
