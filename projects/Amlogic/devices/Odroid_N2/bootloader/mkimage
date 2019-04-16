@@ -35,20 +35,18 @@
 mcopy "$RELEASE_DIR/3rdparty/bootloader/dtb" :: 2>&1 > /dev/null || true
 mcopy "$RELEASE_DIR/3rdparty/bootloader/boot.ini" :: 2>&1 > /dev/null || true
 
-if [ -f "$RELEASE_DIR/3rdparty/bootloader/u-boot-n2/u-boot.bin.sd.bin" ]; then
+if [ -f "$RELEASE_DIR/3rdparty/bootloader/u-boot.bin.sd.bin" ]; then
   echo "Writing u-boot to $(basename $DISK)"
-  dd if="$RELEASE_DIR/3rdparty/bootloader/u-boot-n2/u-boot.bin.sd.bin" of="$DISK" conv=fsync,notrunc bs=1 count=112 >"$SAVE_ERROR" 2>&1 || show_error
-  dd if="$RELEASE_DIR/3rdparty/bootloader/u-boot-n2/u-boot.bin.sd.bin" of="$DISK" conv=fsync,notrunc bs=512 skip=1 seek=1 >"$SAVE_ERROR" 2>&1 || show_error
+  dd if="$RELEASE_DIR/3rdparty/bootloader/u-boot.bin.sd.bin" of="$DISK" conv=fsync,notrunc bs=1 count=112 >"$SAVE_ERROR" 2>&1 || show_error
+  dd if="$RELEASE_DIR/3rdparty/bootloader/u-boot.bin.sd.bin" of="$DISK" conv=fsync,notrunc bs=512 skip=1 seek=1 >"$SAVE_ERROR" 2>&1 || show_error
 fi
-
-DTB="$(${SCRIPTS}/uboot_helper ${PROJECT} ${DEVICE} ${UBOOT_SYSTEM} dtb)"
 
 mkdir -p "${LE_TMP}/extlinux"
 
 cat << EOF > "${LE_TMP}/extlinux/extlinux.conf"
 LABEL ${DISTRO}
   LINUX /${KERNEL_NAME}
-  FDT /dtb/${DTB}
+  FDT /dtb/meson-g12b-odroid-n2.dtb
   APPEND boot=LABEL=LIBREELEC disk=LABEL=STORAGE quiet ${EXTRA_CMDLINE}
 EOF
 

@@ -22,5 +22,4 @@ IgnoreSIGPIPE=no
 KillSignal=SIGHUP
 
 [Install]
-#WantedBy=textmode.target
 WantedBy=sysinit.target

@@ -12,8 +12,8 @@ PKG_BUILD_FLAGS="+lto"
 
 case $PROJECT in
   Amlogic)
-    PKG_VERSION="6ec9733b9f16e94dc3b3a0e6f9e88bced6955e86" # master-19.1
-    PKG_SHA256="93f68c388331e4f90a501a1473991a4abac9d3a60af001bfb0dff7b803416826"
+    PKG_VERSION="400f0bfba123e829fafa6449e6d45e11b6f20e78" # master-19.1
+    PKG_SHA256="95f3ab5cfb5af6dc9e302c6041a509d37c4bbd085c30e474115cb4efb35bbe0d"
     PKG_URL="https://gitlab.freedesktop.org/mesa/mesa/-/archive/$PKG_VERSION/mesa-$PKG_VERSION.tar.gz"
     ;;
   *)
@@ -90,6 +90,10 @@ if [ "$OPENGLES_SUPPORT" = "yes" ]; then
   PKG_MESON_OPTS_TARGET+=" -Dgles1=false -Dgles2=true"
 else
   PKG_MESON_OPTS_TARGET+=" -Dgles1=false -Dgles2=false"
+fi
+
+if [ "$PROJECT" = "Amlogic" ]; then
+  TARGET_CFLAGS+=" -DPANFROST_MALI_64BIT=1"
 fi
 
 # Temporary workaround:

@@ -1,0 +1,483 @@
+From bfdc1f2e41e3a74f8702adca4949befbdf9a9e80 Mon Sep 17 00:00:00 2001
+From: Mateusz Krzak <kszaquitto@gmail.com>
+Date: Sun, 7 Apr 2019 09:26:15 +0200
+Subject: [PATCH 1/5] panfrost: cast bo_handles pointer to uintptr_t first
+
+Required for 64-bit kernel to interpret the pointer from 32-bit userspace.
+
+Signed-off-by: Mateusz Krzak <kszaquitto@gmail.com>
+Reviewed-by: Alyssa Rosenzweig <alyssa@rosenzweig.io>
+---
+ src/gallium/drivers/panfrost/pan_drm.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/gallium/drivers/panfrost/pan_drm.c b/src/gallium/drivers/panfrost/pan_drm.c
+index 4b8c197..9aabd96 100644
+--- a/src/gallium/drivers/panfrost/pan_drm.c
++++ b/src/gallium/drivers/panfrost/pan_drm.c
+@@ -231,7 +231,7 @@ panfrost_drm_submit_job(struct panfrost_context *ctx, u64 job_desc, int reqs, st
+ 	bo_handles[submit.bo_handle_count++] = ctx->tiler_heap.gem_handle;
+ 	bo_handles[submit.bo_handle_count++] = ctx->varying_mem.gem_handle;
+ 	bo_handles[submit.bo_handle_count++] = ctx->misc_0.gem_handle;
+-	submit.bo_handles = (u64)bo_handles;
++	submit.bo_handles = (u64) (uintptr_t) bo_handles;
+ 
+         /* Dump memory _before_ submitting so we're not corrupted with actual GPU results */
+         pantrace_dump_memory();
+-- 
+2.7.4
+
+
+From 51208913bc46a5764b1c1ba66c841ef667e84f59 Mon Sep 17 00:00:00 2001
+From: Mateusz Krzak <kszaquitto@gmail.com>
+Date: Sun, 7 Apr 2019 23:25:49 +0200
+Subject: [PATCH 2/5] panfrost: use os_mmap and os_munmap
+
+32-bit needs mmap64 for 64-bit offsets. We get 64-bit offsets from kernel.
+
+Signed-off-by: Mateusz Krzak <kszaquitto@gmail.com>
+Reviewed-by: Alyssa Rosenzweig <alyssa@rosenzweig.io>
+---
+ src/gallium/drivers/panfrost/pan_drm.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
+
+diff --git a/src/gallium/drivers/panfrost/pan_drm.c b/src/gallium/drivers/panfrost/pan_drm.c
+index 9aabd96..70d8d74 100644
+--- a/src/gallium/drivers/panfrost/pan_drm.c
++++ b/src/gallium/drivers/panfrost/pan_drm.c
+@@ -29,6 +29,7 @@
+ 
+ #include "util/u_memory.h"
+ #include "util/os_time.h"
++#include "os/os_mman.h"
+ 
+ #include "pan_screen.h"
+ #include "pan_resource.h"
+@@ -81,7 +82,7 @@ panfrost_drm_allocate_slab(struct panfrost_screen *screen,
+ 		assert(0);
+ 	}
+ 
+-        mem->cpu = mmap(NULL, mem->size, PROT_READ | PROT_WRITE, MAP_SHARED,
++        mem->cpu = os_mmap(NULL, mem->size, PROT_READ | PROT_WRITE, MAP_SHARED,
+                        drm->fd, mmap_bo.offset);
+         if (mem->cpu == MAP_FAILED) {
+                 fprintf(stderr, "mmap failed: %p\n", mem->cpu);
+@@ -102,7 +103,7 @@ panfrost_drm_free_slab(struct panfrost_screen *screen, struct panfrost_memory *m
+ 	};
+ 	int ret;
+ 
+-        if (munmap((void *) (uintptr_t) mem->cpu, mem->size)) {
++        if (os_munmap((void *) (uintptr_t) mem->cpu, mem->size)) {
+                 perror("munmap");
+                 abort();
+         }
+@@ -148,7 +149,7 @@ panfrost_drm_import_bo(struct panfrost_screen *screen, struct winsys_handle *wha
+ 
+         bo->size = lseek(whandle->handle, 0, SEEK_END);
+         assert(bo->size > 0);
+-        bo->cpu = mmap(NULL, bo->size, PROT_READ | PROT_WRITE, MAP_SHARED,
++        bo->cpu = os_mmap(NULL, bo->size, PROT_READ | PROT_WRITE, MAP_SHARED,
+                        drm->fd, mmap_bo.offset);
+         if (bo->cpu == MAP_FAILED) {
+                 fprintf(stderr, "mmap failed: %p\n", bo->cpu);
+-- 
+2.7.4
+
+
+From c63443c5e888cdef02c8db221ef5a82855c9c97a Mon Sep 17 00:00:00 2001
+From: Mateusz Krzak <kszaquitto@gmail.com>
+Date: Wed, 10 Apr 2019 23:09:40 +0200
+Subject: [PATCH 3/5] panfrost: add mali_job_ptr for pointers used in job
+ structs
+
+Currently pointer size is determined by target arch, i.e. 32-bit for arm
+and 64-bit for aarch64. If one wants to compile for 32-bit userspace to use
+64-bit GPU or vice versa, create a single typedef to change in all places.
+
+Signed-off-by: Mateusz Krzak <kszaquitto@gmail.com>
+---
+ .../drivers/panfrost/include/panfrost-job.h        | 32 +++++++++++-----------
+ .../drivers/panfrost/include/panfrost-misc.h       |  1 +
+ src/gallium/drivers/panfrost/pan_context.c         |  6 ++--
+ src/gallium/drivers/panfrost/pandecode/decode.c    | 16 +++++------
+ 4 files changed, 28 insertions(+), 27 deletions(-)
+
+diff --git a/src/gallium/drivers/panfrost/include/panfrost-job.h b/src/gallium/drivers/panfrost/include/panfrost-job.h
+index 97fcb03..f54078d 100644
+--- a/src/gallium/drivers/panfrost/include/panfrost-job.h
++++ b/src/gallium/drivers/panfrost/include/panfrost-job.h
+@@ -30,7 +30,7 @@
+ #include <stdint.h>
+ #include <panfrost-misc.h>
+ 
+-#define MALI_SHORT_PTR_BITS (sizeof(uintptr_t)*8)
++#define MALI_SHORT_PTR_BITS (sizeof(mali_job_ptr)*8)
+ 
+ #define MALI_FBD_HIERARCHY_WEIGHTS 8
+ 
+@@ -905,7 +905,7 @@ struct mali_vertex_tiler_prefix {
+          * indices (width depends on flags). Thanks, guys, for not making my
+          * life insane for once! NULL for non-indexed draws. */
+ 
+-        uintptr_t indices;
++        mali_job_ptr indices;
+ } __attribute__((packed));
+ 
+ /* Point size / line width can either be specified as a 32-bit float (for
+@@ -917,7 +917,7 @@ struct mali_vertex_tiler_prefix {
+ 
+ union midgard_primitive_size {
+         float constant;
+-        uintptr_t pointer;
++        mali_job_ptr pointer;
+ };
+ 
+ struct bifrost_vertex_only {
+@@ -980,34 +980,34 @@ struct mali_vertex_tiler_postfix {
+          * output from the vertex shader for tiler jobs.
+          */
+ 
+-        uintptr_t position_varying;
++        mali_job_ptr position_varying;
+ 
+         /* An array of mali_uniform_buffer_meta's. The size is given by the
+          * shader_meta.
+          */
+-        uintptr_t uniform_buffers;
++        mali_job_ptr uniform_buffers;
+ 
+         /* This is a pointer to an array of pointers to the texture
+          * descriptors, number of pointers bounded by number of textures. The
+          * indirection is needed to accomodate varying numbers and sizes of
+          * texture descriptors */
+-        uintptr_t texture_trampoline;
++        mali_job_ptr texture_trampoline;
+ 
+         /* For OpenGL, from what I've seen, this is intimately connected to
+          * texture_meta. cwabbott says this is not the case under Vulkan, hence
+          * why this field is seperate (Midgard is Vulkan capable). Pointer to
+          * array of sampler descriptors (which are uniform in size) */
+-        uintptr_t sampler_descriptor;
++        mali_job_ptr sampler_descriptor;
+ 
+-        uintptr_t uniforms;
++        mali_job_ptr uniforms;
+         u8 flags : 4;
+-        uintptr_t _shader_upper : MALI_SHORT_PTR_BITS - 4; /* struct shader_meta */
+-        uintptr_t attributes; /* struct attribute_buffer[] */
+-        uintptr_t attribute_meta; /* attribute_meta[] */
+-        uintptr_t varyings; /* struct attr */
+-        uintptr_t varying_meta; /* pointer */
+-        uintptr_t viewport;
+-        uintptr_t occlusion_counter; /* A single bit as far as I can tell */
++        mali_job_ptr _shader_upper : MALI_SHORT_PTR_BITS - 4; /* struct shader_meta */
++        mali_job_ptr attributes; /* struct attribute_buffer[] */
++        mali_job_ptr attribute_meta; /* attribute_meta[] */
++        mali_job_ptr varyings; /* struct attr */
++        mali_job_ptr varying_meta; /* pointer */
++        mali_job_ptr viewport;
++        mali_job_ptr occlusion_counter; /* A single bit as far as I can tell */
+ 
+         /* Note: on Bifrost, this isn't actually the FBD. It points to
+          * bifrost_scratchpad instead. However, it does point to the same thing
+@@ -1039,7 +1039,7 @@ struct midgard_payload_vertex_tiler {
+         /* Offset for first vertex in buffer */
+         u32 draw_start;
+ 
+-	uintptr_t zero5;
++	mali_job_ptr zero5;
+ 
+         struct mali_vertex_tiler_postfix postfix;
+ 
+diff --git a/src/gallium/drivers/panfrost/include/panfrost-misc.h b/src/gallium/drivers/panfrost/include/panfrost-misc.h
+index 82363d8..63f3c48 100644
+--- a/src/gallium/drivers/panfrost/include/panfrost-misc.h
++++ b/src/gallium/drivers/panfrost/include/panfrost-misc.h
+@@ -38,6 +38,7 @@ typedef int32_t s32;
+ typedef int64_t s64;
+ 
+ typedef uint64_t mali_ptr;
++typedef uintptr_t mali_job_ptr;
+ 
+ #define MALI_PTR_FMT "0x%" PRIx64
+ 
+diff --git a/src/gallium/drivers/panfrost/pan_context.c b/src/gallium/drivers/panfrost/pan_context.c
+index 9f401b1..22f8004 100644
+--- a/src/gallium/drivers/panfrost/pan_context.c
++++ b/src/gallium/drivers/panfrost/pan_context.c
+@@ -1213,9 +1213,9 @@ static void
+ panfrost_link_job_pair(struct mali_job_descriptor_header *first, mali_ptr next)
+ {
+         if (first->job_descriptor_size)
+-                first->next_job_64 = (u64) (uintptr_t) next;
++                first->next_job_64 = (u64) (mali_job_ptr) next;
+         else
+-                first->next_job_32 = (u32) (uintptr_t) next;
++                first->next_job_32 = (u32) (mali_job_ptr) next;
+ }
+ 
+ static void
+@@ -1503,7 +1503,7 @@ panfrost_draw_vbo(
+                 ctx->payload_tiler.prefix.index_count = MALI_POSITIVE(ctx->vertex_count);
+ 
+                 /* Reverse index state */
+-                ctx->payload_tiler.prefix.indices = (uintptr_t) NULL;
++                ctx->payload_tiler.prefix.indices = (mali_job_ptr) NULL;
+         }
+ 
+         ctx->payload_vertex.prefix.invocation_count = MALI_POSITIVE(invocation_count);
+diff --git a/src/gallium/drivers/panfrost/pandecode/decode.c b/src/gallium/drivers/panfrost/pandecode/decode.c
+index bb6f4b1..fc1fa84 100644
+--- a/src/gallium/drivers/panfrost/pandecode/decode.c
++++ b/src/gallium/drivers/panfrost/pandecode/decode.c
+@@ -920,7 +920,7 @@ pandecode_replay_attribute_meta(int job_no, int count, const struct mali_vertex_
+ }
+ 
+ static void
+-pandecode_replay_indices(uintptr_t pindices, uint32_t index_count, int job_no)
++pandecode_replay_indices(mali_job_ptr pindices, uint32_t index_count, int job_no)
+ {
+         struct pandecode_mapped_memory *imem = pandecode_find_mapped_gpu_mem_containing(pindices);
+ 
+@@ -1061,7 +1061,7 @@ pandecode_replay_uniform_buffers(mali_ptr pubufs, int ubufs_count, int job_no)
+ }
+ 
+ static void
+-pandecode_replay_scratchpad(uintptr_t pscratchpad, int job_no, char *suffix)
++pandecode_replay_scratchpad(mali_job_ptr pscratchpad, int job_no, char *suffix)
+ {
+ 
+         struct pandecode_mapped_memory *mem = pandecode_find_mapped_gpu_mem_containing(pscratchpad);
+@@ -1110,7 +1110,7 @@ pandecode_replay_vertex_tiler_postfix_pre(const struct mali_vertex_tiler_postfix
+                                         int job_no, enum mali_job_type job_type,
+                                         char *suffix, bool is_bifrost)
+ {
+-        mali_ptr shader_meta_ptr = (u64) (uintptr_t) (p->_shader_upper << 4);
++        mali_ptr shader_meta_ptr = (u64) (mali_job_ptr) (p->_shader_upper << 4);
+         struct pandecode_mapped_memory *attr_mem;
+ 
+         /* On Bifrost, since the tiler heap (for tiler jobs) and the scratchpad
+@@ -1121,9 +1121,9 @@ pandecode_replay_vertex_tiler_postfix_pre(const struct mali_vertex_tiler_postfix
+         if (is_bifrost)
+                 pandecode_replay_scratchpad(p->framebuffer & ~FBD_TYPE, job_no, suffix);
+         else if (p->framebuffer & MALI_MFBD)
+-                pandecode_replay_mfbd_bfr((u64) ((uintptr_t) p->framebuffer) & FBD_MASK, job_no);
++                pandecode_replay_mfbd_bfr((u64) ((mali_job_ptr) p->framebuffer) & FBD_MASK, job_no);
+         else
+-                pandecode_replay_sfbd((u64) (uintptr_t) p->framebuffer, job_no);
++                pandecode_replay_sfbd((u64) (mali_job_ptr) p->framebuffer, job_no);
+ 
+         int varying_count = 0, attribute_count = 0, uniform_count = 0, uniform_buffer_count = 0;
+         int texture_count = 0, sampler_count = 0;
+@@ -1890,7 +1890,7 @@ pandecode_replay_fragment_job(const struct pandecode_mapped_memory *mem,
+                 fbd_dumped = true;
+         }
+ 
+-        uintptr_t p = (uintptr_t) s->framebuffer & FBD_MASK;
++        mali_job_ptr p = (mali_job_ptr) s->framebuffer & FBD_MASK;
+ 
+         pandecode_log("struct mali_payload_fragment payload_%d = {\n", job_no);
+         pandecode_indent++;
+@@ -2042,12 +2042,12 @@ pandecode_replay_jc(mali_ptr jc_gpu_va, bool bifrost)
+                 /* Handle linkage */
+ 
+                 if (!first) {
+-                        pandecode_log("((struct mali_job_descriptor_header *) (uintptr_t) job_%d_p)->", job_no - 1);
++                        pandecode_log("((struct mali_job_descriptor_header *) (mali_job_ptr) job_%d_p)->", job_no - 1);
+ 
+                         if (last_size)
+                                 pandecode_log_cont("next_job_64 = job_%d_p;\n\n", job_no);
+                         else
+-                                pandecode_log_cont("next_job_32 = (u32) (uintptr_t) job_%d_p;\n\n", job_no);
++                                pandecode_log_cont("next_job_32 = (u32) (mali_job_ptr) job_%d_p;\n\n", job_no);
+                 }
+ 
+                 first = false;
+-- 
+2.7.4
+
+
+From 87999689f9246a2068be4ac57ddb97bb2cd213e4 Mon Sep 17 00:00:00 2001
+From: Mateusz Krzak <kszaquitto@gmail.com>
+Date: Wed, 10 Apr 2019 23:16:29 +0200
+Subject: [PATCH 4/5] panfrost: create a define to determine GPU bitness
+
+Structs for 32-bit Mali (T6xx and T7xx) differ a little bit from
+64-bit Mali structs. Decision which one to use is based on target
+arch. Introduce a new define instead, do that one can easily change
+target GPU arch independently of target bitness.
+
+Signed-off-by: kszaq <kszaquitto@gmail.com>
+---
+ src/gallium/drivers/panfrost/include/panfrost-job.h  |  8 ++++----
+ src/gallium/drivers/panfrost/include/panfrost-misc.h | 11 +++++++++++
+ src/gallium/drivers/panfrost/pan_context.c           |  4 ++--
+ src/gallium/drivers/panfrost/pan_fragment.c          |  2 +-
+ src/gallium/drivers/panfrost/pandecode/decode.c      |  2 +-
+ 5 files changed, 19 insertions(+), 8 deletions(-)
+
+diff --git a/src/gallium/drivers/panfrost/include/panfrost-job.h b/src/gallium/drivers/panfrost/include/panfrost-job.h
+index f54078d..222046f 100644
+--- a/src/gallium/drivers/panfrost/include/panfrost-job.h
++++ b/src/gallium/drivers/panfrost/include/panfrost-job.h
+@@ -1015,7 +1015,7 @@ struct mali_vertex_tiler_postfix {
+          */
+         mali_ptr framebuffer;
+ 
+-#ifdef __LP64__
++#ifdef MALI_64BIT
+ #ifdef BIFROST
+         /* most likely padding to make this a multiple of 64 bytes */
+         u64 zero7;
+@@ -1024,13 +1024,13 @@ struct mali_vertex_tiler_postfix {
+ } __attribute__((packed));
+ 
+ struct midgard_payload_vertex_tiler {
+-#ifndef __LP64__
++#ifndef MALI_64BIT
+         union midgard_primitive_size primitive_size;
+ #endif
+ 
+         struct mali_vertex_tiler_prefix prefix;
+ 
+-#ifndef __LP64__
++#ifndef MALI_64BIT
+         u32 zero3;
+ #endif
+ 
+@@ -1043,7 +1043,7 @@ struct midgard_payload_vertex_tiler {
+ 
+         struct mali_vertex_tiler_postfix postfix;
+ 
+-#ifdef __LP64__
++#ifdef MALI_64BIT
+         union midgard_primitive_size primitive_size;
+ #endif
+ } __attribute__((packed));
+diff --git a/src/gallium/drivers/panfrost/include/panfrost-misc.h b/src/gallium/drivers/panfrost/include/panfrost-misc.h
+index 63f3c48..ea6b7ac 100644
+--- a/src/gallium/drivers/panfrost/include/panfrost-misc.h
++++ b/src/gallium/drivers/panfrost/include/panfrost-misc.h
+@@ -40,6 +40,17 @@ typedef int64_t s64;
+ typedef uint64_t mali_ptr;
+ typedef uintptr_t mali_job_ptr;
+ 
++/*
++ * Structs for 32-bit Mali (T6xx and T7xx) differ
++ * a little bit from 64-bit Mali structs.
++ *
++ * If MALI_64BIT is defined, use "64-bit" structs
++ * and "32-bit" structs otherwise.
++ */
++#ifdef __LP64__
++#define MALI_64BIT
++#endif
++
+ #define MALI_PTR_FMT "0x%" PRIx64
+ 
+ /* FIXME: put this somewhere more fitting */
+diff --git a/src/gallium/drivers/panfrost/pan_context.c b/src/gallium/drivers/panfrost/pan_context.c
+index 22f8004..fcb8e8c 100644
+--- a/src/gallium/drivers/panfrost/pan_context.c
++++ b/src/gallium/drivers/panfrost/pan_context.c
+@@ -590,7 +590,7 @@ panfrost_vertex_tiler_job(struct panfrost_context *ctx, bool is_tiler, bool is_e
+         struct mali_job_descriptor_header job = {
+                 .job_type = is_tiler ? JOB_TYPE_TILER : JOB_TYPE_VERTEX,
+                 .job_index = draw_job_index + (is_tiler ? 1 : 0),
+-#ifdef __LP64__
++#ifdef MALI_64BIT
+                 .job_descriptor_size = 1,
+ #endif
+         };
+@@ -612,7 +612,7 @@ panfrost_vertex_tiler_job(struct panfrost_context *ctx, bool is_tiler, bool is_e
+ 
+         /* There's some padding hacks on 32-bit */
+ 
+-#ifdef __LP64__
++#ifdef MALI_64BIT
+         int offset = 0;
+ #else
+         int offset = 4;
+diff --git a/src/gallium/drivers/panfrost/pan_fragment.c b/src/gallium/drivers/panfrost/pan_fragment.c
+index 0dc15c2..199baf0 100644
+--- a/src/gallium/drivers/panfrost/pan_fragment.c
++++ b/src/gallium/drivers/panfrost/pan_fragment.c
+@@ -44,7 +44,7 @@ panfrost_fragment_job(struct panfrost_context *ctx)
+         struct mali_job_descriptor_header header = {
+                 .job_type = JOB_TYPE_FRAGMENT,
+                 .job_index = 1,
+-#ifdef __LP64__
++#ifdef MALI_64BIT
+                 .job_descriptor_size = 1
+ #endif
+         };
+diff --git a/src/gallium/drivers/panfrost/pandecode/decode.c b/src/gallium/drivers/panfrost/pandecode/decode.c
+index fc1fa84..f18a0d3 100644
+--- a/src/gallium/drivers/panfrost/pandecode/decode.c
++++ b/src/gallium/drivers/panfrost/pandecode/decode.c
+@@ -1834,7 +1834,7 @@ pandecode_replay_vertex_or_tiler_job_mdg(const struct mali_job_descriptor_header
+         pandecode_replay_gl_enables(v->gl_enables, h->job_type);
+         pandecode_prop("draw_start = %d", v->draw_start);
+ 
+-#ifndef __LP64__
++#ifndef MALI_64BIT
+ 
+         if (v->zero3) {
+                 pandecode_msg("Zero tripped\n");
+-- 
+2.7.4
+
+
+From fe972b7bd3a5a016a3a91f22211042974b2ac97c Mon Sep 17 00:00:00 2001
+From: Mateusz Krzak <kszaquitto@gmail.com>
+Date: Thu, 11 Apr 2019 00:24:32 +0200
+Subject: [PATCH 5/5] panfrost: add an option to override GPU bitness with
+ defines
+
+If compiler sets PANFROST_MALI_32BIT or PANFROST_64BIT, bitness
+will be set accordingly. In case of no option defined, use default
+behaviour: determine bitness according to target.
+
+Signed-off-by: Mateusz Krzak <kszaquitto@gmail.com>
+---
+ src/gallium/drivers/panfrost/include/panfrost-misc.h | 17 ++++++++++++++---
+ 1 file changed, 14 insertions(+), 3 deletions(-)
+
+diff --git a/src/gallium/drivers/panfrost/include/panfrost-misc.h b/src/gallium/drivers/panfrost/include/panfrost-misc.h
+index ea6b7ac..4113907 100644
+--- a/src/gallium/drivers/panfrost/include/panfrost-misc.h
++++ b/src/gallium/drivers/panfrost/include/panfrost-misc.h
+@@ -38,7 +38,14 @@ typedef int32_t s32;
+ typedef int64_t s64;
+ 
+ typedef uint64_t mali_ptr;
+-typedef uintptr_t mali_job_ptr;
++
++#if defined(PANFROST_MALI_64BIT)
++  typedef uint64_t mali_job_ptr;
++#elif defined(PANFROST_MALI_32BIT)
++  typedef uint32_t mali_job_ptr;
++#else
++  typedef uintptr_t mali_job_ptr;
++#endif
+ 
+ /*
+  * Structs for 32-bit Mali (T6xx and T7xx) differ
+@@ -47,8 +54,12 @@ typedef uintptr_t mali_job_ptr;
+  * If MALI_64BIT is defined, use "64-bit" structs
+  * and "32-bit" structs otherwise.
+  */
+-#ifdef __LP64__
+-#define MALI_64BIT
++#if defined(PANFROST_MALI_64BIT)
++#  define MALI_64BIT
++#elif !defined(PANFROST_MALI_32BIT)
++#  ifdef __LP64__
++#    define MALI_64BIT
++#  endif
+ #endif
+ 
+ #define MALI_PTR_FMT "0x%" PRIx64
+-- 
+2.7.4
+

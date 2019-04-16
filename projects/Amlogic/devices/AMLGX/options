@@ -1,10 +1,7 @@
   # Configuration for u-boot
     UBOOT_VERSION="vendor"
 
-  # Configuration for u-boot
-    UBOOT_SYSTEM="AMLGX"
-
-  # Additional kernel make parameters (for example to specify the u-boot loadaddress)
+  # Additional kernel make parameters
     KERNEL_MAKE_EXTRACMD=" dtbs"
 
   # Mali GPU family
@@ -12,3 +9,6 @@
 
   # additional packages to install:
     ADDITIONAL_PACKAGES+=" aml_autoscript amlogic-boot-fip"
+
+    DTB_NAME=meson-gxl-s905x-khadas-vim.dtb
+

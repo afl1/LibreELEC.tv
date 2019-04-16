@@ -8,20 +8,11 @@ PKG_DEPENDS_TARGET="toolchain u-boot:host"
 PKG_TOOLCHAIN="manual"
 
 make_target() {
-  case $DEVICE in
-    AMLGX)
-      for src in $PKG_DIR/extlinux-scripts/*autoscript.src ; do
-        $TOOLCHAIN/bin/mkimage -A $TARGET_KERNEL_ARCH -O linux -T script -C none -d "$src" "$(basename $src .src)" > /dev/null
-      done
-      cp -a $PKG_DIR/config/* $PKG_BUILD/      
-      ;;
-    *)
-      for src in $PKG_DIR/scripts/*autoscript.src ; do
-        $TOOLCHAIN/bin/mkimage -A $TARGET_KERNEL_ARCH -O linux -T script -C none -d "$src" "$(basename $src .src)" > /dev/null
-      done
-      cp -a $PKG_DIR/config/* $PKG_BUILD/
-      ;;
-  esac
+  for src in $PKG_DIR/scripts/*autoscript.src ; do
+    $TOOLCHAIN/bin/mkimage -A $TARGET_KERNEL_ARCH -O linux -T script -C none -d "$src" "$(basename $src .src)" > /dev/null
+  done
+  touch $PKG_BUILD/aml_autoscript.zip
+  cp -a $PKG_DIR/instboot/* $PKG_BUILD/
 }
 
 makeinstall_target() {

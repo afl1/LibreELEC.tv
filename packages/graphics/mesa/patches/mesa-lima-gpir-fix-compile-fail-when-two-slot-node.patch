@@ -1,0 +1,87 @@
+From 3af0c981c51551a3fece08c260db64dd2207b375 Mon Sep 17 00:00:00 2001
+From: Qiang Yu <yuq825@gmail.com>
+Date: Thu, 11 Apr 2019 15:42:59 +0800
+Subject: [PATCH] lima/gpir: fix compile fail when two slot node
+
+Come from glmark2-es2 jellyfish test.
+
+Fixes: 92d7ca4b1cd "gallium: add lima driver"
+Signed-off-by: Qiang Yu <yuq825@gmail.com>
+---
+ src/gallium/drivers/lima/ir/gp/gpir.h      |  5 +++++
+ src/gallium/drivers/lima/ir/gp/instr.c     |  2 +-
+ src/gallium/drivers/lima/ir/gp/scheduler.c | 21 +++++++++++++++++++--
+ 3 files changed, 25 insertions(+), 3 deletions(-)
+
+diff --git a/src/gallium/drivers/lima/ir/gp/gpir.h b/src/gallium/drivers/lima/ir/gp/gpir.h
+index 47e4422cd83..43d2adf2366 100644
+--- a/src/gallium/drivers/lima/ir/gp/gpir.h
++++ b/src/gallium/drivers/lima/ir/gp/gpir.h
+@@ -377,6 +377,11 @@ bool gpir_instr_try_insert_node(gpir_instr *instr, gpir_node *node);
+ void gpir_instr_remove_node(gpir_instr *instr, gpir_node *node);
+ void gpir_instr_print_prog(gpir_compiler *comp);
+ 
++static inline bool gpir_instr_alu_slot_is_full(gpir_instr *instr)
++{
++   return instr->alu_num_slot_free <= instr->alu_num_slot_needed_by_store;
++}
++
+ bool gpir_codegen_acc_same_op(gpir_op op1, gpir_op op2);
+ 
+ bool gpir_pre_rsched_lower_prog(gpir_compiler *comp);
+diff --git a/src/gallium/drivers/lima/ir/gp/instr.c b/src/gallium/drivers/lima/ir/gp/instr.c
+index 84736990608..0ff7e7eabc2 100644
+--- a/src/gallium/drivers/lima/ir/gp/instr.c
++++ b/src/gallium/drivers/lima/ir/gp/instr.c
+@@ -273,7 +273,7 @@ static bool gpir_instr_insert_store_check(gpir_instr *instr, gpir_node *node)
+     * already in this instr's alu slot, so instr must have some free
+     * alu slot to insert this node's child
+     */
+-   if (instr->alu_num_slot_free <= instr->alu_num_slot_needed_by_store)
++   if (gpir_instr_alu_slot_is_full(instr))
+       return false;
+ 
+    instr->alu_num_slot_needed_by_store++;
+diff --git a/src/gallium/drivers/lima/ir/gp/scheduler.c b/src/gallium/drivers/lima/ir/gp/scheduler.c
+index 8dbec242a7a..3d7e640ada2 100644
+--- a/src/gallium/drivers/lima/ir/gp/scheduler.c
++++ b/src/gallium/drivers/lima/ir/gp/scheduler.c
+@@ -464,16 +464,33 @@ static gpir_node *gpir_sched_instr_pass(gpir_instr *instr,
+ 
+    /* schedule node used by previous instr when count > 5 */
+    int count = 0;
++   gpir_node *two_slot_node = NULL;
+    list_for_each_entry(gpir_node, node, ready_list, list) {
+       if (gpir_is_input_node(node)) {
+          int min = gpir_get_min_scheduled_succ(node);
+          assert(min >= instr->index - 1);
+-         if (min == instr->index - 1)
+-            count += gpir_op_infos[node->op].may_consume_two_slots ? 2 : 1;
++         if (min == instr->index - 1) {
++            if (gpir_op_infos[node->op].may_consume_two_slots) {
++               two_slot_node = node;
++               count += 2;
++            }
++            else
++               count++;
++         }
+       }
+    }
+ 
+    if (count > 5) {
++      /* When no slot avaible, must schedule a move for two slot node
++       * to reduce the count. This results from the dummy_m/f method.
++       */
++      if (gpir_instr_alu_slot_is_full(instr)) {
++         assert(two_slot_node);
++         gpir_debug("instr is full, schedule move node for two slot node %d\n",
++                    two_slot_node->index);
++         return gpir_sched_node(instr, two_slot_node);
++      }
++
+       /* schedule fully ready node first */
+       list_for_each_entry(gpir_node, node, ready_list, list) {
+          if (gpir_is_input_node(node)) {
+-- 
+2.17.1
+

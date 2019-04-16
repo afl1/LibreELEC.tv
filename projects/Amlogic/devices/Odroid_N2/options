@@ -17,7 +17,7 @@
   # for a list of additinoal drivers see packages/linux-drivers
   # Space separated list is supported,
   # e.g. ADDITIONAL_DRIVERS="DRIVER1 DRIVER2"
-    ADDITIONAL_DRIVERS="mali-bifrost RTL8812AU"
+    ADDITIONAL_DRIVERS="mali-bifrost RTL8812AU-aml"
 
   # Mali GPU family
     MALI_FAMILY="g52"
@@ -25,11 +25,10 @@
   # Configuration for u-boot
     UBOOT_VERSION="vendor"
 
-  # Configuration for u-boot
-    UBOOT_SYSTEM="Odroid_N2"
-
-  # Additional kernel make parameters (for example to specify the u-boot loadaddress)
+  # Additional kernel make parameters
     KERNEL_MAKE_EXTRACMD=" dtbs"
 
   # additional packages to install:
+  # Space separated list is supported,
+  # e.g. ADDITIONAL_PACKAGES="PACKAGE1 PACKAGE2"
     ADDITIONAL_PACKAGES+=" aml_autoscript amlogic-boot-fip"

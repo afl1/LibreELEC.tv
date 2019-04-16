@@ -26,11 +26,6 @@ get_graphicdrivers() {
     GRAPHIC_DRIVERS="i915 i965 r200 r300 r600 radeonsi nvidia nvidia-legacy vmware virtio vc4"
   fi
 
-  if listcontains "$GRAPHIC_DRIVERS" "amlogic"; then
-    GALLIUM_DRIVERS="$GALLIUM_DRIVERS,lima,panfrost,kmsro"
-    V4L2_SUPPORT="yes"
-  fi
-
   if listcontains "$GRAPHIC_DRIVERS" "i915"; then
     DRI_DRIVERS="$DRI_DRIVERS,i915"
     XORG_DRIVERS="$XORG_DRIVERS intel"
