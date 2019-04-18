@@ -24,11 +24,10 @@
 
   # Configuration for u-boot
     UBOOT_VERSION="vendor"
+    DTB=meson-g12b-odroid-n2.dtb
 
   # Additional kernel make parameters
-    KERNEL_MAKE_EXTRACMD=" dtbs"
+    KERNEL_MAKE_EXTRACMD="dtbs"
 
   # additional packages to install:
-  # Space separated list is supported,
-  # e.g. ADDITIONAL_PACKAGES="PACKAGE1 PACKAGE2"
     ADDITIONAL_PACKAGES+=" aml_autoscript amlogic-boot-fip"
