@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: GPL-2.0
+# SPDX-License-Identifier: GPL-2.0-or-later
 # Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
 # Copyright (C) 2016-present Team LibreELEC (https://libreelec.tv)
 
@@ -41,4 +41,11 @@ post_makeinstall_target() {
       done
     done < ${fwlist}
   done
+
+  mkdir -p $INSTALL/usr/bin
+    cp $PKG_DIR/scripts/brcmfmac-firmware-setup $INSTALL/usr/bin
+}
+
+post_install() {
+  enable_service brcmfmac-firmware.service
 }

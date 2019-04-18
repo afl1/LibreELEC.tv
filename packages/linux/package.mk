@@ -38,20 +38,20 @@ case "$LINUX" in
     PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET aml-dtbtools:host u-boot-tools-aml:host"
     PKG_BUILD_PERF="no"
     ;;
-  amlogic-mainline)
-    PKG_VERSION="2555c49b01efa39c475b97c7c40cefb9e7268cbb" # 5.1-rc1
-    PKG_SHA256="bbe58c9077b69c3caf0c3b69efcad49497a1a7974aab1be6dcd79b36c94fdda4"
+  amlogic-amlgx)
+    PKG_VERSION="ebd66bd23893c7d96378ca04f8ec32958aa9fdb1" # 5.1-rc1
+    PKG_SHA256="82332d148861f76731c272c2d92085ceb2227cecfc81b31cb8d2cfa4b48ffbab"
     PKG_URL="https://github.com/superna9999/linux/archive/$PKG_VERSION.tar.gz"
     PKG_SOURCE_DIR="$PKG_NAME-$PKG_VERSION*"
-    PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET u-boot:host"
-    PKG_PATCH_DIRS="default amlogic-mainline"
+    PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET u-boot"
+    PKG_PATCH_DIRS="default amlogic-amlgx"
     ;;
   amlogic-g12)
     PKG_VERSION="f7a88ed1b297f9b63e7435a9ab5096738d706712" # v5.1-rc1
     PKG_SHA256="1a1ca8e9eddf1ec00d1635f9d8aedee522f0a360ac38c6d293c592c8926e509f"
     PKG_URL="https://gitlab.com/superna9999/linux/-/archive/$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.gz"
     PKG_SOURCE_DIR="$PKG_NAME-$PKG_VERSION*"
-    PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET u-boot:host"
+    PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET u-boot"
     PKG_PATCH_DIRS="default amlogic-g12"
     ;;
   amlogic-g12a)

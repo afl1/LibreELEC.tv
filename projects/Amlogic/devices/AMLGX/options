@@ -1,14 +1,12 @@
   # Configuration for u-boot
     UBOOT_VERSION="vendor"
+    DTB="meson-gxl-s905x-khadas-vim.dtb"
 
   # Additional kernel make parameters
-    KERNEL_MAKE_EXTRACMD=" dtbs"
+    KERNEL_MAKE_EXTRACMD="dtbs"
 
   # Mali GPU family
     MALI_FAMILY="450"
 
   # additional packages to install:
     ADDITIONAL_PACKAGES+=" aml_autoscript amlogic-boot-fip"
-
-    DTB_NAME=meson-gxl-s905x-khadas-vim.dtb
-

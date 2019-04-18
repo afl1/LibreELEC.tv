@@ -4,7 +4,7 @@
 PKG_NAME="aml_autoscript"
 PKG_VERSION="1.0"
 PKG_LICENSE="GPL"
-PKG_DEPENDS_TARGET="toolchain u-boot:host"
+PKG_DEPENDS_TARGET="toolchain u-boot"
 PKG_TOOLCHAIN="manual"
 
 make_target() {

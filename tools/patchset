@@ -59,53 +59,22 @@ do_erstrom(){
   git fetch origin master
   git checkout master
   git reset --hard origin/master
-  git format-patch --start-number 0001 94f742967c57a997ab239846be5eb48f5b1458e3 #4.19.0
+  git format-patch --start-number 0001 9050858c21d0ec828261dec467136f4555604c05 # 5.1-rc4
   for filename in *.patch; do mv "$filename" "d-$filename"; done;
   mv *.patch $DIR/$PATCHES/
 }
 
-do_lima(){
-  # LIMA KERNEL DRIVER
+do_amlgx(){
+  # AMLGX KERNEL PATCHES
   rm $PATCHES/e-* 2&>/dev/null
-  cd ~/linux.lima
+  cd ~/linux.chewitt
   rm *.patch 2&>/dev/null
-  git fetch origin lima-5.0-rc8-2
-  git checkout lima-5.0-rc8-2
-  git reset --hard origin/lima-5.0-rc8-2
-  git format-patch --start-number 0001 5908e6b738e3357af42c10e1183753c70a0117a9 #5.0.0-rc8
+  git fetch origin linux-5.1-amlgx
+  git checkout linux-5.1-amlgx
+  git reset --hard origin/linux-5.1-amlgx
+  git format-patch --start-number 0001 ebd66bd23893c7d96378ca04f8ec32958aa9fdb1 #5.1-rc1
   for filename in *.patch; do mv "$filename" "e-$filename"; done;
   mv *.patch $DIR/$PATCHES/
-}
-
-do_panfrost(){
-  # PANFROST KERNEL DRIVER
-  rm $PATCHES/f-* 2&>/dev/null
-  cd ~/linux.panfrost
-  rm *.patch 2&>/dev/null
-  git fetch origin panfrost-5.0
-  git checkout panfrost-5.0
-  git reset --hard origin/panfrost-5.0
-  git format-patch --start-number 0001 12ad143e1b803e541e48b8ba40f550250259ecdd #5.0.0
-  for filename in *.patch; do mv "$filename" "f-$filename"; done;
-  mv *.patch $DIR/$PATCHES/
-  cd $DIR
-  rm $PATCHES/f-0009-drm-Add-reservation_object-to-drm_gem_object.patch
-  rm $PATCHES/f-0017-drm-doc-document-recommended-component-helper-usage.patch
-}
-
-do_nondrm(){
-  # PANFROST NONDRM MESA PATCHES
-  rm packages/graphics/mesa/patches/panfrost/a-* 2&>/dev/null
-  cd ~/panfrost.nondrm
-  rm *.patch 2&>/dev/null
-  git fetch origin master
-  git checkout master
-  git reset --hard origin/master
-  git format-patch --start-number 0001 a98efe3901c3b4d6cc7587b0909d6fb9c49e8323 #nondrm
-  for filename in *.patch; do mv "$filename" "a-$filename"; done;
-  sed -i 's|a/|a/src/gallium/drivers/panfrost/nondrm/|g' *.patch
-  sed -i 's|b/|b/src/gallium/drivers/panfrost/nondrm/|g' *.patch
-  mv *.patch $DIR/packages/graphics/mesa/patches/panfrost/
 }
 
 do_ffmpeg(){
@@ -122,14 +91,16 @@ do_ffmpeg(){
 }
 
 case $2 in
+  g12)
+    PATCHES="packages/linux/patches/amlogic-g12"
   g12a)
     PATCHES="packages/linux/patches/amlogic-g12a"
     ;;
   g12b)
     PATCHES="packages/linux/patches/amlogic-g12b"
     ;;
-  mainline|*)
-    PATCHES="packages/linux/patches/amlogic-mainline"
+  amlgx|*)
+    PATCHES="packages/linux/patches/amlogic-amlgx"
     ;;
 esac
 
@@ -149,14 +120,8 @@ case $1 in
   erstrom|ath10k)
     do_erstrom
     ;;
-  lima)
-    do_lima
-    ;;
-  panfrost)
-    do_panfrost
-    ;;
-  nondrm)
-    do_nondrm
+  amlgx)
+    do_amlgx
     ;;
   ffmpeg)
     do_ffmpeg

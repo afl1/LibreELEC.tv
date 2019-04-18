@@ -1,6 +1,6 @@
   # Kernel to use. values can be:
   # default:  default mainline kernel
-    LINUX="amlogic-g12a"
+    LINUX="amlogic-g12"
 
   # OpenGL-ES implementation to use (no / bcm2835-driver / gpu-viv-bin-mx6q / opengl-meson)
     OPENGLES="libmali"
@@ -11,7 +11,7 @@
     GRAPHIC_DRIVERS="mali-bifrost"
 
   # KODI Player implementation to use (default / bcm2835-driver / libfslvpuwrap / libamcodec)
-    KODIPLAYER_DRIVER="libmali"
+    KODIPLAYER_DRIVER="$OPENGLES"
 
   # additional drivers to install:
   # for a list of additinoal drivers see packages/linux-drivers
@@ -24,12 +24,10 @@
 
   # Configuration for u-boot
     UBOOT_VERSION="vendor"
+    DTB=meson-g12a-x96-max.dtb
 
-  # Additional kernel make parameters (for example to specify the u-boot loadaddress)
-    KERNEL_MAKE_EXTRACMD=" dtbs"
+  # Additional kernel make parameters
+    KERNEL_MAKE_EXTRACMD="dtbs"
 
   # additional packages to install:
     ADDITIONAL_PACKAGES+=" aml_autoscript amlogic-boot-fip"
-
-    DTB_NAME=meson-g12a-x96-max.dtb
-

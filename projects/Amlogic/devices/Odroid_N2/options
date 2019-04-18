@@ -1,6 +1,6 @@
   # Kernel to use. values can be:
   # default:  default mainline kernel
-    LINUX="amlogic-g12b"
+    LINUX="amlogic-g12"
 
   # OpenGL-ES implementation to use (no / bcm2835-driver / gpu-viv-bin-mx6q / opengl-meson)
     OPENGLES="libmali"
@@ -17,7 +17,7 @@
   # for a list of additinoal drivers see packages/linux-drivers
   # Space separated list is supported,
   # e.g. ADDITIONAL_DRIVERS="DRIVER1 DRIVER2"
-    ADDITIONAL_DRIVERS="mali-bifrost RTL8812AU-aml"
+    ADDITIONAL_DRIVERS="mali-bifrost RTL8812AU"
 
   # Mali GPU family
     MALI_FAMILY="g52"

@@ -38,7 +38,7 @@
 
   # Kernel to use. values can be:
   # default:  default mainline kernel
-    LINUX="amlogic-mainline"
+    LINUX="amlogic-amlgx"
 
   # kernel serial console
     EXTRA_CMDLINE="console=ttyAML0,115200n8 console=tty0"
@@ -50,8 +50,8 @@
   # Project CFLAGS
     PROJECT_CFLAGS=""
 
-  # SquashFS compression method (gzip / lzo / xz)
-    SQUASHFS_COMPRESSION="lzo"
+  # SquashFS compression method (gzip / lzo / xz / zstd)
+    SQUASHFS_COMPRESSION="zstd"
 
 ################################################################################
 # setup project defaults
@@ -90,8 +90,7 @@
   # for a list of additinoal drivers see packages/linux-drivers
   # Space separated list is supported,
   # e.g. ADDITIONAL_DRIVERS="DRIVER1 DRIVER2"
-  #  ADDITIONAL_DRIVERS="openvfd wireguard"
-    ADDITIONAL_DRIVERS="wireguard"
+    ADDITIONAL_DRIVERS="openvfd wireguard"
 
   # additional Firmware to use (dvb-firmware, misc-firmware, wlan-firmware)
   # Space separated list is supported,
