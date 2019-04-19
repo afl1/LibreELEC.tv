@@ -1,7 +1,7 @@
-From 88e83aa163074db9d3c798348a8e1e94ba0e9dcf Mon Sep 17 00:00:00 2001
+From 8810eba1cd36b41998e4fb29f8fb37b95cafc332 Mon Sep 17 00:00:00 2001
 From: chewitt <github@chrishewitt.net>
 Date: Fri, 12 Apr 2019 12:26:30 +0000
-Subject: [PATCH 21/26] media: rc: add keymap for KHAMSIN remote
+Subject: [PATCH 20/25] media: rc: add keymap for KHAMSIN remote
 
 Add an IR keymap for the KHAMSIN IR/BT remote supplied with the SmartLabs
 SML-5442TW set-top box that allows basic GUI navigation to pair the more

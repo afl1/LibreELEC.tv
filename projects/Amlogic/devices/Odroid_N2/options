@@ -1,6 +1,6 @@
   # Kernel to use. values can be:
   # default:  default mainline kernel
-    LINUX="amlogic-g12"
+    LINUX="amlogic-g12b"
 
   # OpenGL-ES implementation to use (no / bcm2835-driver / gpu-viv-bin-mx6q / opengl-meson)
     OPENGLES="libmali"

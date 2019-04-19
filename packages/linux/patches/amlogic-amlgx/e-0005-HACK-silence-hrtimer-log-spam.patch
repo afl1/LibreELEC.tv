@@ -1,7 +1,7 @@
 From 48b392bb606eb916a0a2fc0a3d318c4bde92bd2b Mon Sep 17 00:00:00 2001
 From: chewitt <github@chrishewitt.net>
 Date: Sat, 13 Apr 2019 06:35:17 +0000
-Subject: [PATCH 05/26] HACK: silence hrtimer log spam
+Subject: [PATCH 05/25] HACK: silence hrtimer log spam
 
 This silences another annoying system log message
 

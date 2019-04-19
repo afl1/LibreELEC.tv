@@ -1,7 +1,7 @@
-From c6bbd89d250aea0e4739cf5fd3108f9825812e5a Mon Sep 17 00:00:00 2001
+From 227c83db7ee04f3aeac3009edc6206abed501aeb Mon Sep 17 00:00:00 2001
 From: chewitt <github@chrishewitt.net>
 Date: Fri, 12 Apr 2019 12:32:11 +0000
-Subject: [PATCH 22/26] media: rc: add keymap for Philips RC242 remote
+Subject: [PATCH 21/25] media: rc: add keymap for Philips RC242 remote
 
 Add an IR keymap for the Philips RC242 remote used with some IPTV/VOD STB's.
 

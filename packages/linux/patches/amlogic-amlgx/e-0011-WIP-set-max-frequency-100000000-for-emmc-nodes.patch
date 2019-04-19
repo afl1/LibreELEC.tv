@@ -1,7 +1,7 @@
-From 77a5ffbe823b88cd4c6452f992c6806abebb0858 Mon Sep 17 00:00:00 2001
+From f57404c34aa1ac7eacbc32d46675925948ffe4ca Mon Sep 17 00:00:00 2001
 From: chewitt <github@chrishewitt.net>
 Date: Sat, 13 Apr 2019 07:07:54 +0000
-Subject: [PATCH 12/26] WIP: set "max-frequency = <100000000>;" for emmc nodes
+Subject: [PATCH 11/25] WIP: set "max-frequency = <100000000>;" for emmc nodes
 
 Signed-off-by: Christian Hewitt <christianshewitt@gmail.com>
 ---

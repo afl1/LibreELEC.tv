@@ -54,20 +54,12 @@ case "$LINUX" in
     PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET u-boot"
     PKG_PATCH_DIRS="default amlogic-g12"
     ;;
-  amlogic-g12a)
-    PKG_VERSION="0d588e6fe359db23fdfb82bada55102295cdd663" # v5.1-rc1
-    PKG_SHA256="25e55b9b9c3f80beab4dca06e2ecbafcccf0c8988fa50a43c191b9669e66c74e"
-    PKG_URL="https://gitlab.com/superna9999/linux/-/archive/$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.gz"
-    PKG_SOURCE_DIR="$PKG_NAME-$PKG_VERSION*"
-    PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET u-boot:host"
-    PKG_PATCH_DIRS="default amlogic-g12a"
-    ;;
   amlogic-g12b)
     PKG_VERSION="f59f787348e160a26222176aecb5f391f2f27400" # v5.1-rc1
     PKG_SHA256="6570565454d381343e1bf44480749d81e3973d8657969622c804396b0150a070"
     PKG_URL="https://gitlab.com/superna9999/linux/-/archive/$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.gz"
     PKG_SOURCE_DIR="$PKG_NAME-$PKG_VERSION*"
-    PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET u-boot:host"
+    PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET u-boot"
     PKG_PATCH_DIRS="default amlogic-g12b"
     ;;
   rockchip-4.4)
@@ -260,6 +252,13 @@ make_target() {
     done
   fi
 
+  # arm64 target does not support creating uImage.
+  # Build Image first, then wrap it using u-boot's mkimage.
+  if [[ "$TARGET_KERNEL_ARCH" == "arm64" && "$KERNEL_TARGET" == uImage* ]]; then
+    KERNEL_UIMAGE_TARGET="$KERNEL_TARGET"
+    KERNEL_TARGET="${KERNEL_TARGET/uImage/Image}"
+  fi
+
   # the modules target is required to get a proper Module.symvers
   # file with symbols from built-in and external modules.
   # Without that it'll contain only the symbols from the kernel
@@ -284,6 +283,13 @@ make_target() {
 
     mv -f arch/$TARGET_KERNEL_ARCH/boot/boot.img arch/$TARGET_KERNEL_ARCH/boot/$KERNEL_TARGET
 
+  fi
+
+  if [ ! -z "$KERNEL_UIMAGE_TARGET" ] ; then
+    # TODO: make addresses configurable, Amlogic for now...
+    UIMAGE_COMP=${KERNEL_UIMAGE_TARGET:7}
+    UIMAGE_COMP=${UIMAGE_COMP:-none}
+    $TOOLCHAIN/bin/mkimage -A $TARGET_KERNEL_ARCH -O linux -T kernel -C $UIMAGE_COMP -a 0x1080000 -e 0x1080000 -d arch/$TARGET_KERNEL_ARCH/boot/$KERNEL_TARGET arch/$TARGET_KERNEL_ARCH/boot/$KERNEL_UIMAGE_TARGET
   fi
 }
 

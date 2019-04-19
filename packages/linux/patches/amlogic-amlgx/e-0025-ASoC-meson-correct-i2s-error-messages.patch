@@ -1,7 +1,7 @@
-From c9edfac9b725cb2fd02c739b0fdf9583ef3538a9 Mon Sep 17 00:00:00 2001
+From d1cbd99130b7020559ea8a73550166e6151643d0 Mon Sep 17 00:00:00 2001
 From: chewitt <github@chrishewitt.net>
 Date: Sun, 14 Apr 2019 03:25:54 +0000
-Subject: [PATCH 26/26] ASoC: meson: correct i2s error messages
+Subject: [PATCH 25/25] ASoC: meson: correct i2s error messages
 
 Reorder words so they read correctly.
 

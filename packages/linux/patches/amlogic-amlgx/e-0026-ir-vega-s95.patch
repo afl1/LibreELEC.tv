@@ -1,0 +1,11 @@
+--- a/drivers/media/rc/keymaps/Makefile
++++ b/drivers/media/rc/keymaps/Makefile
+@@ -117,6 +117,7 @@
+ 			rc-videomate-m1f.o \
+ 			rc-videomate-s350.o \
+ 			rc-videomate-tv-pvr.o \
++			rc-vega-s95.o \
+ 			rc-wetek-hub.o \
+ 			rc-winfast.o \
+ 			rc-winfast-usbii-deluxe.o \
+

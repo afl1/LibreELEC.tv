@@ -1,7 +1,7 @@
-From b2530ca4b3efb1c51be0770f53c6cfb1be0e20d5 Mon Sep 17 00:00:00 2001
+From 9f9bfa92df29a15c731412b88c14cc9a23c9eed4 Mon Sep 17 00:00:00 2001
 From: chewitt <github@chrishewitt.net>
 Date: Mon, 15 Apr 2019 02:58:24 +0000
-Subject: [PATCH 17/26] arm64: dts: meson-gxl-s905w-tx3-mini set rc-tx3mini ir
+Subject: [PATCH 16/25] arm64: dts: meson-gxl-s905w-tx3-mini set rc-tx3mini ir
  keymap
 
 Signed-off-by: Christian Hewitt <christianshewitt@gmail.com>

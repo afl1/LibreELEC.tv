@@ -93,9 +93,6 @@ do_ffmpeg(){
 case $2 in
   g12)
     PATCHES="packages/linux/patches/amlogic-g12"
-  g12a)
-    PATCHES="packages/linux/patches/amlogic-g12a"
-    ;;
   g12b)
     PATCHES="packages/linux/patches/amlogic-g12b"
     ;;

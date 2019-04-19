@@ -92,10 +92,6 @@ else
   PKG_MESON_OPTS_TARGET+=" -Dgles1=false -Dgles2=false"
 fi
 
-if [ "$PROJECT" = "Amlogic" ]; then
-  TARGET_CFLAGS+=" -DPANFROST_MALI_64BIT=1"
-fi
-
 # Temporary workaround:
 # Listed libraries are static, while mesa expects shared ones. This breaks the
 # dependency tracking. The following has some ideas on how to address that.
@@ -103,6 +99,20 @@ fi
 pre_configure_target() {
   if [ "$DISPLAYSERVER" = "x11" ]; then
     export LIBS="-lxcb-dri3 -lxcb-dri2 -lxcb-xfixes -lxcb-present -lxcb-sync -lxshmfence -lz"
+  fi
+
+  # Temporary hack (until panfrost evolves) to use 64-bit pointers in structs passed to GPU
+  # even if userspace is 32-bit. This is required for Mali-T820 to work with mesa built for
+  # arm userspace. The hack does not affect building for aarch64.
+  if [ "$PROJECT" = "Amlogic" ]; then
+    pushd "$PKG_BUILD/src/gallium/drivers/panfrost"
+      sed -i 's/uintptr_t/uint64_t/g' include/panfrost-job.h \
+                                      include/panfrost-misc.h \
+                                      pan_context.c \
+                                      pandecode/decode.c
+
+      find -type f -exec sed -i 's/ndef __LP64__/ 0/g; s/def __LP64__/ 1/g' {} +;
+    popd
   fi
 }
 
