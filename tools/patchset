@@ -77,6 +77,19 @@ do_amlgx(){
   mv *.patch $DIR/$PATCHES/
 }
 
+do_amlg12(){
+  # AMLG12 KERNEL PATCHES
+  rm $PATCHES/e-* 2&>/dev/null
+  cd ~/linux.chewitt
+  rm *.patch 2&>/dev/null
+  git fetch origin linux-5.1-amlg12
+  git checkout linux-5.1-amlg12
+  git reset --hard origin/linux-5.1-amlg12
+  git format-patch --start-number 0001 4d1e213094d23f307013042077f3cde7d3423ffc #5.1-rc1
+  for filename in *.patch; do mv "$filename" "e-$filename"; done;
+  mv *.patch $DIR/$PATCHES/
+}
+
 do_ffmpeg(){
   # FFMPEG STATEFUL HWACCELL
   rm project/Amlogic/patches/ffmpeg/ffmpeg-hwaccel-* 2&>/dev/null
@@ -91,7 +104,7 @@ do_ffmpeg(){
 }
 
 case $2 in
-  g12)
+  amlg12)
     PATCHES="packages/linux/patches/amlogic-g12"
   g12b)
     PATCHES="packages/linux/patches/amlogic-g12b"
@@ -119,6 +132,9 @@ case $1 in
     ;;
   amlgx)
     do_amlgx
+    ;;
+  amlg12)
+    do_amlg12
     ;;
   ffmpeg)
     do_ffmpeg

@@ -9,4 +9,4 @@
     MALI_FAMILY="450"
 
   # additional packages to install:
-    ADDITIONAL_PACKAGES+=" aml_autoscript amlogic-boot-fip"
+    ADDITIONAL_PACKAGES+=" aml_autoscript amlogic-boot-fip cpumac"

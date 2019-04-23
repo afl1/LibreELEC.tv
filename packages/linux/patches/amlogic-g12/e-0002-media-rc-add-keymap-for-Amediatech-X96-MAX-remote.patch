@@ -1,7 +1,7 @@
-From 02c120fc8ac43cac0d67f518ce444117effbeb98 Mon Sep 17 00:00:00 2001
+From 87585a9b61475fb44bdba734124ce6071191b201 Mon Sep 17 00:00:00 2001
 From: chewitt <github@chrishewitt.net>
 Date: Sun, 7 Apr 2019 04:20:56 +0000
-Subject: [PATCH] media: rc: add keymap for Amediatech X96-MAX remote
+Subject: [PATCH 2/4] media: rc: add keymap for Amediatech X96-MAX remote
 
 This is a simple NEC remote control device shipped with the Amediatech
 X96 MAX Android 'TV Box' device. The remote contains a programmable TV
@@ -17,10 +17,10 @@ Signed-off-by: Christian Hewitt <christianshewitt@gmail.com>
  create mode 100644 drivers/media/rc/keymaps/rc-x96max.c
 
 diff --git a/drivers/media/rc/keymaps/Makefile b/drivers/media/rc/keymaps/Makefile
-index 5b1399af6b3a4b..b88c4e76cdc670 100644
+index 03fbac32befb..f757305eacb2 100644
 --- a/drivers/media/rc/keymaps/Makefile
 +++ b/drivers/media/rc/keymaps/Makefile
-@@ -117,4 +117,5 @@ obj-$(CONFIG_RC_MAP) += rc-adstech-dvb-t-pci.o \
+@@ -118,4 +118,5 @@ obj-$(CONFIG_RC_MAP) += rc-adstech-dvb-t-pci.o \
  			rc-winfast-usbii-deluxe.o \
  			rc-su3000.o \
  			rc-xbox-dvd.o \
@@ -28,7 +28,7 @@ index 5b1399af6b3a4b..b88c4e76cdc670 100644
  			rc-zx-irdec.o
 diff --git a/drivers/media/rc/keymaps/rc-x96max.c b/drivers/media/rc/keymaps/rc-x96max.c
 new file mode 100644
-index 00000000000000..cea5c1c7bf3626
+index 000000000000..cea5c1c7bf36
 --- /dev/null
 +++ b/drivers/media/rc/keymaps/rc-x96max.c
 @@ -0,0 +1,85 @@
@@ -118,10 +118,10 @@ index 00000000000000..cea5c1c7bf3626
 +MODULE_LICENSE("GPL");
 +MODULE_AUTHOR("Christian Hewitt <christianshewitt@gmail.com");
 diff --git a/include/media/rc-map.h b/include/media/rc-map.h
-index 5e684bb0d64c40..19daeef96c482e 100644
+index 771e9e2cca50..ac538a5c55d9 100644
 --- a/include/media/rc-map.h
 +++ b/include/media/rc-map.h
-@@ -286,6 +286,7 @@ struct rc_map *rc_map_get(const char *name);
+@@ -287,6 +287,7 @@ struct rc_map *rc_map_get(const char *name);
  #define RC_MAP_WINFAST_USBII_DELUXE      "rc-winfast-usbii-deluxe"
  #define RC_MAP_SU3000                    "rc-su3000"
  #define RC_MAP_XBOX_DVD                  "rc-xbox-dvd"
@@ -129,3 +129,6 @@ index 5e684bb0d64c40..19daeef96c482e 100644
  #define RC_MAP_ZX_IRDEC                  "rc-zx-irdec"
  
  /*
+-- 
+2.17.1
+

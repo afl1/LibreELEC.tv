@@ -33,7 +33,7 @@
   # Kernel extra targets to build
     KERNEL_UBOOT_EXTRA_TARGET=""
 
-  # Additional kernel make parameters (for example to specify the u-boot loadaddress)
+  # Additional kernel make parameters 
     KERNEL_MAKE_EXTRACMD=""
 
   # Kernel to use. values can be:
@@ -41,7 +41,7 @@
     LINUX="amlogic-amlgx"
 
   # kernel serial console
-    EXTRA_CMDLINE="console=ttyAML0,115200n8 console=tty0"
+    EXTRA_CMDLINE="console=ttyAML0,115200n8 console=tty0 earlycon"
 
 ################################################################################
 # setup build defaults

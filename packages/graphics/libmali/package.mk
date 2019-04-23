@@ -2,8 +2,8 @@
 # Copyright (C) 2019-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="libmali"
-PKG_VERSION="ad56ed30985471c0950a654cc9db1e86310650d5"
-PKG_SHA256="72438ea73cf6c2e8e770545872386b66ccad200c568261e5304845547099c9ed"
+PKG_VERSION="2cbd6f75e235d8c22209621b45de3a7bc43bac50"
+PKG_SHA256="3fa665f84e7225c76b1e14273d26b8a41fa2f2fe3b4764e559d519d8034b2a60"
 PKG_ARCH="arm aarch64"
 PKG_LICENSE="nonfree"
 PKG_SITE="https://github.com/LibreELEC/libmali"
@@ -12,7 +12,7 @@ PKG_LONGDESC="OpenGL ES user-space binary for the ARM Mali GPU family"
 
 PKG_DEPENDS_TARGET="libdrm"
 
-if [ "$MALI_FAMILY" = "t620" -o "$MALI_FAMILY" = "t720" -o "$MALI_FAMILY" = "g52" ]; then
+if [ "$MALI_FAMILY" = "t620" -o "$MALI_FAMILY" = "t720" ]; then
   PKG_DEPENDS_TARGET+=" wayland"
 fi
 

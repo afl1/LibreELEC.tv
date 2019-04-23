@@ -25,7 +25,7 @@ mkdir -p "$RELEASE_DIR/3rdparty/bootloader/dtb"
       cp -a $(get_build_dir linux)/arch/$TARGET_KERNEL_ARCH/boot/dts/amlogic/*gxl*.dtb $RELEASE_DIR/3rdparty/bootloader/dtb
       cp -a $(get_build_dir linux)/arch/$TARGET_KERNEL_ARCH/boot/dts/amlogic/*gxm*.dtb $RELEASE_DIR/3rdparty/bootloader/dtb
       ;;
-    AMLG12|Odroid_N2|X96)
+    AMLG12|Odroid_N2)
       cp -a $(get_build_dir linux)/arch/$TARGET_KERNEL_ARCH/boot/dts/amlogic/*g12a*.dtb $RELEASE_DIR/3rdparty/bootloader/dtb
       cp -a $(get_build_dir linux)/arch/$TARGET_KERNEL_ARCH/boot/dts/amlogic/*g12b*.dtb $RELEASE_DIR/3rdparty/bootloader/dtb
       ;;

@@ -285,11 +285,17 @@ make_target() {
 
   fi
 
-  if [ ! -z "$KERNEL_UIMAGE_TARGET" ] ; then
-    # TODO: make addresses configurable, Amlogic for now...
-    UIMAGE_COMP=${KERNEL_UIMAGE_TARGET:7}
-    UIMAGE_COMP=${UIMAGE_COMP:-none}
-    $TOOLCHAIN/bin/mkimage -A $TARGET_KERNEL_ARCH -O linux -T kernel -C $UIMAGE_COMP -a 0x1080000 -e 0x1080000 -d arch/$TARGET_KERNEL_ARCH/boot/$KERNEL_TARGET arch/$TARGET_KERNEL_ARCH/boot/$KERNEL_UIMAGE_TARGET
+  if [ -n "$KERNEL_UIMAGE_TARGET" ] ; then
+    KERNEL_UIMAGE_COMP=${KERNEL_UIMAGE_TARGET:7}
+    KERNEL_UIMAGE_COMP=${KERNEL_UIMAGE_COMP:-none}
+    mkimage -A $TARGET_KERNEL_ARCH \
+            -O linux \
+            -T kernel \
+            -C $KERNEL_UIMAGE_COMP \
+            -a $KERNEL_UIMAGE_LOADADDR \
+            -e $KERNEL_UIMAGE_ENTRYADDR \
+            -d arch/$TARGET_KERNEL_ARCH/boot/$KERNEL_TARGET \
+               arch/$TARGET_KERNEL_ARCH/boot/$KERNEL_UIMAGE_TARGET
   fi
 }
 

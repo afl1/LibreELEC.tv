@@ -1,0 +1,31 @@
+--- a/arch/arm64/boot/dts/amlogic/meson-gx-p23x-q20x.dtsi
++++ b/arch/arm64/boot/dts/amlogic/meson-gx-p23x-q20x.dtsi
+@@ -11,6 +11,7 @@
+ / {
+ 	aliases {
+ 		serial0 = &uart_AO;
++		serial1 = &uart_A;
+ 		ethernet0 = &ethmac;
+ 	};
+ 
+@@ -250,6 +251,19 @@
+ 	vqmmc-supply = <&vddio_boot>;
+ };
+ 
++/* This one is connected to the Bluetooth module */
++&uart_A {
++	status = "okay";
++	pinctrl-0 = <&uart_a_pins>, <&uart_a_cts_rts_pins>;
++	pinctrl-names = "default";
++	uart-has-rtscts;
++
++	bluetooth {
++		compatible = "brcm,bcm43438-bt";
++		shutdown-gpios = <&gpio GPIOX_17 GPIO_ACTIVE_HIGH>;
++	};
++};
++
+ /* This UART is brought out to the DB9 connector */
+ &uart_AO {
+ 	status = "okay";
+

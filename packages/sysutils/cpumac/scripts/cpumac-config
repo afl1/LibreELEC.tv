@@ -3,24 +3,29 @@
 # SPDX-License-Identifier: GPL-2.0
 # Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv)
 
-COMPATIBLE=$(cat /proc/device-tree/compatible | tr -d '\000' | sed -n -e 's/.*\(amlogic\|rockchip\).*/\1/p')
+COMPATIBLE=$(/usr/bin/dtsoc)
 
 case $COMPATIBLE in
-  amlogic)
-    SERIAL=$(cat /sys/bus/platform/devices/firmware\:secure-monitor/serial)
+  amlogic,meson-gxl|amlogic,meson-gxm)
+    SERIAL=$(cat /sys/bus/platform/devices/firmware\:secure-monitor/serial 2>/dev/null)
     ;;
-  rockchip)
-    SERIAL=$(cat /proc/cpuinfo | awk '/Serial/ {print $3}')
+  rockchip*)
+    SERIAL=$(cat /proc/cpuinfo 2>/dev/null | awk '/Serial/ {print $3}')
     ;;
 esac
 
-case $1 in
-  eth0)
-    MAC=$(echo "$SERIAL" | sed 's/\(..\)/\1:/g' | cut -b-16)
-    echo "MAC=${MAC}a" > /run/libreelec/cpumac-eth0
-    ;;
-  wlan0)
-    MAC=$(echo "$SERIAL" | sed 's/\(..\)/\1:/g' | cut -b-16)
-    echo "MAC=${MAC}b" > /run/libreelec/cpumac-wlan0
-    ;;
-esac
+if [ -n "$SERIAL" ]; then
+  SERIAL=$(echo "$SERIAL" | cut -b-12)
+  # clear multicast bit and set local assignment bit (IEEE802)
+  SERIAL=$(printf '%X\n' "$(( (0x$SERIAL & 0xFEFFFFFFFFFF) | 0x020000000000 ))")
+  case $1 in
+    eth0)
+      MAC=$(echo "$SERIAL" | sed 's/\(..\)/\1:/g' | cut -b-17)
+      ;;
+    wlan0)
+      SERIAL=$(printf '%X\n' "$(( 0x$SERIAL + 1 ))")
+      MAC=$(echo "$SERIAL" | sed 's/\(..\)/\1:/g' | cut -b-17)
+      ;;
+  esac
+  echo "MAC=${MAC}" > /run/libreelec/cpumac-$1
+fi
