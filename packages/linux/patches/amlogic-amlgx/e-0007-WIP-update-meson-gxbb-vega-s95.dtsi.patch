@@ -1,7 +1,7 @@
 From 09feb0d15421bf8f922f8f190886b02a987d5df9 Mon Sep 17 00:00:00 2001
 From: chewitt <github@chrishewitt.net>
 Date: Sat, 13 Apr 2019 06:18:39 +0000
-Subject: [PATCH 07/25] WIP: update meson-gxbb-vega-s95.dtsi
+Subject: [PATCH 07/33] WIP: update meson-gxbb-vega-s95.dtsi
 
 Signed-off-by: Christian Hewitt <christianshewitt@gmail.com>
 ---

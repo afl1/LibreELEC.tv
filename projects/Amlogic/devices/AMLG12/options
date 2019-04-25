@@ -15,10 +15,10 @@
     KODIPLAYER_DRIVER="$OPENGLES"
 
   # Mali GPU family
-    MALI_FAMILY="g31"
+    MALI_FAMILY="g31;g52"
 
   # additional drivers to install
     ADDITIONAL_DRIVERS+=" mali-bifrost"
 
   # additional packages to install:
-    ADDITIONAL_PACKAGES+=" aml_autoscript amlogic-boot-fip cpumac"
+    ADDITIONAL_PACKAGES+=" aml_autoscript amlogic-boot-fip"

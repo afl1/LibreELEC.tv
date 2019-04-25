@@ -1,7 +1,7 @@
 From 78a5fa8623ffbc3a4f661d42aaea172c7d80cc9d Mon Sep 17 00:00:00 2001
 From: chewitt <github@chrishewitt.net>
 Date: Sat, 13 Apr 2019 05:41:51 +0000
-Subject: [PATCH 01/25] HACK: set cma pool to 896MB
+Subject: [PATCH 01/33] HACK: set cma pool to 896MB
 
 This change sets the CMA pool to a larger 896MB! value for (WIP) vdec use
 

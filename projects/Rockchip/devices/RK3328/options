@@ -21,8 +21,8 @@
         ;;
     esac
 
-    LINUX="${LINUX:-rockchip-4.4}"
-#    LINUX="${LINUX:-rockchip-5.x}"
+#    LINUX="${LINUX:-rockchip-4.4}"
+    LINUX="${LINUX:-rockchip-5.x}"
 
   # Kernel target
     KERNEL_TARGET="Image"
@@ -31,13 +31,13 @@
     KERNEL_MAKE_EXTRACMD=""
     KERNEL_MAKE_EXTRACMD+=" rockchip/rk3328-roc-cc.dtb"
     KERNEL_MAKE_EXTRACMD+=" rockchip/rk3328-rock64.dtb"
+    KERNEL_MAKE_EXTRACMD+=" rockchip/rk3328-box-trn9.dtb"
+    KERNEL_MAKE_EXTRACMD+=" rockchip/rk3328-mx10.dtb"
 
     if [ "$LINUX" = "rockchip-4.4" ]; then
       KERNEL_MAKE_EXTRACMD+=" rockchip/rk3328-box.dtb"
-      KERNEL_MAKE_EXTRACMD+=" rockchip/rk3328-box-trn9.dtb"
       KERNEL_MAKE_EXTRACMD+=" rockchip/rk3328-box-z28.dtb"
       KERNEL_MAKE_EXTRACMD+=" rockchip/rk3328-rockbox.dtb"
-      KERNEL_MAKE_EXTRACMD+=" rockchip/rk3328-mx10.dtb"
     fi
 
   # Mali GPU family

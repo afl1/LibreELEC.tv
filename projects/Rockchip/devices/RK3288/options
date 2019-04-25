@@ -22,6 +22,7 @@
 
   # Additional kernel make parameters (for example to specify the u-boot loadaddress)
     KERNEL_MAKE_EXTRACMD=""
+    KERNEL_MAKE_EXTRACMD+=" rk3288-tinker.dtb"
     KERNEL_MAKE_EXTRACMD+=" rk3288-tinker-s.dtb"
     KERNEL_MAKE_EXTRACMD+=" rk3288-miqi.dtb"
 

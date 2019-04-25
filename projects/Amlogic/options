@@ -90,12 +90,12 @@
   # for a list of additinoal drivers see packages/linux-drivers
   # Space separated list is supported,
   # e.g. ADDITIONAL_DRIVERS="DRIVER1 DRIVER2"
-    ADDITIONAL_DRIVERS="openvfd wireguard"
+    ADDITIONAL_DRIVERS="linux_openvfd wireguard"
 
   # additional Firmware to use (dvb-firmware, misc-firmware, wlan-firmware)
   # Space separated list is supported,
   # e.g. FIRMWARE="dvb-firmware misc-firmware wlan-firmware"
-    FIRMWARE="brcmfmac_sdio-firmware meson-firmware ath10k-firmware qca-firmware"
+    FIRMWARE="brcmfmac_sdio-firmware meson-firmware qca-firmware"
 
   # build and install ATV IR remote support (yes / no)
     ATVCLIENT_SUPPORT="no"
@@ -126,16 +126,16 @@
     CEC_FRAMEWORK_SUPPORT="yes"
 
   # Addon Server Url
-#    case $TARGET_ARCH in
-#      aarch64)
-#        ADDON_SERVER_URL="https://balbes150.libreelec.tv/addons"
-#	ADDON_PATH="$ADDON_VERSION/Khadas_VIM/$TARGET_ARCH"
-#        ;;
-#      arm)
-        ADDON_SERVER_URL="https://amlgx.libreelec.tv"
+    case $TARGET_ARCH in
+      aarch64)
+        ADDON_SERVER_URL="https://balbes150.libreelec.tv/addons"
 	ADDON_PATH="$ADDON_VERSION/Khadas_VIM/$TARGET_ARCH"
-#        ;;
-#    esac
+        ;;
+      arm)
+        ADDON_SERVER_URL="https://amlgx.libreelec.tv"
+	ADDON_PATH="$ADDON_VERSION/${DEVICE:-$PROJECT}/$TARGET_ARCH"
+        ;;
+    esac
 
   # set the addon dirs
     ADDON_URL="$ADDON_SERVER_URL/$ADDON_PATH"

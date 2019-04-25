@@ -5,6 +5,7 @@
 PKG_NAME="u-boot"
 PKG_ARCH="arm aarch64"
 PKG_SITE="https://www.denx.de/wiki/U-Boot"
+PKG_DEPENDS_TARGET="toolchain dtc:host"
 PKG_LICENSE="GPL"
 PKG_LONGDESC="Das U-Boot is a cross-platform bootloader for embedded systems."
 PKG_IS_KERNEL_PKG="yes"
@@ -21,14 +22,13 @@ case "${DEVICE:-$PROJECT}" in
     PKG_SHA256="3f9f2bbd0c28be6d7d6eb909823fee5728da023aca0ce37aef3c8f67d1179ec1"
     PKG_URL="https://github.com/rockchip-linux/u-boot/archive/$PKG_VERSION.tar.gz"
     PKG_PATCH_DIRS="rockchip"
-    PKG_DEPENDS_TARGET="toolchain dtc:host rkbin"
+    PKG_DEPENDS_TARGET+=" rkbin"
     PKG_NEED_UNPACK+=" $(get_pkg_directory rkbin)"
     ;;
   *)
     PKG_VERSION="2019.01"
     PKG_SHA256="50bd7e5a466ab828914d080d5f6a432345b500e8fba1ad3b7b61e95e60d51c22"
     PKG_URL="http://ftp.denx.de/pub/u-boot/u-boot-$PKG_VERSION.tar.bz2"
-    PKG_DEPENDS_TARGET="toolchain dtc:host"
     ;;
 esac
 

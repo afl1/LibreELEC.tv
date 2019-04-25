@@ -2,11 +2,11 @@
 # Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="qca-firmware"
-PKG_VERSION="50f9e1ad99c89c6f19b0d21368394434525c0767"
-PKG_SHA256="18333079e07abdea85400f14dac15a11f2683106dd768e6ae6ec0008d34e7eda"
+PKG_VERSION="39d025c6d52085c529568c4e110ca6d0b290fef6"
+PKG_SHA256="7af9e815f0cc5136819c9f7e02c548ea736d34c9a67ca065e5a693f4fdadb312"
 PKG_ARCH="arm aarch64"
-PKG_LICENSE="BSD-3c"
-PKG_SITE="http://linode.boundarydevices.com/repos/apt/ubuntu-relx/pool/main/q/qca-firmware/"
+PKG_LICENSE="Qualcom"
+PKG_SITE="https://github.com/boundarydevices/qca-firmware"
 PKG_URL="https://github.com/chewitt/qca-firmware/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="linux-firmware"
@@ -14,6 +14,7 @@ PKG_SHORTDESC="qca9377 bluetooth firmware"
 PKG_TOOLCHAIN="manual"
 
 makeinstall_target() {
-  mkdir -p $INSTALL/$(get_full_firmware_dir)/qca
-    cp -a qca/tfbtfw11.tlv $INSTALL/$(get_full_firmware_dir)/qca
+  mkdir -p $INSTALL/$(get_full_firmware_dir)
+    cp -aR qca $INSTALL/$(get_full_firmware_dir)
+    cp -aR ath10k $INSTALL/$(get_full_firmware_dir)
 }

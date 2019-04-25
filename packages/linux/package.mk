@@ -39,28 +39,20 @@ case "$LINUX" in
     PKG_BUILD_PERF="no"
     ;;
   amlogic-amlgx)
-    PKG_VERSION="ebd66bd23893c7d96378ca04f8ec32958aa9fdb1" # 5.1-rc1
-    PKG_SHA256="82332d148861f76731c272c2d92085ceb2227cecfc81b31cb8d2cfa4b48ffbab"
+    PKG_VERSION="e167c22f8b3249e881c47912e7bd78184d1eb98e" # 5.1-rc1
+    PKG_SHA256="32df47cffba1b230bf0616f274f75d5e677672780ad0c443cf11e0c16b04ee4f"
     PKG_URL="https://github.com/superna9999/linux/archive/$PKG_VERSION.tar.gz"
     PKG_SOURCE_DIR="$PKG_NAME-$PKG_VERSION*"
     PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET u-boot"
     PKG_PATCH_DIRS="default amlogic-amlgx"
     ;;
   amlogic-g12)
-    PKG_VERSION="f7a88ed1b297f9b63e7435a9ab5096738d706712" # v5.1-rc1
-    PKG_SHA256="1a1ca8e9eddf1ec00d1635f9d8aedee522f0a360ac38c6d293c592c8926e509f"
+    PKG_VERSION="cc0aab20a38771171c9d12d2dc26d6acfaa1aa00" # v5.1-rc1
+    PKG_SHA256="9233bb779c8c2a232d0c8bfc4d0aefaf7b62a777965e3a005706490bc47bf311"
     PKG_URL="https://gitlab.com/superna9999/linux/-/archive/$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.gz"
     PKG_SOURCE_DIR="$PKG_NAME-$PKG_VERSION*"
     PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET u-boot"
     PKG_PATCH_DIRS="default amlogic-g12"
-    ;;
-  amlogic-g12b)
-    PKG_VERSION="f59f787348e160a26222176aecb5f391f2f27400" # v5.1-rc1
-    PKG_SHA256="6570565454d381343e1bf44480749d81e3973d8657969622c804396b0150a070"
-    PKG_URL="https://gitlab.com/superna9999/linux/-/archive/$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.gz"
-    PKG_SOURCE_DIR="$PKG_NAME-$PKG_VERSION*"
-    PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET u-boot"
-    PKG_PATCH_DIRS="default amlogic-g12b"
     ;;
   rockchip-4.4)
     PKG_VERSION="aa8bacf821e5c8ae6dd8cae8d64011c741659945"
@@ -69,15 +61,9 @@ case "$LINUX" in
     PKG_SOURCE_NAME="linux-$LINUX-$PKG_VERSION.tar.gz"
     ;;
   rockchip-5.x)
-    PKG_VERSION="5.0-rc6"
-    PKG_SHA256="dc0ffa31389ab6a349339a93b388f36605ef8cd3d6238f129c27d5c7e584258c"
-    PKG_URL="https://git.kernel.org/torvalds/t/$PKG_NAME-$PKG_VERSION.tar.gz"
-    PKG_SOURCE_NAME="linux-$LINUX-$PKG_VERSION.tar.gz"
-    ;;
-  rockchip-5.0)
-    PKG_VERSION="5.0-rc6"
-    PKG_SHA256="dc0ffa31389ab6a349339a93b388f36605ef8cd3d6238f129c27d5c7e584258c"
-    PKG_URL="https://git.kernel.org/torvalds/t/$PKG_NAME-$PKG_VERSION.tar.gz"
+    PKG_VERSION="5.0.7"
+    PKG_SHA256="16e177662b9fc7255bfc51018513979f6effcbe52e459c543aa83a5b15ef54ec"
+    PKG_URL="https://www.kernel.org/pub/linux/kernel/v5.x/$PKG_NAME-$PKG_VERSION.tar.xz"
     PKG_SOURCE_NAME="linux-$LINUX-$PKG_VERSION.tar.gz"
     ;;
   raspberrypi)

@@ -1,7 +1,7 @@
 From 126ccf45bb4f1c8d3fce980ab2362fc461eef669 Mon Sep 17 00:00:00 2001
 From: chewitt <github@chrishewitt.net>
 Date: Sat, 13 Apr 2019 08:27:53 +0000
-Subject: [PATCH 15/25] arm64: dts: meson-gxm-khadas-vim2 set eee-broken-1000t
+Subject: [PATCH 15/33] arm64: dts: meson-gxm-khadas-vim2 set eee-broken-1000t
 
 Signed-off-by: Christian Hewitt <christianshewitt@gmail.com>
 ---

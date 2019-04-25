@@ -1,4 +1,4 @@
-From 4cf2ccfbe7444a1c3cb2d33f52651ab450a3aab3 Mon Sep 17 00:00:00 2001
+From 4d6af620f4d6a6645229dcf3403a397dfb1a8a93 Mon Sep 17 00:00:00 2001
 From: Lukas Rusak <lorusak@gmail.com>
 Date: Mon, 15 Apr 2019 16:51:09 -0700
 Subject: [PATCH] CDRMUtils: rework modifiers flag selection
@@ -8,7 +8,7 @@ Subject: [PATCH] CDRMUtils: rework modifiers flag selection
  1 file changed, 7 insertions(+), 4 deletions(-)
 
 diff --git a/xbmc/windowing/gbm/DRMUtils.cpp b/xbmc/windowing/gbm/DRMUtils.cpp
-index df46ad4bdc25..052823b8a041 100644
+index df46ad4bdc25..8e1ec9d0dcb5 100644
 --- a/xbmc/windowing/gbm/DRMUtils.cpp
 +++ b/xbmc/windowing/gbm/DRMUtils.cpp
 @@ -109,10 +109,13 @@ drm_fb * CDRMUtils::DrmFbGetFromBo(struct gbm_bo *bo)
@@ -20,7 +20,7 @@ index df46ad4bdc25..052823b8a041 100644
 +  uint32_t flags = 0;
  
 -  CLog::Log(LOGDEBUG, "CDRMUtils::%s - using modifier: %lli", __FUNCTION__, modifiers[0]);
-+  if (modifiers[0] > DRM_FORMAT_MOD_LINEAR && modifiers[0] != DRM_FORMAT_MOD_INVALID)
++  if (modifiers[0] && modifiers[0] != DRM_FORMAT_MOD_INVALID)
 +  {
 +    flags |= DRM_MODE_FB_MODIFIERS;
 +    CLog::Log(LOGDEBUG, "CDRMUtils::{} - using modifier: {:#x}", __FUNCTION__, modifiers[0]);

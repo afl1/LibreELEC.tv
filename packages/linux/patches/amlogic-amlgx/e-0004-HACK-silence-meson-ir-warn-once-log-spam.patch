@@ -1,7 +1,7 @@
 From 2585e9b6e91d529c2ac27133f1219761726a643c Mon Sep 17 00:00:00 2001
 From: chewitt <github@chrishewitt.net>
 Date: Sat, 13 Apr 2019 06:27:33 +0000
-Subject: [PATCH 04/25] HACK: silence meson-ir warn once log spam
+Subject: [PATCH 04/33] HACK: silence meson-ir warn once log spam
 
 This silences another warning message that spams the system log.
 
