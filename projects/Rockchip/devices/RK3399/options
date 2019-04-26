@@ -21,8 +21,8 @@
         ;;
     esac
 
-#    LINUX="${LINUX:-rockchip-4.4}"
-    LINUX="${LINUX:-rockchip-5.x}"
+    LINUX="${LINUX:-rockchip-4.4}"
+#    LINUX="${LINUX:-rockchip-5.x}"
 
   # Kernel target
     KERNEL_TARGET="Image"
