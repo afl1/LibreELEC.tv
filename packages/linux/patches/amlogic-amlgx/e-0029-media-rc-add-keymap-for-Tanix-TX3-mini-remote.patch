@@ -1,7 +1,7 @@
-From fa32db3367f67d1c573520d9558f1704cd1ad98d Mon Sep 17 00:00:00 2001
+From 535519da85063f6749f41879f76a543c0866d5a0 Mon Sep 17 00:00:00 2001
 From: chewitt <github@chrishewitt.net>
 Date: Mon, 15 Apr 2019 02:44:48 +0000
-Subject: [PATCH 27/33] media: rc: add keymap for Tanix TX3 mini remote
+Subject: [PATCH 29/35] media: rc: add keymap for Tanix TX3 mini remote
 
 This is a simple NEC remote control device shipped with the Tanix TX3
 Android STB device.

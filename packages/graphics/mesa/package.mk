@@ -12,8 +12,8 @@ PKG_BUILD_FLAGS="+lto"
 
 case $PROJECT in
   Amlogic)
-    PKG_VERSION="e4ec814c392c5405a363f64e14864623d5c1b10c" # master-19.1
-    PKG_SHA256="f49a36758d3afe48ca10128fbf17057e50ce600cf2aef5296fd20376577dad51"
+    PKG_VERSION="77d091d0c5dc1f1b174668cb1da5f00ad391d76d" # master-19.1
+    PKG_SHA256="b1113cd7f0055b79e0f597cdc3424e901c3407c6d4729222a79e829d933e0c3e"
     PKG_URL="https://gitlab.freedesktop.org/mesa/mesa/-/archive/$PKG_VERSION/mesa-$PKG_VERSION.tar.gz"
     ;;
   *)

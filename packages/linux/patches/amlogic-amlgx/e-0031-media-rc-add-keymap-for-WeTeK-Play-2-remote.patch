@@ -1,7 +1,7 @@
-From a8856ad1b52f0af7e09e70da5c4c7d56b931272b Mon Sep 17 00:00:00 2001
+From b3eb0af8f70c5782f1b643cc1c946551b755ec2e Mon Sep 17 00:00:00 2001
 From: chewitt <github@chrishewitt.net>
 Date: Sun, 21 Apr 2019 02:24:07 +0000
-Subject: [PATCH 29/33] media: rc: add keymap for WeTeK Play 2 remote
+Subject: [PATCH 31/35] media: rc: add keymap for WeTeK Play 2 remote
 
 Signed-off-by: Christian Hewitt <christianshewitt@gmail.com>
 ---

@@ -1,7 +1,7 @@
-From 08a0832537f64fe6c0e99b588b03523245da59db Mon Sep 17 00:00:00 2001
+From f8f5b1315150bea86996e55db9a390947fab9563 Mon Sep 17 00:00:00 2001
 From: chewitt <github@chrishewitt.net>
 Date: Wed, 24 Apr 2019 03:40:16 +0000
-Subject: [PATCH 18/33] arm64: dts: meson-gxbb-odroid set blue led to on
+Subject: [PATCH 18/35] arm64: dts: meson-gxbb-odroid set blue led to on
 
 The constantly flashing blue LED heartbeat is annoying for an HTPC device
 so remove the heartbeat and simply default to on.

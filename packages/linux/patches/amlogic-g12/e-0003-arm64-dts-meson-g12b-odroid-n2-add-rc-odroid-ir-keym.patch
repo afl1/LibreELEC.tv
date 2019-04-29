@@ -1,7 +1,7 @@
 From 827fdc48e582dad1a78b14ed800de8ddc614ea5b Mon Sep 17 00:00:00 2001
 From: chewitt <github@chrishewitt.net>
 Date: Sat, 20 Apr 2019 23:51:04 +0000
-Subject: [PATCH 3/4] arm64: dts: meson-g12b-odroid-n2: add rc-odroid ir keymap
+Subject: [PATCH 3/6] arm64: dts: meson-g12b-odroid-n2: add rc-odroid ir keymap
 
 Signed-off-by: Christian Hewitt <christianshewitt@gmail.com>
 ---

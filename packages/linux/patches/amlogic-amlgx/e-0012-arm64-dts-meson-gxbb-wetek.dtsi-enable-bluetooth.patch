@@ -1,7 +1,7 @@
-From 046ca685cc0eabd8d48cbe5c5783d19971a1e7c6 Mon Sep 17 00:00:00 2001
+From 77cb6197c151ec2ce727f0e0746a31e9da5a59cd Mon Sep 17 00:00:00 2001
 From: chewitt <github@chrishewitt.net>
 Date: Sat, 13 Apr 2019 06:50:48 +0000
-Subject: [PATCH 12/33] arm64: dts: meson-gxbb-wetek.dtsi enable bluetooth
+Subject: [PATCH 12/35] arm64: dts: meson-gxbb-wetek.dtsi enable bluetooth
 
 This enables Bluetooth support for the following models:
 

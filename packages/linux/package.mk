@@ -31,13 +31,6 @@ case "$LINUX" in
     PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET aml-dtbtools:host u-boot-tools-aml:host"
     PKG_BUILD_PERF="no"
     ;;
-  amlogic-s805)
-    PKG_VERSION="dbc3c7eb1d562eec234dac5f449b8fa89fc6a130"
-    PKG_URL="https://github.com/150balbes/Amlogic_s8xx-kernel/archive/$PKG_VERSION.tar.gz"
-    PKG_SOURCE_NAME="Amlogic_s8xx-kernel-$PKG_VERSION.tar.gz"
-    PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET aml-dtbtools:host u-boot-tools-aml:host"
-    PKG_BUILD_PERF="no"
-    ;;
   amlogic-amlgx)
     PKG_VERSION="e167c22f8b3249e881c47912e7bd78184d1eb98e" # 5.1-rc1
     PKG_SHA256="32df47cffba1b230bf0616f274f75d5e677672780ad0c443cf11e0c16b04ee4f"

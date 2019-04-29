@@ -1,7 +1,7 @@
-From f57404c34aa1ac7eacbc32d46675925948ffe4ca Mon Sep 17 00:00:00 2001
+From dd99bfd3381b32267cda98cc9badc6da97d23da7 Mon Sep 17 00:00:00 2001
 From: chewitt <github@chrishewitt.net>
 Date: Sat, 13 Apr 2019 07:07:54 +0000
-Subject: [PATCH 11/33] WIP: set "max-frequency = <100000000>;" for emmc nodes
+Subject: [PATCH 10/35] WIP: set "max-frequency = <100000000>;" for emmc nodes
 
 Signed-off-by: Christian Hewitt <christianshewitt@gmail.com>
 ---
@@ -73,10 +73,10 @@ index 6871238101f6..e3f97c1a0715 100644
  	disable-wp;
  	mmc-ddr-1_8v;
 diff --git a/arch/arm64/boot/dts/amlogic/meson-gxbb-vega-s95.dtsi b/arch/arm64/boot/dts/amlogic/meson-gxbb-vega-s95.dtsi
-index cb693a56c1e2..4990e47e6ee7 100644
+index ad4d50bd9d77..d8c262b9be01 100644
 --- a/arch/arm64/boot/dts/amlogic/meson-gxbb-vega-s95.dtsi
 +++ b/arch/arm64/boot/dts/amlogic/meson-gxbb-vega-s95.dtsi
-@@ -261,7 +261,7 @@
+@@ -168,7 +168,7 @@
  
  	bus-width = <8>;
  	cap-mmc-highspeed;

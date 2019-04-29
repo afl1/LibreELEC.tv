@@ -1,7 +1,7 @@
-From 60f3b76bf2a52d9cb0c0b6f7666013e66829ceca Mon Sep 17 00:00:00 2001
+From da9d1c51ae40bd3fd25a9d6f2ebe1e2586ac38e3 Mon Sep 17 00:00:00 2001
 From: chewitt <github@chrishewitt.net>
 Date: Mon, 15 Apr 2019 04:37:44 +0000
-Subject: [PATCH 28/33] media: rc: add keymap for WeTek Hub remote
+Subject: [PATCH 30/35] media: rc: add keymap for WeTek Hub remote
 
 This is a simple RC5 remote control device shipped with the WeTek Hub
 Android STB device.

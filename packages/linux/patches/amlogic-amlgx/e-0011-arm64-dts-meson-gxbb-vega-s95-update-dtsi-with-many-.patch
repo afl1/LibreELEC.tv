@@ -1,15 +1,16 @@
-From 09feb0d15421bf8f922f8f190886b02a987d5df9 Mon Sep 17 00:00:00 2001
+From 7bcabb527d09dece1b28d5a79195684e2d9e8c33 Mon Sep 17 00:00:00 2001
 From: chewitt <github@chrishewitt.net>
 Date: Sat, 13 Apr 2019 06:18:39 +0000
-Subject: [PATCH 07/33] WIP: update meson-gxbb-vega-s95.dtsi
+Subject: [PATCH 11/35] arm64: dts: meson-gxbb-vega-s95 update dtsi with many
+ changes
 
 Signed-off-by: Christian Hewitt <christianshewitt@gmail.com>
 ---
- .../boot/dts/amlogic/meson-gxbb-vega-s95.dtsi | 128 ++++++++++++++++--
- 1 file changed, 117 insertions(+), 11 deletions(-)
+ .../boot/dts/amlogic/meson-gxbb-vega-s95.dtsi | 133 ++++++++++++++++--
+ 1 file changed, 119 insertions(+), 14 deletions(-)
 
 diff --git a/arch/arm64/boot/dts/amlogic/meson-gxbb-vega-s95.dtsi b/arch/arm64/boot/dts/amlogic/meson-gxbb-vega-s95.dtsi
-index ad4d50bd9d77..cb693a56c1e2 100644
+index d8c262b9be01..58aaa196d576 100644
 --- a/arch/arm64/boot/dts/amlogic/meson-gxbb-vega-s95.dtsi
 +++ b/arch/arm64/boot/dts/amlogic/meson-gxbb-vega-s95.dtsi
 @@ -4,12 +4,15 @@
@@ -80,7 +81,7 @@ index ad4d50bd9d77..cb693a56c1e2 100644
  	emmc_pwrseq: emmc-pwrseq {
  		compatible = "mmc-pwrseq-emmc";
  		reset-gpios = <&gpio BOOT_9 GPIO_ACTIVE_LOW>;
-@@ -66,6 +83,46 @@
+@@ -66,15 +83,69 @@
  		pwms = <&pwm_ef 0 30518 0>; /* PWM_E at 32.768KHz */
  	};
  
@@ -126,8 +127,11 @@ index ad4d50bd9d77..cb693a56c1e2 100644
 +
  	sdio_pwrseq: sdio-pwrseq {
  		compatible = "mmc-pwrseq-simple";
- 		reset-gpios = <&gpio GPIOX_6 GPIO_ACTIVE_LOW>,
-@@ -75,6 +132,21 @@
+-		reset-gpios = <&gpio GPIOX_6 GPIO_ACTIVE_LOW>,
+-				<&gpio GPIOX_20 GPIO_ACTIVE_LOW>;
++		reset-gpios = <&gpio GPIOX_6 GPIO_ACTIVE_LOW>;
+ 		clocks = <&wifi32k>;
+ 		clock-names = "ext_clock";
  	};
  };
  
@@ -149,7 +153,7 @@ index ad4d50bd9d77..cb693a56c1e2 100644
  &ethmac {
  	status = "okay";
  	pinctrl-0 = <&eth_rgmii_pins>;
-@@ -97,10 +169,25 @@
+@@ -97,10 +168,25 @@
  		eth_phy0: ethernet-phy@0 {
  			/* Realtek RTL8211F (0x001cc916) */
  			reg = <0>;
@@ -175,7 +179,7 @@ index ad4d50bd9d77..cb693a56c1e2 100644
  &ir {
  	status = "okay";
  	pinctrl-0 = <&remote_input_ao_pins>;
-@@ -115,6 +202,11 @@
+@@ -115,10 +201,15 @@
  	clock-names = "clkin0";
  };
  
@@ -187,7 +191,12 @@ index ad4d50bd9d77..cb693a56c1e2 100644
  /* Wireless SDIO Module */
  &sd_emmc_a {
  	status = "okay";
-@@ -133,8 +225,8 @@
+-	pinctrl-0 = <&sdio_pins &sdio_irq_pins>;
++	pinctrl-0 = <&sdio_pins>;
+ 	pinctrl-1 = <&sdio_clk_gate_pins>;
+ 	pinctrl-names = "default", "clk-gate";
+ 	#address-cells = <1>;
+@@ -133,8 +224,8 @@
  
  	mmc-pwrseq = <&sdio_pwrseq>;
  
@@ -198,7 +207,7 @@ index ad4d50bd9d77..cb693a56c1e2 100644
  
  	brcmf: wifi@1 {
  		reg = <1>;
-@@ -156,7 +248,8 @@
+@@ -156,7 +247,8 @@
  
  	cd-gpios = <&gpio CARD_6 GPIO_ACTIVE_LOW>;
  
@@ -208,7 +217,7 @@ index ad4d50bd9d77..cb693a56c1e2 100644
  };
  
  /* eMMC */
-@@ -176,9 +269,22 @@
+@@ -176,9 +268,22 @@
  
  	mmc-pwrseq = <&emmc_pwrseq>;
  	vmmc-supply = <&vcc_3v3>;
@@ -223,7 +232,7 @@ index ad4d50bd9d77..cb693a56c1e2 100644
 +	pinctrl-names = "default";
 +
 +	bluetooth {
-+	compatible = "brcm,bcm43438-bt";
++		compatible = "brcm,bcm43438-bt";
 +		shutdown-gpios = <&gpio GPIOX_20 GPIO_ACTIVE_HIGH>;
 +	};
  };
@@ -232,7 +241,7 @@ index ad4d50bd9d77..cb693a56c1e2 100644
  &uart_AO {
  	status = "okay";
  	pinctrl-0 = <&uart_ao_a_pins>;
-@@ -187,7 +293,7 @@
+@@ -187,7 +292,7 @@
  
  &usb0_phy {
  	status = "okay";

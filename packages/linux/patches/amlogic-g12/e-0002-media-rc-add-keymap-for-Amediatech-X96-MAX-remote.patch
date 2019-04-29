@@ -1,7 +1,7 @@
 From 87585a9b61475fb44bdba734124ce6071191b201 Mon Sep 17 00:00:00 2001
 From: chewitt <github@chrishewitt.net>
 Date: Sun, 7 Apr 2019 04:20:56 +0000
-Subject: [PATCH 2/4] media: rc: add keymap for Amediatech X96-MAX remote
+Subject: [PATCH 2/6] media: rc: add keymap for Amediatech X96-MAX remote
 
 This is a simple NEC remote control device shipped with the Amediatech
 X96 MAX Android 'TV Box' device. The remote contains a programmable TV

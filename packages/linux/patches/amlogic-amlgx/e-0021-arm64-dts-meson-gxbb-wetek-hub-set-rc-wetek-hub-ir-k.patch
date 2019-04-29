@@ -1,7 +1,7 @@
-From 6136dcf97d7863825f9f83b7d56b380ddcc04022 Mon Sep 17 00:00:00 2001
+From 3b23dbad6984abb7ae7dd0baef440609e1f56e0c Mon Sep 17 00:00:00 2001
 From: chewitt <github@chrishewitt.net>
 Date: Mon, 15 Apr 2019 04:40:25 +0000
-Subject: [PATCH 20/33] arm64: dts: meson-gxbb-wetek-hub set rc-wetek-hub ir
+Subject: [PATCH 21/35] arm64: dts: meson-gxbb-wetek-hub set rc-wetek-hub ir
  keymap
 
 Signed-off-by: Christian Hewitt <christianshewitt@gmail.com>

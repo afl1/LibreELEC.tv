@@ -1,7 +1,7 @@
-From 8db80438201862b016ff94ab41b908f0f41e6025 Mon Sep 17 00:00:00 2001
+From 6928c7117f0852c918039380d89d6ba58d5d4fa0 Mon Sep 17 00:00:00 2001
 From: chewitt <github@chrishewitt.net>
 Date: Tue, 16 Apr 2019 13:06:08 +0000
-Subject: [PATCH 22/33] arm64: dts: meson-gxl-s905x-khadas-vim: fix
+Subject: [PATCH 23/35] arm64: dts: meson-gxl-s905x-khadas-vim: fix
  address/size cells dtc warnings
 
 Fix DTC warnings:

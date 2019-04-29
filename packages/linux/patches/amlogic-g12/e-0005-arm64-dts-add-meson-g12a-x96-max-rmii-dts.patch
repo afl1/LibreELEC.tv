@@ -1,8 +1,51 @@
+From 3dc28e080cbd6da0d9d908266aff6d14c053dbda Mon Sep 17 00:00:00 2001
+From: chewitt <github@chrishewitt.net>
+Date: Mon, 22 Apr 2019 07:17:31 +0000
+Subject: [PATCH 5/6] arm64: dts: add meson-g12a-x96-max-rmii dts
+
+Some variants of the X96 max use the internal rmii PHY instead of external
+rgmii PHY so provide a device-tree for them.
+
+Signed-off-by: Christian Hewitt <christianshewitt@gmail.com>
+---
+ .../devicetree/bindings/arm/amlogic.txt       |   3 +-
+ arch/arm64/boot/dts/amlogic/Makefile          |   1 +
+ .../dts/amlogic/meson-g12a-x96-max-rmii.dts   | 281 ++++++++++++++++++
+ 3 files changed, 284 insertions(+), 1 deletion(-)
+ create mode 100644 arch/arm64/boot/dts/amlogic/meson-g12a-x96-max-rmii.dts
+
+diff --git a/Documentation/devicetree/bindings/arm/amlogic.txt b/Documentation/devicetree/bindings/arm/amlogic.txt
+index eff41128268e..b78220bb3feb 100644
+--- a/Documentation/devicetree/bindings/arm/amlogic.txt
++++ b/Documentation/devicetree/bindings/arm/amlogic.txt
+@@ -113,7 +113,8 @@ Board compatible values (alphabetically, grouped by SoC):
+   - "amlogic,s400" (Meson axg a113d)
+ 
+   - "amlogic,u200" (Meson g12a s905d2)
+-  - "amediatech,x96-max" (Meson g12a s905x2)
++  - "amediatech,x96-max" (Meson g12a s905x2 using external PHY)
++  - "amediatech,x96-max-rmii" (Meson g12a s905x2 using internal PHY)
+   - "seirobotics,sei510" (Meson g12a s905x2)
+ 
+   - "hardkernel,odroid-n2" (Meson g12b s922x)
+diff --git a/arch/arm64/boot/dts/amlogic/Makefile b/arch/arm64/boot/dts/amlogic/Makefile
+index 07b861fe5fa5..3eeda866ced1 100644
+--- a/arch/arm64/boot/dts/amlogic/Makefile
++++ b/arch/arm64/boot/dts/amlogic/Makefile
+@@ -3,6 +3,7 @@ dtb-$(CONFIG_ARCH_MESON) += meson-axg-s400.dtb
+ dtb-$(CONFIG_ARCH_MESON) += meson-g12a-sei510.dtb
+ dtb-$(CONFIG_ARCH_MESON) += meson-g12a-u200.dtb
+ dtb-$(CONFIG_ARCH_MESON) += meson-g12a-x96-max.dtb
++dtb-$(CONFIG_ARCH_MESON) += meson-g12a-x96-max-rmii.dtb
+ dtb-$(CONFIG_ARCH_MESON) += meson-g12b-odroid-n2.dtb
+ dtb-$(CONFIG_ARCH_MESON) += meson-gxbb-nanopi-k2.dtb
+ dtb-$(CONFIG_ARCH_MESON) += meson-gxbb-nexbox-a95x.dtb
+diff --git a/arch/arm64/boot/dts/amlogic/meson-g12a-x96-max-rmii.dts b/arch/arm64/boot/dts/amlogic/meson-g12a-x96-max-rmii.dts
 new file mode 100644
-index 000000000000..cea5c1c7bf36
---- a/dev/null
+index 000000000000..72751bfe88d3
+--- /dev/null
 +++ b/arch/arm64/boot/dts/amlogic/meson-g12a-x96-max-rmii.dts
-@@ -0,0 +1,282 @@
+@@ -0,0 +1,281 @@
 +// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
 +/*
 + * Copyright (c) 2018 BayLibre SAS. All rights reserved.
@@ -15,12 +58,11 @@ index 000000000000..cea5c1c7bf36
 +#include <dt-bindings/gpio/meson-g12a-gpio.h>
 +
 +/ {
-+	compatible = "amediatech,x96-max", "amlogic,u200", "amlogic,g12a";
++	compatible = "amediatech,x96-max-rmii", "amlogic,u200", "amlogic,g12a";
 +	model = "Shenzhen Amediatech Technology Co., Ltd X96 Max";
 +
 +	aliases {
 +		serial0 = &uart_AO;
-+		serial1 = &uart_A;
 +		ethernet0 = &ethmac;
 +	};
 +	chosen {
@@ -187,11 +229,11 @@ index 000000000000..cea5c1c7bf36
 +};
 +
 +&ethmac {
-+	status = "okay";
-+	pinctrl-0 = <&eth_leds_pins>;
-+	pinctrl-names = "default";
-+	phy-handle = <&internal_ephy>;
-+	phy-mode = "rmii";
++        status = "okay";
++        pinctrl-0 = <&eth_leds_pins>;
++        pinctrl-names = "default";
++        phy-handle = <&internal_ephy>;
++        phy-mode = "rmii";
 +};
 +
 +&pwm_ef {
@@ -285,4 +327,6 @@ index 000000000000..cea5c1c7bf36
 +	vmmc-supply = <&vcc_3v3>;
 +	vqmmc-supply = <&flash_1v8>;
 +};
+-- 
+2.17.1
 

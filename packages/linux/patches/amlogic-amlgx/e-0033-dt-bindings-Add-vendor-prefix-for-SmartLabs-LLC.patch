@@ -1,7 +1,7 @@
-From 5738532222666bcb698ce6d54f8cb6f3be065d1c Mon Sep 17 00:00:00 2001
+From c3d68f7e17ea9390c8fcda42f0f4784f56d9a2ff Mon Sep 17 00:00:00 2001
 From: chewitt <github@chrishewitt.net>
 Date: Wed, 24 Apr 2019 10:49:48 +0000
-Subject: [PATCH 31/33] dt-bindings: Add vendor prefix for SmartLabs LLC.
+Subject: [PATCH 33/35] dt-bindings: Add vendor prefix for SmartLabs LLC.
 
 SmartLabs LLC. are an integrator of Interactive TV solutions and IPTV/STB
 devices (https://www.smartlabs.tv/en/about/) for Telco/ISP customers.

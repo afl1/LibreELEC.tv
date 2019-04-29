@@ -1,7 +1,7 @@
-From ae52167777bc44abb4b48fcca23c802f44f6bfad Mon Sep 17 00:00:00 2001
+From 9758d71e8a6cc7739fc5cca7c9d274ab93f801e0 Mon Sep 17 00:00:00 2001
 From: chewitt <github@chrishewitt.net>
 Date: Sun, 21 Apr 2019 02:27:40 +0000
-Subject: [PATCH 21/33] arm64: dts: meson-gxbb-wetek-play2 set rc-wetek-play2
+Subject: [PATCH 22/35] arm64: dts: meson-gxbb-wetek-play2 set rc-wetek-play2
  ir keymap
 
 Signed-off-by: Christian Hewitt <christianshewitt@gmail.com>

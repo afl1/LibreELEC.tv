@@ -1,7 +1,7 @@
-From 73715eed18984cb5a4eb4ec136341e872eff93a1 Mon Sep 17 00:00:00 2001
+From adf27fe699517dbd0f697ea85b0d3a3676a20075 Mon Sep 17 00:00:00 2001
 From: chewitt <github@chrishewitt.net>
 Date: Wed, 24 Apr 2019 03:26:16 +0000
-Subject: [PATCH 19/33] arm64: dts: meson-gxbb-odroid set rc-odroid ir keymap
+Subject: [PATCH 19/35] arm64: dts: meson-gxbb-odroid set rc-odroid ir keymap
 
 Signed-off-by: Christian Hewitt <christianshewitt@gmail.com>
 ---

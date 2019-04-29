@@ -1,7 +1,7 @@
-From f94bc4aa0873cc0ff4787f873af2a0ff9f5912b8 Mon Sep 17 00:00:00 2001
+From 7ed36e5f8f80e0efe5b1da4dee45cae3c5cbbd00 Mon Sep 17 00:00:00 2001
 From: chewitt <github@chrishewitt.net>
 Date: Wed, 24 Apr 2019 13:58:32 +0000
-Subject: [PATCH 16/33] arm64: dts: meson-gxm-khadas-vim2 set bt compatible
+Subject: [PATCH 16/35] arm64: dts: meson-gxm-khadas-vim2 set bt compatible
 
 Signed-off-by: Christian Hewitt <christianshewitt@gmail.com>
 ---

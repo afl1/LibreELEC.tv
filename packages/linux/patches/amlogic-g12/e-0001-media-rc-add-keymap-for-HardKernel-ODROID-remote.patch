@@ -1,7 +1,7 @@
 From eb999bc0a09e4ec191292f84a4c0f87cf9296368 Mon Sep 17 00:00:00 2001
 From: Christian Hewitt <christianshewitt@gmail.com>
 Date: Mon, 1 Apr 2019 04:22:30 +0400
-Subject: [PATCH 1/4] media: rc: add keymap for HardKernel ODROID remote
+Subject: [PATCH 1/6] media: rc: add keymap for HardKernel ODROID remote
 
 This is a simple NEC remote controll device shipped with the HardKernel
 ODROID range of ARM Single Board Computer (SBC) devices.

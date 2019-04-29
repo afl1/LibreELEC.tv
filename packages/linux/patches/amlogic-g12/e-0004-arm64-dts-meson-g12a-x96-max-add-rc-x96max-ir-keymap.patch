@@ -1,7 +1,7 @@
 From 8337a65c09a0252ac8d25e1c5720cafd8c635252 Mon Sep 17 00:00:00 2001
 From: chewitt <github@chrishewitt.net>
 Date: Sat, 20 Apr 2019 23:52:15 +0000
-Subject: [PATCH 4/4] arm64: dts: meson-g12a-x96-max: add rc-x96max ir keymap
+Subject: [PATCH 4/6] arm64: dts: meson-g12a-x96-max: add rc-x96max ir keymap
 
 Signed-off-by: Christian Hewitt <christianshewitt@gmail.com>
 ---

@@ -1,7 +1,7 @@
-From f37467ad3af05a21d987c267f99a042667304d02 Mon Sep 17 00:00:00 2001
+From b16ba25e6af50dea1d43390a26febfcb79e3bd1d Mon Sep 17 00:00:00 2001
 From: chewitt <github@chrishewitt.net>
 Date: Wed, 24 Apr 2019 10:52:06 +0000
-Subject: [PATCH 32/33] dt-bindings: arm: amlogic: Add support for the
+Subject: [PATCH 34/35] dt-bindings: arm: amlogic: Add support for the
  SmartLabs SML-5442TW
 
 The SmartLabs SML-5442TW is the next-gen/4K IPTV/DVB-S STB for O2 Czech based
