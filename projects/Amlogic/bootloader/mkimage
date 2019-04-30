@@ -33,6 +33,11 @@ if [ -n "$UBOOT_SYSTEM" ]; then
       dd if="$DESTDIR/u-boot.gxbb" of="$DESTDIR/u-boot.bin.sd.bin" conv=fsync,notrunc bs=512 seek=97 >"$SAVE_ERROR" 2>&1 || show_error
       ;;
 
+    Odroid_N2)
+      BIN_DIR="$(get_build_dir u-boot)/sd_fuse"
+      cp $BIN_DIR/u-boot.bin.sd.bin $DESTDIR/u-boot.bin.sd.bin
+      ;;
+
     NanoPi_K2)
       FIPDIR="$(get_build_dir amlogic-boot-fip)"
 
@@ -113,11 +118,6 @@ if [ -n "$UBOOT_SYSTEM" ]; then
     dd if="$DESTDIR/u-boot.bin.sd.bin" of="$DISK" conv=fsync,notrunc bs=1 count=112 >"$SAVE_ERROR" 2>&1 || show_error
     dd if="$DESTDIR/u-boot.bin.sd.bin" of="$DISK" conv=fsync,notrunc bs=512 skip=1 seek=1 >"$SAVE_ERROR" 2>&1 || show_error
 
-    echo "image: copying u-boot.bin"
-    mkdir -p "${LE_TMP}/u-boot"
-    cp -R "$DESTDIR/u-boot.bin.sd.bin" "${LE_TMP}/u-boot/u-boot.bin"
-    mcopy -s "${LE_TMP}/u-boot" :: 2>&1 > /dev/null || true
-
     echo "image: creating extlinux/extlinux.conf"
     DTB="$(${SCRIPTS}/uboot_helper ${PROJECT} ${DEVICE} ${UBOOT_SYSTEM} dtb)"
     mkdir -p "${LE_TMP}/extlinux"
@@ -128,14 +128,6 @@ LABEL ${DISTRO}
   APPEND boot=LABEL=LIBREELEC disk=LABEL=STORAGE quiet ${EXTRA_CMDLINE}
 EOF
     mcopy -s "${LE_TMP}/extlinux" ::
-
-else
-
-  if [ -f "$RELEASE_DIR/3rdparty/bootloader/u-boot.bin.sd.bin" ]; then
-	  echo "Writing u-boot to $(basename $DISK)"
-	  dd if="$RELEASE_DIR/3rdparty/bootloader/u-boot.bin.sd.bin" of="$DISK" conv=fsync,notrunc bs=1 count=112 >"$SAVE_ERROR" 2>&1 || show_error
-	  dd if="$RELEASE_DIR/3rdparty/bootloader/u-boot.bin.sd.bin" of="$DISK" conv=fsync,notrunc bs=512 skip=1 seek=1 >"$SAVE_ERROR" 2>&1 || show_error
-  fi
 
 fi
 
@@ -160,4 +152,3 @@ mcopy "$RELEASE_DIR/3rdparty/bootloader/dtb" :: 2>&1 > /dev/null || true
 mcopy "$RELEASE_DIR/3rdparty/bootloader/install2emmc.sh" :: 2>&1 > /dev/null || true
 mcopy "$RELEASE_DIR/3rdparty/bootloader/ddbr-backup.sh" :: 2>&1 > /dev/null || true
 mcopy "$RELEASE_DIR/3rdparty/bootloader/ddbr-restore.sh" :: 2>&1 > /dev/null || true
-

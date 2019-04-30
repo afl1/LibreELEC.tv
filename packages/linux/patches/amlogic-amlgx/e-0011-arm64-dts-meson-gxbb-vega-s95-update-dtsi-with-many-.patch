@@ -1,7 +1,7 @@
-From 7bcabb527d09dece1b28d5a79195684e2d9e8c33 Mon Sep 17 00:00:00 2001
+From d724c862a105e5921abf71275d1e250bb4331a3d Mon Sep 17 00:00:00 2001
 From: chewitt <github@chrishewitt.net>
 Date: Sat, 13 Apr 2019 06:18:39 +0000
-Subject: [PATCH 11/35] arm64: dts: meson-gxbb-vega-s95 update dtsi with many
+Subject: [PATCH 11/37] arm64: dts: meson-gxbb-vega-s95: update dtsi with many
  changes
 
 Signed-off-by: Christian Hewitt <christianshewitt@gmail.com>

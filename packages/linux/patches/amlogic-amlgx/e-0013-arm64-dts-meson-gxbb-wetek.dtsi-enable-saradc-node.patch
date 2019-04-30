@@ -1,7 +1,7 @@
-From 25947c9dab9a87d7ab388c30be65e0dba588b1fe Mon Sep 17 00:00:00 2001
+From 17bb4637c8f9a78cab585b9f0d55960784fb90ed Mon Sep 17 00:00:00 2001
 From: chewitt <github@chrishewitt.net>
 Date: Sat, 13 Apr 2019 06:58:59 +0000
-Subject: [PATCH 13/35] arm64: dts: meson-gxbb-wetek.dtsi enable saradc node
+Subject: [PATCH 13/37] arm64: dts: meson-gxbb-wetek.dtsi: enable saradc node
 
 Signed-off-by: Christian Hewitt <christianshewitt@gmail.com>
 ---

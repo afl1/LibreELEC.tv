@@ -1,5 +1,3 @@
-  # Configuration for u-boot
-    UBOOT_VERSION="vendor"
     DTB=meson-g12a-x96-max.dtb
 
   # Linux Kernel to use
@@ -11,6 +9,9 @@
   # OpenGL-ES implementation to use
     OPENGLES="libmali"
 
+  # Graphic drivers to use
+    GRAPHIC_DRIVERS=""
+
   # KODI Player implementation to use
     KODIPLAYER_DRIVER="$OPENGLES"
 
@@ -19,6 +20,3 @@
 
   # additional drivers to install
     ADDITIONAL_DRIVERS+=" mali-bifrost"
-
-  # additional packages to install:
-    ADDITIONAL_PACKAGES+=" aml_autoscript amlogic-boot-fip"

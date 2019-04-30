@@ -6,16 +6,8 @@
 mkdir -p "$RELEASE_DIR/3rdparty/bootloader"
   cp -a $(get_build_dir aml_autoscript)/* $RELEASE_DIR/3rdparty/bootloader
 
-  if [ -f "$ROOT/projects/$PROJECT/devices/$DEVICE/bootloader/boot.ini" ]; then
-    cp -a $ROOT/projects/$PROJECT/devices/$DEVICE/bootloader/boot.ini $RELEASE_DIR/3rdparty/bootloader
-  fi
-
-  if [ -f "$ROOT/projects/$PROJECT/devices/$DEVICE/bootloader/u-boot.bin" ]; then
-    cp -a $ROOT/projects/$PROJECT/devices/$DEVICE/bootloader/u-boot.bin $RELEASE_DIR/3rdparty/bootloader
-  fi
-
-  if [ -f "$ROOT/projects/$PROJECT/devices/$DEVICE/bootloader/u-boot.bin.sd.bin" ]; then
-    cp -a $ROOT/projects/$PROJECT/devices/$DEVICE/bootloader/u-boot.bin.sd.bin $RELEASE_DIR/3rdparty/bootloader
+  if find_file_path bootloader/${UBOOT_SYSTEM}.ini; then
+    cp -av ${FOUND_PATH} $RELEASE_DIR/3rdparty/bootloader/boot.ini
   fi
 
 mkdir -p "$RELEASE_DIR/3rdparty/bootloader/dtb"

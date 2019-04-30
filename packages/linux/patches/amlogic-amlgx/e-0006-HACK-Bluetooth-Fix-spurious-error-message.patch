@@ -1,7 +1,7 @@
 From e0f59e98b6603924e5b44a276a6939b7893c86e1 Mon Sep 17 00:00:00 2001
 From: Szymon Janc <szymon.janc@xxxxxxxxxxx>
 Date: Thu, 29 Mar 2018 11:41:17 +0200
-Subject: [PATCH 06/35] HACK: Bluetooth: Fix spurious error message
+Subject: [PATCH 06/37] HACK: Bluetooth: Fix spurious error message
 
 This message was debug message before 2064ee332e4c1b7495cf68b. Looks
 like it was changed by accident in that patch. This is causing some

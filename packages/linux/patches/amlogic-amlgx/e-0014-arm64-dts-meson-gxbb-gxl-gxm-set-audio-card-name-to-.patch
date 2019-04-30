@@ -1,7 +1,7 @@
-From e666ec0cc549db989b9bcd8432aaf191d1de625d Mon Sep 17 00:00:00 2001
+From 531f3e44038bf2881dfde13e54cd04327fa93a2e Mon Sep 17 00:00:00 2001
 From: chewitt <github@chrishewitt.net>
 Date: Sat, 13 Apr 2019 08:00:18 +0000
-Subject: [PATCH 14/35] arm64: dts: meson gxbb/gxl/gxm set audio card name to
+Subject: [PATCH 14/37] arm64: dts: meson gxbb/gxl/gxm: set audio card name to
  HDMI
 
 Signed-off-by: chewitt <github@chrishewitt.net>

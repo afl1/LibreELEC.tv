@@ -25,7 +25,7 @@
     BOOTLOADER="u-boot"
 
   # u-boot version to use (default)
-    UBOOT_VERSION="default"
+    UBOOT_VERSION="vendor"
 
   # Kernel target
     KERNEL_TARGET="Image"
@@ -35,10 +35,6 @@
 
   # Additional kernel make parameters 
     KERNEL_MAKE_EXTRACMD=""
-
-  # Kernel to use. values can be:
-  # default:  default mainline kernel
-    LINUX="amlogic-amlgx"
 
   # kernel serial console
     EXTRA_CMDLINE="console=ttyAML0,115200n8 console=tty0 earlycon"
@@ -63,9 +59,6 @@
   # OpenGL(X) implementation to use (no / mesa)
     OPENGL="no"
 
-  # OpenGL-ES implementation to use (no / bcm2835-driver / gpu-viv-bin-mx6q / opengl-meson)
-    OPENGLES="mesa"
-
   # include uvesafb support (yes / no)
     UVESAFB_SUPPORT="no"
 
@@ -75,26 +68,13 @@
   # Windowmanager to use (ratpoison / fluxbox / none)
     WINDOWMANAGER="none"
 
-  # Graphic drivers to use (all / i915,i965,r200,r300,r600,nvidia,nouveau)
-  # Space separated list is supported,
-  # e.g. GRAPHIC_DRIVERS="i915 i965 r300 r600 radeonsi nvidia nouveau"
-    GRAPHIC_DRIVERS="lima panfrost"
-
-  # KODI Player implementation to use (default / bcm2835-driver / libfslvpuwrap / libamcodec)
-    KODIPLAYER_DRIVER="$OPENGLES"
-
   # Modules to install in initramfs for early boot
     INITRAMFS_MODULES=""
 
   # additional drivers to install:
-  # for a list of additinoal drivers see packages/linux-drivers
-  # Space separated list is supported,
-  # e.g. ADDITIONAL_DRIVERS="DRIVER1 DRIVER2"
-    ADDITIONAL_DRIVERS="linux_openvfd wireguard"
+    ADDITIONAL_DRIVERS="linux_openvfd wireguard RTL8812AU"
 
   # additional Firmware to use (dvb-firmware, misc-firmware, wlan-firmware)
-  # Space separated list is supported,
-  # e.g. FIRMWARE="dvb-firmware misc-firmware wlan-firmware"
     FIRMWARE="brcmfmac_sdio-firmware meson-firmware qca-firmware"
 
   # build and install ATV IR remote support (yes / no)
@@ -113,14 +93,10 @@
     DRIVER_ADDONS_SUPPORT="no"
 
   # driver addons to install:
-  # for a list of additinoal drivers see packages/linux-driver-addons
-  # Space separated list is supported,
     DRIVER_ADDONS="crazycat dvb-latest"
 
   # additional packages to install:
-  # Space separated list is supported,
-  # e.g. ADDITIONAL_PACKAGES="PACKAGE1 PACKAGE2"
-    ADDITIONAL_PACKAGES="dtc"
+    ADDITIONAL_PACKAGES="aml_autoscript amlogic-boot-fip dtc"
 
   # use the kernel CEC framework for libcec (yes / no)
     CEC_FRAMEWORK_SUPPORT="yes"

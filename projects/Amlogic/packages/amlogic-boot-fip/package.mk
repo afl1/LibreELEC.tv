@@ -43,8 +43,8 @@ case "$UBOOT_SYSTEM" in
     PKG_SOURCE_DIR="u-boot-${PKG_VERSION}"
     ;;
   Odroid_N2)
-    PKG_VERSION="odroidn2-v2015.01"
-    PKG_SHA256="f3c07380d265e81c527b7c08c45e499c3d064694fc3092b83cb5ac6afc33ef77"
+    PKG_VERSION="7272dbb0b09cc3083edc85368b2ad947bfd210b8" # travis/odroidn2-25
+    PKG_SHA256="8ca576d88b31fdfe5b9eb5cdc2e5c6bc2d20c9a354799b8212ece4cc37dd4ddd"
     PKG_URL="https://github.com/hardkernel/u-boot/archive/${PKG_VERSION}.tar.gz"
     PKG_SOURCE_DIR="u-boot-${PKG_VERSION}"
     ;;

@@ -1,7 +1,7 @@
 From cc3775ba0310f38b41c3652bba082854554a7331 Mon Sep 17 00:00:00 2001
 From: chewitt <github@chrishewitt.net>
 Date: Sat, 13 Apr 2019 06:21:06 +0000
-Subject: [PATCH 07/35] WIP: hdmi patch
+Subject: [PATCH 07/37] WIP: hdmi patch
 
 No idea what this was added for, it needs to be reviewed by Neil
 

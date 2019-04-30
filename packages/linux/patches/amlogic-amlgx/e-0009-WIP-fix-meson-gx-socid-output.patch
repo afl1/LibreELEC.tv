@@ -1,7 +1,7 @@
 From 2dc6dc50676b849d7f1fed67f2a2a1f4d0a10fb1 Mon Sep 17 00:00:00 2001
 From: chewitt <github@chrishewitt.net>
 Date: Sat, 13 Apr 2019 06:33:07 +0000
-Subject: [PATCH 09/35] WIP: fix meson-gx-socid output
+Subject: [PATCH 09/37] WIP: fix meson-gx-socid output
 
 Signed-off-by: chewitt <github@chrishewitt.net>
 ---

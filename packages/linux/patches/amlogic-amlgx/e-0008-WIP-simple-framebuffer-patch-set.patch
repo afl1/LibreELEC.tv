@@ -1,7 +1,7 @@
 From f56ccdcf3d6c4507ad1290ce6df572715b48652a Mon Sep 17 00:00:00 2001
 From: chewitt <github@chrishewitt.net>
 Date: Sat, 13 Apr 2019 06:30:26 +0000
-Subject: [PATCH 08/35] WIP: simple framebuffer patch-set
+Subject: [PATCH 08/37] WIP: simple framebuffer patch-set
 
 Signed-off-by: chewitt <github@chrishewitt.net>
 ---
