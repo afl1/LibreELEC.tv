@@ -1,9 +1,9 @@
-# SPDX-License-Identifier: GPL-2.0-or-later
+# SPDX-License-Identifier: GPL-2.0
 # Copyright (C) 2016-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="dvb-latest"
-PKG_VERSION="bd2896dbe1969af199b9f0569d1c60b0ab2859ff"
-PKG_SHA256="00923e79db7b34fec4015cafc1390db388165b86e78564f340759f6da245824e"
+PKG_VERSION="c23276037794bae357fa8d23e3a4f11af9ad46e9"
+PKG_SHA256="c69d5c6af435887bd46d8da4816f724905e36fd7d080c8e1c437fbe4848ea813"
 PKG_LICENSE="GPL"
 PKG_SITE="http://git.linuxtv.org/media_build.git"
 PKG_URL="https://git.linuxtv.org/media_build.git/snapshot/${PKG_VERSION}.tar.gz"
@@ -19,13 +19,6 @@ PKG_ADDON_NAME="DVB drivers from the latest kernel"
 PKG_ADDON_TYPE="xbmc.service"
 PKG_ADDON_VERSION="${ADDON_VERSION}.${PKG_REV}"
 
-configure_package() {
-  if [ "$PROJECT" = "Amlogic" ]; then
-    PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET media_tree_aml"
-    PKG_NEED_UNPACK="$PKG_NEED_UNPACK media_tree_aml"
-  fi
-}
-
 pre_make_target() {
   export KERNEL_VER=$(get_module_dir)
   export LDFLAGS=""
@@ -34,23 +27,8 @@ pre_make_target() {
 make_target() {
   cp -RP $(get_build_dir media_tree)/* $PKG_BUILD/linux
 
-  if [ "$PROJECT" = "Amlogic" ]; then
-    cp -rfL $(get_build_dir media_tree_aml)/drivers/media/platform/meson/dvb $PKG_BUILD/linux/drivers/media/platform/meson/
-    rm $PKG_BUILD/linux/drivers/media/platform/qcom/venus/*.c
-    rm $PKG_BUILD/linux/drivers/media/platform/qcom/venus/*.h
-
-    # compile modules
-    echo "obj-y += dvb/" >> "$PKG_BUILD/linux/drivers/media/platform/meson/Makefile"
-    echo 'source "drivers/media/platform/meson/dvb/Kconfig"' >>  "$PKG_BUILD/linux/drivers/media/platform/Kconfig"
-  fi
-
   # make config all
   kernel_make VER=$KERNEL_VER SRCDIR=$(kernel_path) allyesconfig
-
-  if [ "$PROJECT" = "Amlogic" ]; then
-    sed -e 's/CONFIG_VIDEO_SAA7146_VV=m/# CONFIG_VIDEO_SAA7146_VV is not set/g' -i $PKG_BUILD/v4l/.config
-    sed -e 's/CONFIG_VIDEO_QCOM_VENUS=m/# CONFIG_VIDEO_QCOM_VENUS is not set/g' -i $PKG_BUILD/v4l/.config
-  fi
 
   kernel_make VER=$KERNEL_VER SRCDIR=$(kernel_path)
 }

@@ -8,6 +8,9 @@
           <visible>true</visible>
           <default>0192001080060.00000pstd</default>
         </setting>
+        <setting id="videoscreen.limitedrange">
+          <visible>false</visible>
+        </setting>
         <setting id="videoscreen.limitguisize">
           <visible>false</visible>
           <default>3</default>

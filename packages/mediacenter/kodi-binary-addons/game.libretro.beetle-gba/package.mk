@@ -1,10 +1,10 @@
-# SPDX-License-Identifier: GPL-2.0-or-later
+# SPDX-License-Identifier: GPL-2.0
 # Copyright (C) 2016-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="game.libretro.beetle-gba"
-PKG_VERSION="06dc6e3947dc505d3ed94c770388fe7f3026b61f"
-PKG_SHA256="4069c3f23de9120e48e82f688a1eb5d1eb22afbcfd0709dce8fb4a5092447514"
-PKG_REV="112"
+PKG_VERSION="0.9.36.2-Leia"
+PKG_SHA256="a6132503ee86257b4c5f120b1dca3ae274be5d00f9fe9243a66796e5541551f4"
+PKG_REV="114"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/kodi-game/game.libretro.beetle-gba"

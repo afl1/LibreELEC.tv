@@ -1,0 +1,127 @@
+From f56ccdcf3d6c4507ad1290ce6df572715b48652a Mon Sep 17 00:00:00 2001
+From: chewitt <github@chrishewitt.net>
+Date: Sat, 13 Apr 2019 06:30:26 +0000
+Subject: [PATCH 08/37] WIP: simple framebuffer patch-set
+
+Signed-off-by: chewitt <github@chrishewitt.net>
+---
+ .../display/simple-framebuffer-meson.txt      | 33 +++++++++++++++++++
+ arch/arm64/boot/dts/amlogic/meson-gxbb.dtsi   | 25 ++++++++++++++
+ arch/arm64/boot/dts/amlogic/meson-gxl.dtsi    | 25 ++++++++++++++
+ 3 files changed, 83 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/display/simple-framebuffer-meson.txt
+
+diff --git a/Documentation/devicetree/bindings/display/simple-framebuffer-meson.txt b/Documentation/devicetree/bindings/display/simple-framebuffer-meson.txt
+new file mode 100644
+index 000000000000..122a5c005cd9
+--- /dev/null
++++ b/Documentation/devicetree/bindings/display/simple-framebuffer-meson.txt
+@@ -0,0 +1,33 @@
++Meson specific Simple Framebuffer bindings
++
++This binding documents meson specific extensions to the simple-framebuffer
++bindings. The meson simplefb u-boot code relies on the devicetree containing
++pre-populated simplefb nodes.
++
++These extensions are intended so that u-boot can select the right node based
++on which pipeline is being used. As such they are solely intended for
++firmware / bootloader use, and the OS should ignore them.
++
++Required properties:
++- compatible: "amlogic,simple-framebuffer"
++- amlogic,pipeline, one of:
++  "vpu-cvbs"
++  "vpu-hdmi"
++
++Example:
++
++chosen {
++	#address-cells = <2>;
++	#size-cells = <2>;
++	ranges;
++
++	framebuffer@0 {
++		compatible = "amlogic,simple-framebuffer",
++			     "simple-framebuffer";
++		amlogic,pipeline = "vpu-hdmi";
++		clocks = <&clkc CLKID_HDMI_PCLK>,
++			 <&clkc CLKID_CLK81>,
++			 <&clkc CLKID_GCLK_VENCI_INT0>;
++		power-domains = <&pwrc_vpu>;
++	};
++};
+diff --git a/arch/arm64/boot/dts/amlogic/meson-gxbb.dtsi b/arch/arm64/boot/dts/amlogic/meson-gxbb.dtsi
+index 6a847efd4b65..473a9fe91739 100644
+--- a/arch/arm64/boot/dts/amlogic/meson-gxbb.dtsi
++++ b/arch/arm64/boot/dts/amlogic/meson-gxbb.dtsi
+@@ -13,6 +13,31 @@
+ / {
+ 	compatible = "amlogic,meson-gxbb";
+ 
++	chosen {
++		#address-cells = <2>;
++		#size-cells = <2>;
++		ranges;
++
++		framebuffer@0 {
++			compatible = "amlogic,simple-framebuffer",
++				     "simple-framebuffer";
++			amlogic,pipeline = "vpu-cvbs";
++			power-domains = <&pwrc_vpu>;
++			status = "disabled";
++		};
++
++		framebuffer@1 {
++			compatible = "amlogic,simple-framebuffer",
++				     "simple-framebuffer";
++			amlogic,pipeline = "vpu-hdmi";
++			clocks = <&clkc CLKID_HDMI_PCLK>,
++				 <&clkc CLKID_CLK81>,
++				 <&clkc CLKID_GCLK_VENCI_INT0>;
++			power-domains = <&pwrc_vpu>;
++			status = "disabled";
++		};
++	};
++
+ 	soc {
+ 		usb0_phy: phy@c0000000 {
+ 			compatible = "amlogic,meson-gxbb-usb2-phy";
+diff --git a/arch/arm64/boot/dts/amlogic/meson-gxl.dtsi b/arch/arm64/boot/dts/amlogic/meson-gxl.dtsi
+index 6f5764fd5e89..e6e256e79052 100644
+--- a/arch/arm64/boot/dts/amlogic/meson-gxl.dtsi
++++ b/arch/arm64/boot/dts/amlogic/meson-gxl.dtsi
+@@ -13,6 +13,31 @@
+ / {
+ 	compatible = "amlogic,meson-gxl";
+ 
++	chosen {
++		#address-cells = <2>;
++		#size-cells = <2>;
++		ranges;
++
++		framebuffer@0 {
++			compatible = "amlogic,simple-framebuffer",
++				     "simple-framebuffer";
++			amlogic,pipeline = "vpu-cvbs";
++			power-domains = <&pwrc_vpu>;
++			status = "disabled";
++		};
++
++		framebuffer@1 {
++			compatible = "amlogic,simple-framebuffer",
++				     "simple-framebuffer";
++			amlogic,pipeline = "vpu-hdmi";
++			clocks = <&clkc CLKID_HDMI_PCLK>,
++				 <&clkc CLKID_CLK81>,
++				 <&clkc CLKID_GCLK_VENCI_INT0>;
++			power-domains = <&pwrc_vpu>;
++			status = "disabled";
++		};
++	};
++
+ 	soc {
+ 		usb0: usb@c9000000 {
+ 			status = "disabled";
+-- 
+2.17.1
+

@@ -21,16 +21,23 @@
         ;;
     esac
 
+    LINUX="${LINUX:-rockchip-4.4}"
+#    LINUX="${LINUX:-rockchip-5.x}"
+
   # Kernel target
     KERNEL_TARGET="Image"
 
   # Additional kernel make parameters (for example to specify the u-boot loadaddress)
     KERNEL_MAKE_EXTRACMD=""
-    KERNEL_MAKE_EXTRACMD+=" rockchip/rk3399-khadas-edge.dtb"
     KERNEL_MAKE_EXTRACMD+=" rockchip/rk3399-rock960.dtb"
     KERNEL_MAKE_EXTRACMD+=" rockchip/rk3399-rock-pi-4.dtb"
     KERNEL_MAKE_EXTRACMD+=" rockchip/rk3399-rockpro64.dtb"
     KERNEL_MAKE_EXTRACMD+=" rockchip/rk3399-sapphire.dtb"
+    KERNEL_MAKE_EXTRACMD+=" rockchip/rk3399-khadas-edge.dtb"
+
+    if [ "$LINUX" = "rockchip-4.4" ]; then
+      KERNEL_MAKE_EXTRACMD+=" rockchip/rk3399-magicsee-n6-max.dtb"
+    fi
 
   # Mali GPU family
     MALI_FAMILY="t860"
@@ -44,3 +51,7 @@
   # Space separated list is supported,
   # e.g. ADDITIONAL_PACKAGES="PACKAGE1 PACKAGE2"
     ADDITIONAL_PACKAGES+=" rockchip-autoscript"
+
+    if [ "$LINUX" != "rockchip-4.4" ]; then
+      ADDITIONAL_DRIVERS="mali-midgard-rockchip"
+    fi

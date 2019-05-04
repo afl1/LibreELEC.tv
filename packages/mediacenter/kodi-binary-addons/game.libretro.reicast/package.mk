@@ -1,10 +1,10 @@
-# SPDX-License-Identifier: GPL-2.0-or-later
+# SPDX-License-Identifier: GPL-2.0
 # Copyright (C) 2016-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="game.libretro.reicast"
-PKG_VERSION="da758eabc2ac8df92d5dc4688772c7a40d58904c"
-PKG_SHA256="c07d72c50796459611088b44ce4751daaf043b0dae2d4fee7fa008634acdb96a"
-PKG_REV="113"
+PKG_VERSION="0.1.0.11-Leia"
+PKG_SHA256="ddc4d7a025643642ac0d4f33d4d1d1693e6491df2d34d733b7a47319640060c3"
+PKG_REV="115"
 # no openGL suport in retroplayer yet
 PKG_ARCH="none"
 PKG_LICENSE="GPL"

@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: GPL-2.0-or-later
+# SPDX-License-Identifier: GPL-2.0
 # Copyright (C) 2016-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="amlogic-boot-fip"
@@ -9,15 +9,16 @@ PKG_SECTION="tools"
 PKG_SHORTDESC="Amlogic Boot Firmware"
 PKG_LONGDESC="Amlogic Boot Firmare files used to wrap U-Boot to provide a functional boot blob"
 PKG_TOOLCHAIN="manual"
+PKG_STAMP="$UBOOT_SYSTEM"
 
-case "$DEVICE" in
+case "$UBOOT_SYSTEM" in
   P212)
     PKG_VERSION="20170606"
     PKG_SHA256="957c96037bcd792a4139cc33eded2f006d55a82c0c56ae69ef43bdcb76a255e2"
     PKG_URL="https://github.com/BayLibre/u-boot/releases/download/v2017.11-libretech-cc/p212_fip_${PKG_VERSION}.tar.gz"
     PKG_SOURCE_DIR="fip"
     ;;
-  LaFrite|LePotato*)
+  LePotato)
     PKG_VERSION="20170606"
     PKG_SHA256="957c96037bcd792a4139cc33eded2f006d55a82c0c56ae69ef43bdcb76a255e2"
     PKG_URL="https://github.com/BayLibre/u-boot/releases/download/v2017.11-libretech-cc/libretech-cc_fip_${PKG_VERSION}.tar.gz"
@@ -38,6 +39,12 @@ case "$DEVICE" in
   Odroid_C2)
     PKG_VERSION="s905_6.0.1_v3.7"
     PKG_SHA256="3ee700fd3a6439997060ac6d21217b0adba3a801876707fae70988f8ce6c3fef"
+    PKG_URL="https://github.com/hardkernel/u-boot/archive/${PKG_VERSION}.tar.gz"
+    PKG_SOURCE_DIR="u-boot-${PKG_VERSION}"
+    ;;
+  Odroid_N2)
+    PKG_VERSION="7272dbb0b09cc3083edc85368b2ad947bfd210b8" # travis/odroidn2-25
+    PKG_SHA256="8ca576d88b31fdfe5b9eb5cdc2e5c6bc2d20c9a354799b8212ece4cc37dd4ddd"
     PKG_URL="https://github.com/hardkernel/u-boot/archive/${PKG_VERSION}.tar.gz"
     PKG_SOURCE_DIR="u-boot-${PKG_VERSION}"
     ;;

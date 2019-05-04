@@ -1,10 +1,10 @@
 #!/bin/bash
 
-# SPDX-License-Identifier: GPL-2.0-or-later
+# SPDX-License-Identifier: GPL-2.0
 # Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv)
 
 if [ -f  .git/config ]; then
-  DIR="/home/chewitt/build/LibreELEC.chewitt"
+  DIR=$(pwd)
 else
   echo "not in git root folder, exiting.."
   exit 1
@@ -12,111 +12,105 @@ fi
 
 do_narmstrong(){
   # DRM + AUDIO PATCHES
-  rm projects/Amlogic/patches/linux/a-* 2&>/dev/null
+  rm $PATCHES/a-* 2&>/dev/null
   cd ~/linux.narmstrong
   rm *.patch 2&>/dev/null
-  git fetch origin linux-4.20-le-amlogic-gx
-  git checkout linux-4.20-le-amlogic-gx
-  git reset --hard origin/linux-4.20-le-amlogic-gx
-  git format-patch --start-number 0001 8fe28cb58bcb235034b64cbbb7550a8a43fd88be # 4.20.0
+  git checkout linux-5.0-le-amlogic-gx
+  git fetch origin linux-5.0-le-amlogic-gx
+  git reset --hard origin/linux-5.0-le-amlogic-gx
+  git format-patch --start-number 0001 a3b22b9f11d9fbc48b0291ea92259a5a810e9438 # 5.0-rc7
   for filename in *.patch; do mv "$filename" "a-$filename"; done;
-  mv *.patch $DIR/projects/Amlogic/patches/linux/
+  mv *.patch $DIR/$PATCHES/
 }
 
-#do_upstream(){
-  # LINUX PATCHES
-#  rm projects/Amlogic/patches/linux/b-* 2&>/dev/null
-#  cd ~/linux.narmstrong
-#  rm *.patch 2&>/dev/null
-#  git checkout linux-4.19-le-amlogic-gx
-#  git fetch origin linux-4.19-le-amlogic-gx
-#  git reset --hard origin/linux-4.19-le-amlogic-gx
-#  git format-patch --start-number 0001 6bf4ca7fbc85d80446ac01c0d1d77db4d91a6d84 #4.19-rc5
-  #rm 0001*
-  #rm 0003*
-#  for filename in *.patch; do mv "$filename" "b-$filename"; done;
-#  mv *.patch $DIR/projects/Amlogic/patches/linux/
-#}
-
 do_elyotna(){
-  # VDEC PATCHES
-  rm projects/Amlogic/patches/linux/b-* 2&>/dev/null
+  # V4L2 VDEC PATCHES
+  rm $PATCHES/b-* 2&>/dev/null
   cd ~/linux.elyotna
   rm *.patch 2&>/dev/null
-  git checkout 4.20/v4l2-m2m-vp9
-  git fetch origin 4.20/v4l2-m2m-vp9
-  git reset --hard origin/4.20/v4l2-m2m-vp9
-  git format-patch --start-number 0001 8fe28cb58bcb235034b64cbbb7550a8a43fd88be # 4.20.0
+  git checkout 5.0/v4l2-m2m-pr
+  git fetch origin 5.0/v4l2-m2m-pr
+  git reset --hard origin/5.0/v4l2-m2m-pr
+  git format-patch --start-number 0001 8834f5600cf3c8db365e18a3d5cac2c2780c81e5 # 5.0-rc5
   for filename in *.patch; do mv "$filename" "b-$filename"; done;
-  mv *.patch $DIR/projects/Amlogic/patches/linux/
-  cd $DIR
-  git checkout projects/Amlogic/patches/linux/b-0005-arm64-dts-meson-add-vdec-entries.patch
+  mv *.patch $DIR/$PATCHES/
+#  cd $DIR
+#  git checkout projects/Amlogic/patches/linux/b-0005-arm64-dts-meson-add-vdec-entries.patch
 }
 
 do_kwiboo(){
-  # HDMI AUDIO PATCHES
-  rm projects/Amlogic/patches/linux/c-* 2&>/dev/null
+  # DW-HDMI AUDIO PATCHES
+  rm $PATCHES/c-* 2&>/dev/null
   cd ~/linux.kwiboo
   rm *.patch 2&>/dev/null
-  git checkout allwinner-4.20-audio
   git fetch origin allwinner-4.20-audio
+  git checkout allwinner-4.20-audio
   git reset --hard origin/allwinner-4.20-audio
   git format-patch --start-number 0001 8fe28cb58bcb235034b64cbbb7550a8a43fd88be # 4.20.0
   for filename in *.patch; do mv "$filename" "c-$filename"; done;
-  mv *.patch $DIR/projects/Amlogic/patches/linux/
+  mv *.patch $DIR/$PATCHES/
 }
 
 do_erstrom(){
-  # ath10k-sdio PATCHES
-  rm projects/Amlogic/patches/linux/d-* 2&>/dev/null
+  # ATH10K-SDIO PATCHES
+  rm $PATCHES/d-* 2&>/dev/null
   cd ~/linux.erstrom
   rm *.patch 2&>/dev/null
-  git checkout master
   git fetch origin master
+  git checkout master
   git reset --hard origin/master
-  git format-patch --start-number 0001 94f742967c57a997ab239846be5eb48f5b1458e3 #4.19.0
+  git format-patch --start-number 0001 9050858c21d0ec828261dec467136f4555604c05 # 5.1-rc4
   for filename in *.patch; do mv "$filename" "d-$filename"; done;
-  mv *.patch $DIR/projects/Amlogic/patches/linux/
+  mv *.patch $DIR/$PATCHES/
 }
 
-do_lima(){
-  # LIMA DRIVER
-  rm projects/Amlogic/patches/linux/e-* 2&>/dev/null
-  cd ~/linux.lima
+do_amlgx(){
+  # AMLGX KERNEL PATCHES
+  rm $PATCHES/e-* 2&>/dev/null
+  cd ~/linux.chewitt
   rm *.patch 2&>/dev/null
-  git fetch origin lima-4.20
-  git checkout lima-4.20
-  git reset --hard origin/lima-4.20
-  git format-patch --start-number 0001 8fe28cb58bcb235034b64cbbb7550a8a43fd88be #4.20.0
+  git fetch origin linux-5.1-amlgx
+  git checkout linux-5.1-amlgx
+  git reset --hard origin/linux-5.1-amlgx
+  git format-patch --start-number 0001 ebd66bd23893c7d96378ca04f8ec32958aa9fdb1 #5.1-rc1
   for filename in *.patch; do mv "$filename" "e-$filename"; done;
-  mv *.patch $DIR/projects/Amlogic/patches/linux/
-
-  cd $DIR
-
-  # LIMA MESA PATCHES
-  rm packages/graphics/mesa/a-* 2&>/dev/null
-  cd ~/mesa.lima
-  rm *.patch 2&>/dev/null
-  git fetch origin lima-18.3
-  git checkout lima-18.3
-  git reset --hard origin/lima-18.3
-  git format-patch --start-number 0001 d81beab96afb403915805435fd4b810a00291b99 #18.3.0
-  for filename in *.patch; do mv "$filename" "a-$filename"; done;
-  mv *.patch $DIR/packages/graphics/mesa/patches/
+  mv *.patch $DIR/$PATCHES/
 }
 
-do_panfrost(){
-  # PANFROST MESA PATCHES
-  rm packages/graphics/mesa/c-* 2&>/dev/null
-  cd ~/mesa.narmstrong
+do_amlg12(){
+  # AMLG12 KERNEL PATCHES
+  rm $PATCHES/e-* 2&>/dev/null
+  cd ~/linux.chewitt
   rm *.patch 2&>/dev/null
-  git fetch origin lima-panfrost-18.3
-  git checkout lima-panfrost-18.3
-  git reset --hard origin/lima-panfrost-18.3
-  git format-patch --start-number 0001 d81beab96afb403915805435fd4b810a00291b99 #18.3.0
-  for filename in *.patch; do mv "$filename" "c-$filename"; done;
-  mv *.patch $DIR/packages/graphics/mesa/patches/
+  git fetch origin linux-5.1-amlg12
+  git checkout linux-5.1-amlg12
+  git reset --hard origin/linux-5.1-amlg12
+  git format-patch --start-number 0001 4d1e213094d23f307013042077f3cde7d3423ffc #5.1-rc1
+  for filename in *.patch; do mv "$filename" "e-$filename"; done;
+  mv *.patch $DIR/$PATCHES/
 }
+
+do_ffmpeg(){
+  # FFMPEG STATEFUL HWACCELL
+  rm project/Amlogic/patches/ffmpeg/ffmpeg-hwaccel-* 2&>/dev/null
+  cd ~/ffmpeg.lrusak
+  rm *.patch 2&>/dev/null
+  git fetch origin v4l2-request-hwaccel
+  git checkout v4l2-request-hwaccel
+  git reset --hard origin/v4l2-request-hwaccel
+  git format-patch --start-number 0001 21c13d04e624aabc1c78998f910782db673070e6 # 4.0.3-Leia-18.2
+  for filename in *.patch; do mv "$filename" "ffmpeg-hwaccel-$filename"; done;
+  mv *.patch $DIR/projects/Amlogic/patches/ffmpeg/
+}
+
+case $2 in
+  amlg12)
+    PATCHES="packages/linux/patches/amlogic-g12"
+    ;;
+  amlgx|*)
+    PATCHES="packages/linux/patches/amlogic-amlgx"
+    ;;
+esac
 
 case $1 in
   narmstrong)
@@ -134,18 +128,18 @@ case $1 in
   erstrom|ath10k)
     do_erstrom
     ;;
-  lima)
-    do_lima
+  amlgx)
+    do_amlgx
     ;;
-  panfrost)
-    do_panfrost
+  amlg12)
+    do_amlg12
     ;;
-  all|*)
-    do_narmstrong
-    do_upstream
-    do_elyotna
-    do_kwiboo
-    do_erstrom
+  ffmpeg)
+    do_ffmpeg
+    ;;
+  *)
+    echo "error: nothing selected!"
+    ;;
 esac
 
 cd $DIR

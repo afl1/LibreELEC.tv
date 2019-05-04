@@ -1,9 +1,9 @@
-# SPDX-License-Identifier: GPL-2.0-or-later
+# SPDX-License-Identifier: GPL-2.0
 # Copyright (C) 2016-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="kernel-firmware"
-PKG_VERSION="0f22c8527439eaaf5c3fcf87b31c89445b6fa84d"
-PKG_SHA256="ac8edc72ea744c2992dbdd231ccb385c60a0027f9796be468ba9104f22d76c62"
+PKG_VERSION="b0d9583f9528890dfcb28d338fe70b50371084bf"
+PKG_SHA256="6ce9bdbe9df28756e8a633c5d6a2c8ced3597e32b75f6897cbc4f576851f611a"
 PKG_LICENSE="other"
 PKG_SITE="https://git.kernel.org/pub/scm/linux/kernel/git/firmware/linux-firmware.git/"
 PKG_URL="https://git.kernel.org/pub/scm/linux/kernel/git/firmware/linux-firmware.git/snapshot/$PKG_VERSION.tar.gz"

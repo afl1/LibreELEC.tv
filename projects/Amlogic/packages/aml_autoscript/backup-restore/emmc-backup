@@ -1,0 +1,79 @@
+#!/bin/sh
+
+# SPDX-License-Identifier: GPL-2.0-or-later
+# Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv)
+
+IMAGE="emmc-backup.img.gz"
+
+TARGET="$1"
+BACKUP="$2"
+
+do_unmount(){
+  MOUNTS=$(grep $TARGET /proc/mounts | awk '{print $1}')
+  for mount in $MOUNTS; do
+    echo "INFO: unmounting $mount"
+    umount "$MOUNTS"
+    sleep 2
+  done
+}
+
+do_sync(){
+  partprobe "$TARGET"
+  sync
+}
+
+do_checksource(){
+ # check it's a valid emmc block device
+}
+
+do_checkdest(){
+ # 
+}
+
+do_backup(){
+  if [ -z "$EMMC" ]; then
+    EMMC="/dev/mmcblk1"
+  else
+
+
+if [ "$OUTDIR" = "" ]
+then
+    OUTDIR="/storage/backup/ddbr"
+    [ ! -d $OUTDIR ] && mkdir -p $OUTDIR
+else
+    if [ ! -d "$OUTDIR" ] ; then
+        echo " PROGRAM EXITED DUE TO ERROR: NO DIR $OUTDIR !!!"
+        exit 1
+    fi
+fi
+
+dd if=$emmc | gzip > $OUTDIR/$image.gz
+
+echo "Done! Full backup completed."
+
+
+do_restore(){
+  if [ -z "$BACKUPDIR" ]; then
+    BACKUPDIR="/storage/backup"
+  elif [ ! -d "$BACKUPDIR" ]; then
+    echo "ERROR: Path is not a valid directory, aborting!"
+    exit 1
+  fi
+
+if [ -z "$BACKUPSRC" ]; then
+  EMMC="/dev/mmcblk1"
+elif [ ! -e "$EMMC" ]; then
+  echo "ERROR: eMMC device not found, aborting!"
+  exit 1
+fi
+
+if [ ! -f "$BACKUPDIR/$IMAGE" ]; then
+  echo "ERROR: $IMAGE not found, aborting!"
+  exit 1
+fi
+
+gunzip -c $BACKUPDIR/$IMAGE | dd of=$EMMC
+
+echo "INFO: Restore completed!"
+(poweroff)&
+exit 0

@@ -11,6 +11,7 @@ PKG_DEPENDS_INIT="toolchain"
 PKG_NEED_UNPACK="$LINUX_DEPENDS"
 PKG_LONGDESC="This package contains a precompiled kernel image and the modules."
 PKG_IS_KERNEL_PKG="yes"
+PKG_STAMP="$KERNEL_TARGET $KERNEL_MAKE_EXTRACMD $KERNEL_UBOOT_EXTRA_TARGET"
 
 PKG_PATCH_DIRS="$LINUX"
 
@@ -30,28 +31,21 @@ case "$LINUX" in
     PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET aml-dtbtools:host u-boot-tools-aml:host"
     PKG_BUILD_PERF="no"
     ;;
-  amlogic-s805)
-    PKG_VERSION="dbc3c7eb1d562eec234dac5f449b8fa89fc6a130"
-    PKG_URL="https://github.com/150balbes/Amlogic_s8xx-kernel/archive/$PKG_VERSION.tar.gz"
-    PKG_SOURCE_NAME="Amlogic_s8xx-kernel-$PKG_VERSION.tar.gz"
-    PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET aml-dtbtools:host u-boot-tools-aml:host"
-    PKG_BUILD_PERF="no"
-    ;;
-  amlogic-3.14)
-    PKG_VERSION="6d8fbb4ee61a7779ac57b5961e076f0c63ff8b65"
-    PKG_SHA256="ef05c88779c893f92e92e5315d0e5396f34c32289726c301fae7ffe8c4214227"
-    PKG_URL="https://github.com/LibreELEC/linux-amlogic/archive/$PKG_VERSION.tar.gz"
-    PKG_SOURCE_NAME="linux-$LINUX-$PKG_VERSION.tar.gz"
-    PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET aml-dtbtools:host"
-    PKG_BUILD_PERF="no"
-    ;;
-  amlogic-mainline)
-    PKG_VERSION="7f600870eca5a3b1ad58afe78098613d35b6466e" # 4.20.10
-    PKG_SHA256=""
-    PKG_URL="https://github.com/torvalds/linux/archive/$PKG_VERSION.tar.gz"
+  amlogic-amlgx)
+    PKG_VERSION="e167c22f8b3249e881c47912e7bd78184d1eb98e" # 5.1-rc1
+    PKG_SHA256="32df47cffba1b230bf0616f274f75d5e677672780ad0c443cf11e0c16b04ee4f"
+    PKG_URL="https://github.com/superna9999/linux/archive/$PKG_VERSION.tar.gz"
     PKG_SOURCE_DIR="$PKG_NAME-$PKG_VERSION*"
-    PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET u-boot-tools-aml:host"
-    PKG_PATCH_DIRS="default"
+    PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET u-boot"
+    PKG_PATCH_DIRS="default amlogic-amlgx"
+    ;;
+  amlogic-g12)
+    PKG_VERSION="cc0aab20a38771171c9d12d2dc26d6acfaa1aa00" # v5.1-rc1
+    PKG_SHA256="9233bb779c8c2a232d0c8bfc4d0aefaf7b62a777965e3a005706490bc47bf311"
+    PKG_URL="https://gitlab.com/superna9999/linux/-/archive/$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.gz"
+    PKG_SOURCE_DIR="$PKG_NAME-$PKG_VERSION*"
+    PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET u-boot"
+    PKG_PATCH_DIRS="default amlogic-g12"
     ;;
   rockchip-4.4)
     PKG_VERSION="aa8bacf821e5c8ae6dd8cae8d64011c741659945"
@@ -59,32 +53,31 @@ case "$LINUX" in
     PKG_URL="https://github.com/rockchip-linux/kernel/archive/$PKG_VERSION.tar.gz"
     PKG_SOURCE_NAME="linux-$LINUX-$PKG_VERSION.tar.gz"
     ;;
+  rockchip-5.x)
+    PKG_VERSION="5.0.7"
+    PKG_SHA256="16e177662b9fc7255bfc51018513979f6effcbe52e459c543aa83a5b15ef54ec"
+    PKG_URL="https://www.kernel.org/pub/linux/kernel/v5.x/$PKG_NAME-$PKG_VERSION.tar.xz"
+    PKG_SOURCE_NAME="linux-$LINUX-$PKG_VERSION.tar.gz"
+    ;;
   raspberrypi)
-    PKG_VERSION="5c4a6441f890845472a698e35c8df995804e06e2" # 4.19.17
-    PKG_SHA256="58eac16e603edfd106993ae057bcc13adf3f8ffce609172f404144696edd7221"
+    PKG_VERSION="75b821b12af48026ca25614cd8968da26f861964" # 5.0.7
+    PKG_SHA256="8448e36fdd7ed4c4433a5a47d7136753dc5b11b7a1c9830889fb82517f22a547"
     PKG_URL="https://github.com/raspberrypi/linux/archive/$PKG_VERSION.tar.gz"
     PKG_SOURCE_NAME="linux-$LINUX-$PKG_VERSION.tar.gz"
     ;;
   *)
-    PKG_VERSION="4.19.17"
-    PKG_SHA256="872d92a17a2d252ccd6334503bc8f67eebceeb99cb822a77f5c72b936f2ccb59"
-    PKG_URL="https://www.kernel.org/pub/linux/kernel/v4.x/$PKG_NAME-$PKG_VERSION.tar.xz"
+    PKG_VERSION="5.0.7"
+    PKG_SHA256="16e177662b9fc7255bfc51018513979f6effcbe52e459c543aa83a5b15ef54ec"
+    PKG_URL="https://www.kernel.org/pub/linux/kernel/v5.x/$PKG_NAME-$PKG_VERSION.tar.xz"
     PKG_PATCH_DIRS="default"
     ;;
 esac
 
 PKG_KERNEL_CFG_FILE=$(kernel_config_path)
 
-configure_package() {
-  if [ "$PROJECT" = "Amlogic" ]; then
-    PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET media_tree_aml"
-    PKG_NEED_UNPACK="$PKG_NEED_UNPACK media_tree_aml"
-  fi
-}
-
-if [ -n "$KERNEL_LINARO_TOOLCHAIN" ]; then
-  PKG_DEPENDS_HOST="$PKG_DEPENDS_HOST gcc-linaro-$KERNEL_LINARO_TOOLCHAIN:host"
-  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET gcc-linaro-$KERNEL_LINARO_TOOLCHAIN:host"
+if [ -n "$KERNEL_TOOLCHAIN" ]; then
+  PKG_DEPENDS_HOST="$PKG_DEPENDS_HOST gcc-arm-$KERNEL_TOOLCHAIN:host"
+  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET gcc-arm-$KERNEL_TOOLCHAIN:host"
   HEADERS_ARCH=$TARGET_ARCH
 fi
 
@@ -135,11 +128,6 @@ post_patch() {
     sed -i -e "s|^CONFIG_ISCSI_IBFT=.*$|# CONFIG_ISCSI_IBFT is not set|" $PKG_BUILD/.config
   fi
 
-  # disable lima support if 'meson' not enabled
-  if [ ! "$GRAPHIC_DRIVERS" = meson ]; then
-    sed -i -e "s|^CONFIG_DRM_LIMA=.*$|# CONFIG_DRM_LIMA is not set|" $PKG_BUILD/.config
-  fi
-
   # install extra dts files
   for f in $PROJECT_DIR/$PROJECT/config/*-overlay.dts; do
     [ -f "$f" ] && cp -v $f $PKG_BUILD/arch/$TARGET_KERNEL_ARCH/boot/dts/overlays || true
@@ -177,12 +165,6 @@ makeinstall_host() {
 }
 
 pre_make_target() {
-  if [ "$PROJECT" = "Amlogic" ]; then
-    cp -rL $(get_build_dir media_tree_aml)/drivers/media/platform/meson/dvb $PKG_BUILD/drivers/media/platform/meson/
-    echo "obj-y += dvb/" >> "$PKG_BUILD/drivers/media/platform/meson/Makefile"
-    echo 'source "drivers/media/platform/meson/dvb/Kconfig"' >>  "$PKG_BUILD/drivers/media/platform/Kconfig"
-  fi
-
   if [ "$TARGET_ARCH" = "x86_64" ]; then
     # copy some extra firmware to linux tree
     mkdir -p $PKG_BUILD/external-firmware
@@ -216,9 +198,6 @@ make_target() {
         x86_64)
           PERF_BUILD_ARGS="ARCH=x86"
           ;;
-        aarch64)
-          PERF_BUILD_ARGS="ARCH=arm64"
-          ;;
         *)
           PERF_BUILD_ARGS="ARCH=$TARGET_ARCH"
           ;;
@@ -233,8 +212,6 @@ make_target() {
       NO_LIBAUDIT=1 \
       NO_LZMA=1 \
       NO_SDT=1 \
-      LDFLAGS="$LDFLAGS -ldw -ldwfl -lebl -lelf -ldl -lz" \
-      EXTRA_PERFLIBS="-lebl" \
       CROSS_COMPILE="$TARGET_PREFIX" \
       JOBS="$CONCURRENCY_MAKE_LEVEL" \
         make $PERF_BUILD_ARGS
@@ -252,6 +229,13 @@ make_target() {
     for extra_target in "$KERNEL_UBOOT_EXTRA_TARGET"; do
       kernel_make $extra_target
     done
+  fi
+
+  # arm64 target does not support creating uImage.
+  # Build Image first, then wrap it using u-boot's mkimage.
+  if [[ "$TARGET_KERNEL_ARCH" == "arm64" && "$KERNEL_TARGET" == uImage* ]]; then
+    KERNEL_UIMAGE_TARGET="$KERNEL_TARGET"
+    KERNEL_TARGET="${KERNEL_TARGET/uImage/Image}"
   fi
 
   # the modules target is required to get a proper Module.symvers
@@ -278,6 +262,19 @@ make_target() {
 
     mv -f arch/$TARGET_KERNEL_ARCH/boot/boot.img arch/$TARGET_KERNEL_ARCH/boot/$KERNEL_TARGET
 
+  fi
+
+  if [ -n "$KERNEL_UIMAGE_TARGET" ] ; then
+    KERNEL_UIMAGE_COMP=${KERNEL_UIMAGE_TARGET:7}
+    KERNEL_UIMAGE_COMP=${KERNEL_UIMAGE_COMP:-none}
+    mkimage -A $TARGET_KERNEL_ARCH \
+            -O linux \
+            -T kernel \
+            -C $KERNEL_UIMAGE_COMP \
+            -a $KERNEL_UIMAGE_LOADADDR \
+            -e $KERNEL_UIMAGE_ENTRYADDR \
+            -d arch/$TARGET_KERNEL_ARCH/boot/$KERNEL_TARGET \
+               arch/$TARGET_KERNEL_ARCH/boot/$KERNEL_UIMAGE_TARGET
   fi
 }
 

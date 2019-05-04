@@ -1,10 +1,10 @@
-# SPDX-License-Identifier: GPL-2.0-or-later
+# SPDX-License-Identifier: GPL-2.0
 # Copyright (C) 2016-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="game.libretro.gambatte"
-PKG_VERSION="e3ab537be8379dc9f4f1143586679562166a0f3b"
-PKG_SHA256="03260c594b6d0cb6344aabc2675ed4dba987ad2e1943665e1d2e701224ed0294"
-PKG_REV="112"
+PKG_VERSION="0.5.0.5-Leia"
+PKG_SHA256="66e63d9c1f4a4223295a6225d858ed1991f353a607efd1b64486dc6f1741dedb"
+PKG_REV="114"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/kodi-game/game.libretro.gambatte"

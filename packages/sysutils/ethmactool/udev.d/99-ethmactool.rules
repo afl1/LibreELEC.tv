@@ -1,0 +1,10 @@
+# SPDX-License-Identifier: GPL-2.0
+# Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv)
+
+ACTION!="add|change", GOTO="end"
+SUBSYSTEM!="net", GOTO="end"
+ENV{INTERFACE}!="eth0", GOTO="end"
+
+RUN+="/usr/bin/ethmactool-config $env{INTERFACE}"
+
+LABEL="end"

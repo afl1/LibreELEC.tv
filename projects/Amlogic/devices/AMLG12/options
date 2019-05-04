@@ -1,0 +1,22 @@
+    DTB=meson-g12a-x96-max.dtb
+
+  # Linux Kernel to use
+    LINUX="amlogic-g12"
+
+  # Additional kernel make parameters
+    KERNEL_MAKE_EXTRACMD="dtbs"
+
+  # OpenGL-ES implementation to use
+    OPENGLES="libmali"
+
+  # Graphic drivers to use
+    GRAPHIC_DRIVERS=""
+
+  # KODI Player implementation to use
+    KODIPLAYER_DRIVER="$OPENGLES"
+
+  # Mali GPU family
+    MALI_FAMILY="g31;g52"
+
+  # additional drivers to install
+    ADDITIONAL_DRIVERS+=" mali-bifrost"

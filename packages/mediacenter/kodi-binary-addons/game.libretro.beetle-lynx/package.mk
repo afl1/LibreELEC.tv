@@ -1,10 +1,10 @@
-# SPDX-License-Identifier: GPL-2.0-or-later
+# SPDX-License-Identifier: GPL-2.0
 # Copyright (C) 2016-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="game.libretro.beetle-lynx"
-PKG_VERSION="ba7b31b3284031cf3fd52818d8ecc273c6ed54e5"
-PKG_SHA256="f7ebc524a05cccf231e0e9b6df4e9bcd25d6bbaef6102e1a9f069813bb15bb48"
-PKG_REV="111"
+PKG_VERSION="0.9.47.4-Leia"
+PKG_SHA256="e2d9573ec98f28fc6d8faf0d2ce0aceb35d3033b9254a877c4743f8e85db5467"
+PKG_REV="113"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/kodi-game/game.libretro.beetle-lynx"

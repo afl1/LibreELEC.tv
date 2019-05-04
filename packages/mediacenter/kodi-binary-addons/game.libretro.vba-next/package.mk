@@ -1,10 +1,10 @@
-# SPDX-License-Identifier: GPL-2.0-or-later
+# SPDX-License-Identifier: GPL-2.0
 # Copyright (C) 2016-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="game.libretro.vba-next"
-PKG_VERSION="d4f67c65b28f400ade5f25a27d5fb80425d6125c"
-PKG_SHA256="c2faa95b6917b0539d93233dd2a03dad15fdb7d9b0480230e25d2e7fe84473d0"
-PKG_REV="112"
+PKG_VERSION="1.0.2.1-Leia"
+PKG_SHA256="9e153b16107cd460655104293fbc2273b279be24a77bf2f5de184e1dc91d4890"
+PKG_REV="114"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/kodi-game/game.libretro.vba-next"

@@ -1,0 +1,15 @@
+  # Kernel to use
+    LINUX="amlogic-amlgx"
+    DTB="meson-gxl-s905x-khadas-vim.dtb"
+
+  # Additional kernel make parameters
+    KERNEL_MAKE_EXTRACMD="dtbs"
+
+  # OpenGL-ES implementation to use
+    OPENGLES="mesa"
+
+  # Graphic drivers to use
+    GRAPHIC_DRIVERS="lima panfrost"
+
+  # KODI Player implementation to use
+    KODIPLAYER_DRIVER="$OPENGLES"

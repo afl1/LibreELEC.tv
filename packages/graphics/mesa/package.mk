@@ -12,28 +12,13 @@ PKG_BUILD_FLAGS="+lto"
 
 case $PROJECT in
   Amlogic)
-    case $DEVICE in
-      Khadas_VIM2|Nexbox_A1|S912)
-        #PKG_VERSION="3c2923caa79f885212dc0b891ea420e325f4ccea" # master
-        #PKG_SHA256="992e86cd1e08fe67591a8838a9e4a0c54af8c169b2fa052938b7e9e44d31dc32"
-        #PKG_URL="https://gitlab.freedesktop.org/panfrost/mesa/-/archive/$PKG_VERSION/mesa-$PKG_VERSION.tar.gz"
-        #;;
-        PKG_VERSION="5beac5f5333a5d89a3ad363b2139db495589d9ce" # winsys-rebased-meson
-        PKG_SHA256="72eba8c035161be88bcb223f40525d37f64ead3d8b726dd09aa57dcb8421bb15"
-        PKG_URL="https://github.com/chewitt/mesa/archive/$PKG_VERSION.tar.gz"
-        PKG_SOURCE_NAME="mesa-$PKG_VERSION.tar.gz"
-        PKG_PATCH_DIRS="panfrost"
-        ;;
-      *)
-        PKG_VERSION="8e713e4781982c700bfc7b09279146189d525a86" # lima-18.3
-        PKG_SHA256="389b781c64e9be176ea98ec9b940179d410a7eebc206318d33b3806450ea4f16"
-	PKG_URL="https://gitlab.freedesktop.org/lima/mesa/-/archive/$PKG_VERSION/mesa-$PKG_VERSION.tar.gz"
-	;;
-    esac
+    PKG_VERSION="77d091d0c5dc1f1b174668cb1da5f00ad391d76d" # master-19.1
+    PKG_SHA256="b1113cd7f0055b79e0f597cdc3424e901c3407c6d4729222a79e829d933e0c3e"
+    PKG_URL="https://gitlab.freedesktop.org/mesa/mesa/-/archive/$PKG_VERSION/mesa-$PKG_VERSION.tar.gz"
     ;;
   *)
-    PKG_VERSION="18.3.3"
-    PKG_SHA256="10e20e8498f935863946c82581ee1f94cfa051f6e7e96a1ba9d804efbefb9c1f"
+    PKG_VERSION="19.0.2"
+    PKG_SHA256="2b64022b209fd729ec164f746bd237a8b1dfa9d85dcf1bbc70103e986dbfc60c"
     PKG_URL="https://github.com/mesa3d/mesa/archive/mesa-$PKG_VERSION.tar.gz"
     ;;
 esac
@@ -114,6 +99,20 @@ fi
 pre_configure_target() {
   if [ "$DISPLAYSERVER" = "x11" ]; then
     export LIBS="-lxcb-dri3 -lxcb-dri2 -lxcb-xfixes -lxcb-present -lxcb-sync -lxshmfence -lz"
+  fi
+
+  # Temporary hack (until panfrost evolves) to use 64-bit pointers in structs passed to GPU
+  # even if userspace is 32-bit. This is required for Mali-T820 to work with mesa built for
+  # arm userspace. The hack does not affect building for aarch64.
+  if [ "$PROJECT" = "Amlogic" ]; then
+    pushd "$PKG_BUILD/src/gallium/drivers/panfrost"
+      sed -i 's/uintptr_t/uint64_t/g' include/panfrost-job.h \
+                                      include/panfrost-misc.h \
+                                      pan_context.c \
+                                      pandecode/decode.c
+
+      find -type f -exec sed -i 's/ndef __LP64__/ 0/g; s/def __LP64__/ 1/g' {} +;
+    popd
   fi
 }
 

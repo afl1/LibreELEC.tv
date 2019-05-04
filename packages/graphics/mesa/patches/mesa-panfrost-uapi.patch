@@ -1,0 +1,44 @@
+diff --git a/include/drm-uapi/panfrost_drm.h b/include/drm-uapi/panfrost_drm.h
+index 508b962..a52e028 100644
+--- a/include/drm-uapi/panfrost_drm.h
++++ b/include/drm-uapi/panfrost_drm.h
+@@ -59,7 +59,7 @@ struct drm_panfrost_submit {
+ 
+ /**
+  * struct drm_panfrost_wait_bo - ioctl argument for waiting for
+- * completion of the last DRM_PANFROST_SUBMIT_CL on a BO.
++ * completion of the last DRM_PANFROST_SUBMIT on a BO.
+  *
+  * This is useful for cases where multiple processes might be
+  * rendering to a BO and you want to wait for all rendering to be
+@@ -82,6 +82,8 @@ struct drm_panfrost_create_bo {
+ 	__u32 flags;
+ 	/** Returned GEM handle for the BO. */
+ 	__u32 handle;
++	/* Pad, must be zero-filled. */
++	__u32 pad;
+ 	/**
+ 	 * Returned offset for the BO in the GPU address space.  This offset
+ 	 * is private to the DRM fd and is valid for the lifetime of the GEM
+@@ -113,7 +115,7 @@ struct drm_panfrost_mmap_bo {
+ };
+ 
+ enum drm_panfrost_param {
+-	DRM_PANFROST_PARAM_GPU_ID,
++	DRM_PANFROST_PARAM_GPU_PROD_ID,
+ };
+ 
+ struct drm_panfrost_get_param {
+diff --git a/src/gallium/drivers/panfrost/pan_drm.c b/src/gallium/drivers/panfrost/pan_drm.c
+index 70d8d74..aa3da1f 100644
+--- a/src/gallium/drivers/panfrost/pan_drm.c
++++ b/src/gallium/drivers/panfrost/pan_drm.c
+@@ -331,7 +331,7 @@ panfrost_drm_query_gpu_version(struct panfrost_screen *screen)
+         struct drm_panfrost_get_param get_param = {0,};
+         int ret;
+ 
+-	get_param.param = DRM_PANFROST_PARAM_GPU_ID;
++	get_param.param = DRM_PANFROST_PARAM_GPU_PROD_ID;
+         ret = drmIoctl(drm->fd, DRM_IOCTL_PANFROST_GET_PARAM, &get_param);
+         assert(!ret);
+ 

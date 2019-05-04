@@ -1,10 +1,10 @@
-# SPDX-License-Identifier: GPL-2.0-or-later
+# SPDX-License-Identifier: GPL-2.0
 # Copyright (C) 2016-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="game.libretro.stella"
-PKG_VERSION="f8da2227b35f0860e39b4ec87680bea0ffba6413"
-PKG_SHA256="6a47d29388b8c63a462e7782e3e695572d4f0cd215fe67f22bb86102e985a512"
-PKG_REV="110"
+PKG_VERSION="3.9.3.4-Leia"
+PKG_SHA256="777e8232c7f032d69a16e0f5604810cbe9f60526fe8c83e98b5f73a6a60b7811"
+PKG_REV="112"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/kodi-game/game.libretro.stella"

@@ -1,10 +1,10 @@
-# SPDX-License-Identifier: GPL-2.0-or-later
+# SPDX-License-Identifier: GPL-2.0
 # Copyright (C) 2016-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="game.libretro.bnes"
-PKG_VERSION="2fba5466289846a238cf59b1cd318edf4966d716"
-PKG_SHA256="36f7728305ff3952b650d7d1d2d3b9d3edf75aba2fa63f6384e216ac0a8ab981"
-PKG_REV="111"
+PKG_VERSION="0.83.0.3-Leia"
+PKG_SHA256="7b3aec8954628d1b610d4dce368b94eb60d521246710d5cd026b87bf916d6690"
+PKG_REV="113"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/kodi-game/game.libretro.bnes"

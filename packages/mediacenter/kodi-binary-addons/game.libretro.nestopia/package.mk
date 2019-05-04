@@ -1,10 +1,10 @@
-# SPDX-License-Identifier: GPL-2.0-or-later
+# SPDX-License-Identifier: GPL-2.0
 # Copyright (C) 2016-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="game.libretro.nestopia"
-PKG_VERSION="43d8d1e88c36e33eb476242b47fe1dd9df828633"
-PKG_SHA256="69554d6d7b42d490158322270fba012ef1939c0391b06383a165c5801c766314"
-PKG_REV="112"
+PKG_VERSION="1.50.0.3-Leia"
+PKG_SHA256="dd8bbf8bec38f018fd21ea19f010094e3696303d8c0d9f5654e86adf09d4a62b"
+PKG_REV="114"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/kodi-game/game.libretro.nestopia"

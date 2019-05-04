@@ -1,10 +1,10 @@
-# SPDX-License-Identifier: GPL-2.0-or-later
+# SPDX-License-Identifier: GPL-2.0
 # Copyright (C) 2016-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="game.libretro.beetle-wswan"
-PKG_VERSION="3d270cb3723e0c054c8c74678a528e0a0427c9e8"
-PKG_SHA256="e4064fbdc1ca54bc84295243fc55aea65cab53c6488edb91e259255ecae89ef0"
-PKG_REV="112"
+PKG_VERSION="0.9.35.3-Leia"
+PKG_SHA256="e69d1bc924ce9d5dcbd78b098dc5df3360ec26aacae69f886bc643a50f949da1"
+PKG_REV="114"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/kodi-game/game.libretro.beetle-wswan"

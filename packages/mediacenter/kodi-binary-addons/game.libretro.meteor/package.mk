@@ -1,10 +1,10 @@
-# SPDX-License-Identifier: GPL-2.0-or-later
+# SPDX-License-Identifier: GPL-2.0
 # Copyright (C) 2016-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="game.libretro.meteor"
-PKG_VERSION="443b8dbe1fd3787d4874cd6f7282dcf0345491b9"
-PKG_SHA256="e08a6b241b82b84f596d53587f3c0efd6b6c2a32d2e9af36fd2b1c691beace42"
-PKG_REV="109"
+PKG_VERSION="1.4.0.1-Leia"
+PKG_SHA256="3e1b973787e6f3345d9596794c04ee442a704f445c332bd4c42beeb24e601d85"
+PKG_REV="111"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/kodi-game/game.libretro.meteor"

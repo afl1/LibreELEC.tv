@@ -1,10 +1,10 @@
-# SPDX-License-Identifier: GPL-2.0-or-later
+# SPDX-License-Identifier: GPL-2.0
 # Copyright (C) 2016-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="game.libretro.virtualjaguar"
-PKG_VERSION="cb25493096d7632e53bb1c2d0d9a058bec183e7a"
-PKG_SHA256="db0486cc221c29ac1f37ad6eafbef32336511d8042c971a48ab3ff466262505d"
-PKG_REV="112"
+PKG_VERSION="2.1.0.3-Leia"
+PKG_SHA256="a329ce852471f01b070088c3cbaf377ccd5e08bb50e1236375491f0900be9c6c"
+PKG_REV="114"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/kodi-game/game.libretro.virtualjaguar"
