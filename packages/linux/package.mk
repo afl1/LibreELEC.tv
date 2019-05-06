@@ -36,7 +36,7 @@ case "$LINUX" in
     PKG_SHA256="32df47cffba1b230bf0616f274f75d5e677672780ad0c443cf11e0c16b04ee4f"
     PKG_URL="https://github.com/superna9999/linux/archive/$PKG_VERSION.tar.gz"
     PKG_SOURCE_DIR="$PKG_NAME-$PKG_VERSION*"
-    PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET u-boot"
+    PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET u-boot media_tree_aml"
     PKG_PATCH_DIRS="default amlogic-amlgx"
     ;;
   amlogic-g12)
@@ -44,7 +44,7 @@ case "$LINUX" in
     PKG_SHA256="9233bb779c8c2a232d0c8bfc4d0aefaf7b62a777965e3a005706490bc47bf311"
     PKG_URL="https://gitlab.com/superna9999/linux/-/archive/$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.gz"
     PKG_SOURCE_DIR="$PKG_NAME-$PKG_VERSION*"
-    PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET u-boot"
+    PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET u-boot media_tree_aml"
     PKG_PATCH_DIRS="default amlogic-g12"
     ;;
   rockchip-4.4)
@@ -165,6 +165,12 @@ makeinstall_host() {
 }
 
 pre_make_target() {
+  if [ "$PROJECT" = "Amlogic" ]; then
+    cp -rL $(get_build_dir media_tree_aml)/drivers/media/platform/meson/dvb $PKG_BUILD/drivers/media/platform/meson/
+    echo "obj-y += dvb/" >> "$PKG_BUILD/drivers/media/platform/meson/Makefile"
+    echo 'source "drivers/media/platform/meson/dvb/Kconfig"' >>  "$PKG_BUILD/drivers/media/platform/Kconfig"
+  fi
+
   if [ "$TARGET_ARCH" = "x86_64" ]; then
     # copy some extra firmware to linux tree
     mkdir -p $PKG_BUILD/external-firmware
@@ -185,6 +191,12 @@ pre_make_target() {
 }
 
 make_target() {
+
+  if [ "$PROJECT" = "Amlogic" ]; then
+    cp -rL $(get_build_dir media_tree_aml)/drivers/media/platform/meson/dvb $PKG_BUILD/drivers/media/platform/meson/
+    echo "obj-y += dvb/" >> "$PKG_BUILD/drivers/media/platform/meson/Makefile"
+  fi 
+
   kernel_make modules
   kernel_make INSTALL_MOD_PATH=$INSTALL/$(get_kernel_overlay_dir) modules_install
   rm -f $INSTALL/$(get_kernel_overlay_dir)/lib/modules/*/build
