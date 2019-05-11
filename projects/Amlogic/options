@@ -75,7 +75,7 @@
     ADDITIONAL_DRIVERS="linux_openvfd wireguard RTL8812AU"
 
   # additional Firmware to use (dvb-firmware, misc-firmware, wlan-firmware)
-    FIRMWARE="brcmfmac_sdio-firmware meson-firmware qca-firmware"
+    FIRMWARE="brcmfmac_sdio-firmware meson-firmware qca-firmware dvb-firmware"
 
   # build and install ATV IR remote support (yes / no)
     ATVCLIENT_SUPPORT="no"
